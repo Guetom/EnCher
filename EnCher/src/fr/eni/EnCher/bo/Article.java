@@ -13,6 +13,7 @@ public class Article {
 	private Utilisateur proprietaire;
 	private Retrait retrait;
 	private List<Tag> listeTag;
+	private char Etat;
 	
 	private List<Photo> listeImage;
 

@@ -4,7 +4,7 @@ public class Retrait {
 	private int idRetrait;
 	private String rue;
 	private String ville;
-	private int codePostal;
+	private String codePostal;
 	private boolean retire;
 
 }

@@ -14,10 +14,11 @@ public class Utilisateur {
 	private LocalDate dateNaissance;
 	private String rue;
 	private String ville;
-	private int codePostal;
+	private String codePostal;
 	private String motDePasse;
 	private int credit;
 	private LocalDateTime dateCreation;
+	private Photo photoProfil;
 	private boolean admin;
 	
 	private List<Article> listeArticle;
