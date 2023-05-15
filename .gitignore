@@ -1,5 +1,6 @@
-# Fichier pour ne pas tout commit
+# Tout
+/*
 
-RemoteSystemsTempFiles/*
-.metadata/*
-Servers/*
+# Sauf
+!/EnCher/
+!/Template/
