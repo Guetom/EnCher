@@ -1,0 +1,145 @@
+package fr.eni.EnCher.dal.sqlServer;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.eni.EnCher.bo.Article;
+import fr.eni.EnCher.bo.Categorie;
+import fr.eni.EnCher.bo.Photo;
+import fr.eni.EnCher.bo.Retrait;
+import fr.eni.EnCher.bo.Utilisateur;
+import fr.eni.EnCher.dal.DAO;
+import fr.eni.EnCher.dal.JdbcTools;
+import fr.eni.EnCher.dal.Lister;
+import fr.eni.EnCher.exception.EncherException;
+
+public class ArticleDAOSqlServer implements DAO<Article>{
+	private final String LISTER = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait";
+	private final String AJOUTER = "INSERT INTO ARTICLES(etat, nom, description, prix, idCategorie, idUtilisateur, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?,?)";
+	private final String MODIFIER = "UPDATE ARTICLES SET etat=?, nom=?, description=?, prix=?, idCategorie=?, idUtilisateur=?, dateDebut=?, dateFin=? WHERE idArticle=?";
+	private final String SUPPRIMER = "DELETE FROM ARTICLES WHERE idArticle=?";
+
+
+	@Override
+	public List<Article> selectionner(Lister choix) throws EncherException {
+		List<Article> listeArticle = new ArrayList<Article>();
+		Article article = null;
+		
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(LISTER)){
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				Categorie categorie = new Categorie(
+						rs.getInt("idCategorie"),
+						rs.getString("libelle"));
+				
+				Photo photoProfil = new Photo(
+						rs.getInt("idPhoto"),
+						rs.getString("url"));
+								
+				Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("idUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("prenom"),
+						rs.getString("nom"),
+						rs.getInt("tel"),
+						rs.getString("email"),
+						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getString("code_postal"),
+						rs.getInt("credit"),
+						rs.getTimestamp("dateCreation").toLocalDateTime(),
+						photoProfil,
+						rs.getBoolean("isAdmin"));
+				
+				Retrait retrait = new Retrait(
+						rs.getInt("idRetrait"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"));
+				
+				article = new Article(
+						rs.getInt("idArticle"),
+						rs.getString("nom"),
+						rs.getString("description"),
+						rs.getInt("prix"),
+						rs.getTimestamp("dateDebut").toLocalDateTime(),
+						rs.getTimestamp("dateFin").toLocalDateTime(),
+						utilisateur,
+						retrait,
+						categorie,
+						rs.getString("etat"));
+				
+				listeArticle.add(article);
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeArticle;
+	}
+
+	@Override
+	public void ajouter(Article t) throws EncherException {
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+			pStmt.setString(1, t.getEtat());
+			pStmt.setString(2, t.getNom());
+			pStmt.setString(3, t.getDescription());
+			pStmt.setInt(4, t.getPrix());
+			pStmt.setInt(5, t.getCategorie().getIdCategorie());
+			pStmt.setInt(6, t.getProprietaire().getIdUtilisateur());
+			pStmt.setInt(7, t.getRetrait().getIdRetrait());
+			pStmt.setTimestamp(8, java.sql.Timestamp.valueOf(t.getDateDebut()));
+			pStmt.setTimestamp(9, java.sql.Timestamp.valueOf(t.getDateFin()));
+			pStmt.executeUpdate();
+			ResultSet rs = pStmt.getGeneratedKeys();
+			if(rs.next()) {
+				t.setIdArticle(rs.getInt(1));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void modifier(Article t) throws EncherException {
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(MODIFIER)){
+			pStmt.setString(1, t.getEtat());
+			pStmt.setString(2, t.getNom());
+			pStmt.setString(3, t.getDescription());
+			pStmt.setInt(4, t.getPrix());
+			pStmt.setInt(5, t.getCategorie().getIdCategorie());
+			pStmt.setInt(6, t.getProprietaire().getIdUtilisateur());
+			pStmt.setInt(7, t.getRetrait().getIdRetrait());
+			pStmt.setTimestamp(8, java.sql.Timestamp.valueOf(t.getDateDebut()));
+			pStmt.setTimestamp(9, java.sql.Timestamp.valueOf(t.getDateFin()));
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void supprimer(Article t) throws EncherException {
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(SUPPRIMER)){
+			pStmt.setInt(1, t.getIdArticle());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
