@@ -8,8 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-abstract class ConnectionProvider {
-	static DataSource dataSource;
+public class JdbcTools {
+static DataSource dataSource;
 	
 	/**
 	 * Au chargement de la classe, la DataSource est recherchée dans l'arbre JNDI
