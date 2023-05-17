@@ -31,7 +31,7 @@ public class EnchereDAOSqlServer implements DAO<Enchere>{
 				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
 			pStmt.setTimestamp(1, Timestamp.valueOf(t.getDateHeureEnchere()));
 			pStmt.setInt(2, t.getMontant());
-			pStmt.setInt(3, t.getEncherisseur().getIdUtilisateur());
+			pStmt.setInt(3, t.getEncheriseur().getIdUtilisateur());
 			pStmt.setInt(4, t.getArticle().getIdArticle());
 			pStmt.executeUpdate();
 			ResultSet rs = pStmt.getGeneratedKeys();
@@ -50,7 +50,7 @@ public class EnchereDAOSqlServer implements DAO<Enchere>{
 				PreparedStatement pStmt = con.prepareStatement(MODIFIER)){
 			pStmt.setTimestamp(1, Timestamp.valueOf(t.getDateHeureEnchere()));
 			pStmt.setInt(2, t.getMontant());
-			pStmt.setInt(3, t.getEncherisseur().getIdUtilisateur());
+			pStmt.setInt(3, t.getEncheriseur().getIdUtilisateur());
 			pStmt.setInt(4, t.getArticle().getIdArticle());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {

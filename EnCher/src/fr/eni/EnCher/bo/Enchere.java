@@ -6,7 +6,7 @@ public class Enchere {
 	private int idEnchere;
 	private LocalDateTime dateHeureEnchere;
 	private int montant;
-	private Utilisateur encherisseur;
+	private Utilisateur encheriseur;
 	private Article article;
 	
 	public Enchere(int idEnchere, LocalDateTime dateHeureEnchere, int montant, Utilisateur encheriseur,
@@ -15,7 +15,7 @@ public class Enchere {
 		this.idEnchere = idEnchere;
 		this.dateHeureEnchere = dateHeureEnchere;
 		this.montant = montant;
-		this.encherisseur = encheriseur;
+		this.encheriseur = encheriseur;
 		this.article = article;
 	}
 
@@ -35,8 +35,8 @@ public class Enchere {
 		return montant;
 	}
 
-	public Utilisateur getEncherisseur() {
-		return encherisseur;
+	public Utilisateur getEncheriseur() {
+		return encheriseur;
 	}
 
 	public Article getArticle() {
