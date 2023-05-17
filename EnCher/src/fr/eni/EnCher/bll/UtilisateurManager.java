@@ -65,49 +65,49 @@ public class UtilisateurManager {
 	    }*/
 		
 	    if (utilisateur.getPseudo() == null || utilisateur.getPseudo().isEmpty()) {
-	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_INVALID);
+	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_INVALIDE);
 	    }
 
 	    if (utilisateur.getPrenom() == null || utilisateur.getPrenom().isEmpty()) {
-	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PRENOM_INVALID);
+	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PRENOM_INVALIDE);
 	    }
 
 	    if (utilisateur.getNom() == null || utilisateur.getNom().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_NOM_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_NOM_INVALIDE);
 	    }
 
 	    if (utilisateur.getPhotoProfil() != null && utilisateur.getNumeroTel() <= 0) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALIDE);
 	    }
 	    
 	    String emailRegex = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b";
 	    if (utilisateur.getEmail() == null || utilisateur.getEmail().isEmpty() || !utilisateur.getEmail().matches(emailRegex)) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_EMAIL_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_EMAIL_INVALIDE);
 	    }
 	    
 	    if (utilisateur.getRue() == null || utilisateur.getRue().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_RUE_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_RUE_INVALIDE);
 	    }
 
 	    if (utilisateur.getCodePostal() == null || utilisateur.getCodePostal().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CP_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CP_INVALIDE);
 	    }
 
 	    if (utilisateur.getVille() == null || utilisateur.getVille().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_INVALIDE);
 	    }
 
 	    if (utilisateur.getMotDePasse() == null || utilisateur.getMotDePasse().isEmpty()) {
 	    	//TODO verif hash
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MDP_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MDP_INVALIDE);
 	    }
 
 	    if (utilisateur.getCredit() < 0) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CREDIT_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CREDIT_INVALIDE);
 	    }
 
 	    if (utilisateur.getDateNaissance() == null) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_DATENAISSANCE_INVALID);
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_DATENAISSANCE_INVALIDE);
 	    }
 	}
 }
