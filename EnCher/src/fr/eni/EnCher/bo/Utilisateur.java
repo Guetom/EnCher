@@ -103,6 +103,10 @@ public class Utilisateur {
 	public Photo getPhotoProfil() {
 		return photoProfil;
 	}
+	
+	/*public Photo setPhotoProfil() {
+		this.photoProfil = "https://maisondesante-saintcere.fr/images/assets/pp-default.png";
+	}*/
 
 	public boolean isAdmin() {
 		return admin;
