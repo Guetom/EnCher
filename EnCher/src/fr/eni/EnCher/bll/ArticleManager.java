@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import fr.eni.EnCher.bo.Article;
-import fr.eni.EnCher.bo.Utilisateur;
 import fr.eni.EnCher.dal.Lister;
 import fr.eni.EnCher.dal.sqlServer.ArticleDAOSqlServer;
 import fr.eni.EnCher.exception.EncherException;
