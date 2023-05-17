@@ -23,14 +23,46 @@ public class TagManager {
 	}
 	
 	public void modfier(Tag tag) throws EncherException{
-		tagDAO.modifier(tag);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(tag, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			tagDAO.modifier(tag);
+		}
+		
 	}
 	
 	public void ajouter(Tag tag) throws EncherException{
-		tagDAO.ajouter(tag);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(tag, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			tagDAO.ajouter(tag);
+		}
 	}
 	
 	public void supprimer(Tag tag) throws EncherException{
-		tagDAO.supprimer(tag);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(tag, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			tagDAO.supprimer(tag);
+		}
+	}
+	
+	private void validerContenu(Tag tag, EncherException encherException) throws EncherException{
+	    
+	    if (tag.getLibelle() == null || tag.getLibelle().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_TAG_LIBELLE_INVALIDE);
+	    }
 	}
 }

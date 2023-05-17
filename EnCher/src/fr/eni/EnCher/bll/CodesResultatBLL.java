@@ -123,4 +123,28 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_CATEGORIE_LIBELLE_INVALIDE = 20200;
 	
+	/* Retrait */
+	
+	/**
+	 * Le nom de rue est invalide.
+	 */
+	public static final int REGLE_RETRAIT_RUE_INVALIDE = 20400;
+	
+	/**
+	 * Le nom de ville est invalide.
+	 */
+	public static final int REGLE_RETRAIT_VILLE_INVALIDE = 20401;
+	
+	/**
+	 * Le code postal est invalide.
+	 */
+	public static final int REGLE_RETRAIT_CP_INVALIDE = 20402;
+	
+	/* Tags */
+	
+	/**
+	 * Le libellé du tag est invalide.
+	 */
+	public static final int REGLE_TAG_LIBELLE_INVALIDE = 20500;
+	
 }
