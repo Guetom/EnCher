@@ -10,7 +10,7 @@ public class Utilisateur {
 	private String pseudo;
 	private String prenom;
 	private String nom;
-	private int numeroTel;
+	private long numeroTel;
 	private String email;
 	private LocalDate dateNaissance;
 	private String rue;
@@ -23,10 +23,8 @@ public class Utilisateur {
 	private boolean admin;
 	
 	private List<Article> listeArticle;
-	
-	
 
-	public Utilisateur(int idUtilisateur, String pseudo, String prenom, String nom, int numeroTel, String email,
+	public Utilisateur(int idUtilisateur, String pseudo, String prenom, String nom, long numeroTel, String email,
 			LocalDate dateNaissance, String rue, String ville, String codePostal, int credit,
 			LocalDateTime dateCreation, Photo photoProfil, boolean admin) {
 		super();
@@ -66,7 +64,7 @@ public class Utilisateur {
 		return nom;
 	}
 
-	public int getNumeroTel() {
+	public long getNumeroTel() {
 		return numeroTel;
 	}
 
@@ -105,6 +103,10 @@ public class Utilisateur {
 	public Photo getPhotoProfil() {
 		return photoProfil;
 	}
+	
+	/*public Photo setPhotoProfil() {
+		this.photoProfil = "https://maisondesante-saintcere.fr/images/assets/pp-default.png";
+	}*/
 
 	public boolean isAdmin() {
 		return admin;

@@ -27,11 +27,77 @@ public class UtilisateurManager {
 	}
 	
 	public void ajouter(Utilisateur utilisateur) throws EncherException{
-		utilisateurDAO.ajouter(utilisateur);
+		
+		EncherException encherException = new EncherException();
+		
+		validerContenu(utilisateur, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		}
+		else {
+			utilisateurDAO.ajouter(utilisateur);
+		}
 	}
 	
 	public void supprimer(Utilisateur utilisateur) throws EncherException{
 		utilisateurDAO.supprimer(utilisateur);
 	}
+	
+	private void validerContenu(Utilisateur utilisateur, EncherException encherException) throws EncherException{
+		
+		/*if (utilisateur.getPhotoProfil() == null) {
+			utilisateur.setPhotoProfil("");
+	    }*/
+		
+		/*if (utilisateur.getDateCreation() == null) {
+			utilisateur.setDateCreation();
+	    }*/
+		
+	    if (utilisateur.getPseudo() == null || utilisateur.getPseudo().isEmpty()) {
+	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_INVALID);
+	    }
 
+	    if (utilisateur.getPrenom() == null || utilisateur.getPrenom().isEmpty()) {
+	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PRENOM_INVALID);
+	    }
+
+	    if (utilisateur.getNom() == null || utilisateur.getNom().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_NOM_INVALID);
+	    }
+
+	    if (utilisateur.getPhotoProfil() != null && utilisateur.getNumeroTel() <= 0) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALID);
+	    }
+	    
+	    String emailRegex = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b";
+	    if (utilisateur.getEmail() == null || utilisateur.getEmail().isEmpty() || !utilisateur.getEmail().matches(emailRegex)) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_EMAIL_INVALID);
+	    }
+	    
+	    if (utilisateur.getRue() == null || utilisateur.getRue().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_RUE_INVALID);
+	    }
+
+	    if (utilisateur.getCodePostal() == null || utilisateur.getCodePostal().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CP_INVALID);
+	    }
+
+	    if (utilisateur.getVille() == null || utilisateur.getVille().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_INVALID);
+	    }
+
+	    if (utilisateur.getMotDePasse() == null || utilisateur.getMotDePasse().isEmpty()) {
+	    	//TODO verif hash
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MDP_INVALID);
+	    }
+
+	    if (utilisateur.getCredit() < 0) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CREDIT_INVALID);
+	    }
+
+	    if (utilisateur.getDateNaissance() == null) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_DATENAISSANCE_INVALID);
+	    }
+	}
 }

@@ -41,7 +41,7 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 						rs.getString("pseudo"),
 						rs.getString("prenom"),
 						rs.getString("nom"),
-						rs.getInt("tel"),
+						rs.getLong("tel"),
 						rs.getString("email"),
 						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
 						rs.getString("rue"),
@@ -78,7 +78,7 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 						rs.getString("pseudo"),
 						rs.getString("prenom"),
 						rs.getString("nom"),
-						rs.getInt("tel"),
+						rs.getLong("tel"),
 						rs.getString("email"),
 						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
 						rs.getString("rue"),
@@ -106,7 +106,7 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 			pStmt.setString(2, t.getPrenom());
 			pStmt.setString(3, t.getNom());
 			pStmt.setInt(4, t.getPhotoProfil().getIdPhoto());
-			pStmt.setInt(5, t.getNumeroTel());
+			pStmt.setLong(5, t.getNumeroTel());
 			pStmt.setString(6, t.getEmail());
 			pStmt.setString(7, t.getRue());
 			pStmt.setString(8, t.getCodePostal());
@@ -134,7 +134,7 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 			pStmt.setString(2, t.getPrenom());
 			pStmt.setString(3, t.getNom());
 			pStmt.setInt(4, t.getPhotoProfil().getIdPhoto());
-			pStmt.setInt(5, t.getNumeroTel());
+			pStmt.setLong(5, t.getNumeroTel());
 			pStmt.setString(6, t.getEmail());
 			pStmt.setString(7, t.getRue());
 			pStmt.setString(8, t.getCodePostal());
