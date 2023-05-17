@@ -23,7 +23,17 @@ public class UtilisateurManager {
 	}
 	
 	public void modfier(Utilisateur utilisateur) throws EncherException{
-		utilisateurDAO.modifier(utilisateur);
+		
+		EncherException encherException = new EncherException();
+		
+		validerContenu(utilisateur, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		}
+		else {
+			utilisateurDAO.modifier(utilisateur);
+		}
 	}
 	
 	public void ajouter(Utilisateur utilisateur) throws EncherException{
