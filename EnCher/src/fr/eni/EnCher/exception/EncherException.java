@@ -1,27 +1,35 @@
 package fr.eni.EnCher.exception;
 
+import java.util.List;
+
 public class EncherException extends Exception {
+	private static final long serialVersionUID = 1L;
+	private List<Integer> listeCodesErreur;
 	
 	public EncherException() {
 		super();
 	}
-	
-	public EncherException(String message) {
-		super(message);
+
+	/**
+	 * 
+	 * @param code Code de l'erreur. 
+	 * Doit avoir un message associÃ© dans un fichier properties.
+	 */
+	public void ajouterErreur(int code)
+	{
+		if(!this.listeCodesErreur.contains(code))
+		{
+			this.listeCodesErreur.add(code);
+		}
 	}
 	
-	public EncherException(String message, Throwable exception) {
-		super(message, exception);
+	public boolean hasErreurs()
+	{
+		return this.listeCodesErreur.size()>0;
 	}
-
-	//Méthodes
-	@Override
-	public String getMessage() {
-		StringBuffer sb = new StringBuffer("EnCher exception - ");
-		sb.append(super.getMessage());
-		
-		return sb.toString() ;
+	
+	public List<Integer> getListeCodesErreur()
+	{
+		return this.listeCodesErreur;
 	}
-
-
 }
