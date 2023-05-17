@@ -8,7 +8,6 @@ import fr.eni.EnCher.bo.Utilisateur;
 import fr.eni.EnCher.dal.Lister;
 import fr.eni.EnCher.dal.sqlServer.ArticleDAOSqlServer;
 import fr.eni.EnCher.exception.EncherException;
-import fr.eni.prisedenotes.BusinessException;
 
 public class ArticleManager {
 	private static ArticleManager instance;
@@ -71,39 +70,39 @@ public class ArticleManager {
 	private void validerContenu(Article article, EncherException encherException) throws EncherException{
 	    
 	    if (article.getNom() == null || article.getNom().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_INVALID);//Le nom de l'article est requis.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_INVALIDE);
 	    }
 	    
 	    if (article.getDescription() == null || article.getDescription().isEmpty()) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_INVALID);//Une description de l'article est requise.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_INVALIDE);
 	    }
 	    
 	    if (article.getPrix() < 0) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_NEGATIF);//Le prix de l'article ne peut pas être négatif.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_NEGATIF);
 	    }
 	    
 	    if(article.getCategorie() == null) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_CATEGORIE_NULL);//Une catégorie d'article est requise.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_CATEGORIE_INVALIDE);
 	    }
 	    
 	    if(article.getProprietaire() == null) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_UTILISATEUR_NULL);//Aucun utilisateur n'est lié à l'article.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_UTILISATEUR_INVALIDE);
 	    }
 	    
 	    if(article.getRetrait() == null) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_RETRAIT_NULL);//L'adresse de retrait pour l'article est requise.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_RETRAIT_INVALIDE);
 	    }
 	    
 	    if(article.getDateDebut().isBefore(LocalDateTime.now())) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_DANS_LE_PASSE);//Impossible de mettre la date de début d'enchères dans le passé.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_DANS_LE_PASSE);
 	    }
 	    
 	    if(article.getDateFin().isBefore(LocalDateTime.now())) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_DANS_LE_PASSE);//Impossible de mettre la date de fin d'enchères dans le passé.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_DANS_LE_PASSE);
 	    }
 	    
 	    if(article.getDateDebut().isAfter(article.getDateFin())) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_APRES_FIN);//Impossible de mettre la date de début d'enchères après la date de fin d'enchères.
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_APRES_FIN);
 	    }
 
 	}
