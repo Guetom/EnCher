@@ -116,4 +116,11 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_ARTICLE_DATE_DEBUT_APRES_FIN = 20108;
 	
+	/* Categories */
+	
+	/**
+	 * Le libellé de la catégorie est invalide.
+	 */
+	public static final int REGLE_CATEGORIE_LIBELLE_INVALIDE = 20200;
+	
 }

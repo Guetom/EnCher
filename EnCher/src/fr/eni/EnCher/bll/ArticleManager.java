@@ -36,9 +36,10 @@ public class ArticleManager {
 		
 		if(encherException.hasErreurs()) {
 			throw encherException;
+		} else {
+			articleDAO.modifier(article);
 		}
-		
-		articleDAO.modifier(article);
+
 	}
 	
 	public void ajouter(Article article) throws EncherException{
@@ -49,9 +50,9 @@ public class ArticleManager {
 		
 		if(encherException.hasErreurs()) {
 			throw encherException;
+		} else {
+			articleDAO.ajouter(article);
 		}
-		
-		articleDAO.ajouter(article);
 	}
 	
 	public void supprimer(Article article) throws EncherException{
@@ -62,9 +63,9 @@ public class ArticleManager {
 		
 		if(encherException.hasErreurs()) {
 			throw encherException;
+		} else {
+			articleDAO.supprimer(article);
 		}
-		
-		articleDAO.supprimer(article);
 	}
 	
 	private void validerContenu(Article article, EncherException encherException) throws EncherException{
