@@ -33,5 +33,12 @@ public class CategorieManager {
 	public void supprimer(Categorie categorie) throws EncherException{
 		categorieDAO.supprimer(categorie);
 	}
+	
+	private void validerContenu(Categorie categorie, EncherException encherException) throws EncherException{
+	    
+	    if (categorie.getLibelle() == null || categorie.getLibelle().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_LIBELLE_INVALIDE);
+	    }
+	}
 
 }
