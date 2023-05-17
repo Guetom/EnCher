@@ -23,15 +23,47 @@ public class CategorieManager {
 	}
 	
 	public void modfier(Categorie categorie) throws EncherException{
-		categorieDAO.modifier(categorie);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(categorie, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			categorieDAO.modifier(categorie);
+		}
 	}
 	
 	public void ajouter(Categorie categorie) throws EncherException{
-		categorieDAO.ajouter(categorie);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(categorie, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			categorieDAO.ajouter(categorie);
+		}
+		
 	}
 	
 	public void supprimer(Categorie categorie) throws EncherException{
-		categorieDAO.supprimer(categorie);
+		EncherException encherException = new EncherException();
+		
+		validerContenu(categorie, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			categorieDAO.supprimer(categorie);
+		}
+	}
+	
+	private void validerContenu(Categorie categorie, EncherException encherException) throws EncherException{
+	    
+	    if (categorie.getLibelle() == null || categorie.getLibelle().isEmpty()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_LIBELLE_INVALIDE);
+	    }
 	}
 
 }
