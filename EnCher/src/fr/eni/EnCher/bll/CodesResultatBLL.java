@@ -147,4 +147,28 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_TAG_LIBELLE_INVALIDE = 20500;
 	
+	/**
+	 * La date et l'heure de l'enchère sont obligatoires.
+	 */
+	public static final int REGLE_ENCHERE_DATE_INVALIDE=20300;
+	
+	/**
+	 * Le montant de l'enchère doit être supérieur à zéro.
+	 */
+	public static final int REGLE_ENCHERE_MONTANT_INVALIDE=20301;
+	
+	/**
+	 * L'enchérisseur est invalide.
+	 */
+	public static final int REGLE_ENCHERE_ENCHERISSEUR_INVALIDE=20302;
+	
+	/**
+	 * L'article est invalide.
+	 */
+	public static final int REGLE_ENCHERE_ARTICLE_INVALIDE=20303;
+	
+	/**
+	 * L'article est indisponible.
+	 */
+	public static final int REGLE_ENCHERE_ARTICLE_INDISPONIBLE=20304;
 }
