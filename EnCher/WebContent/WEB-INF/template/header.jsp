@@ -16,7 +16,7 @@
   <header>
     <nav class="navbar navbar-expand-sm navbar-light bg-light bg-gradient sticky-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo EnCher" style="height:60px;"
+        <a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/assets/logo.png" alt="Logo EnCher" style="height:60px;"
             class="img-fluid"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId">
           <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
             <li class="nav-item mx-sm-3">
               <div class="dropdown">
                 <a class="navbar-brand dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                  <img src="${pageContext.request.contextPath}/assets/img/profil.jpg" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+                  <img src="${pageContext.request.contextPath}/assets/profil.jpg" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li><a class="dropdown-item" href="#">Mon profil</a></li>

@@ -18,7 +18,7 @@ import fr.eni.EnCher.exception.EncherException;
  */
 @WebServlet(
 		urlPatterns= {
-						"/",
+						"",
 						"/article",
 						"/article/ajouter",
 						"/article/supprimer"
@@ -38,18 +38,10 @@ public class ServletArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
 		String filtre = null;
 		// Page d'acceuil (lister tout les articles
-		if(request.getServletPath().equals("/")) {
+		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
 			try {
 				request.setAttribute("listeArticles", articleManager.getManager().selectionner(Lister.TOUT));
@@ -91,7 +83,13 @@ public class ServletArticle extends HttpServlet {
 		else if (request.getServletPath().equals("/article/supprimer")) {
 			
 		}
-		//		doGet(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }
