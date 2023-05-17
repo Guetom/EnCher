@@ -16,14 +16,12 @@ public class Article {
 	private Categorie categorie;
 	private List<Tag> listeTag;
 	private String etat;
+	private Photo photoPrincipal;
 	
 	private List<Photo> listeImage;
 	
-	
-	
-	
 	public Article(int idArticle, String nom, String description, int prix, LocalDateTime dateDebut, LocalDateTime dateFin,
-			Utilisateur proprietaire, Retrait retrait, Categorie categorie, String etat) {
+			Utilisateur proprietaire, Retrait retrait, Categorie categorie, String etat, Photo photoPrincipal) {
 		super();
 		this.idArticle = idArticle;
 		this.nom = nom;
@@ -35,6 +33,7 @@ public class Article {
 		this.retrait = retrait;
 		this.categorie = categorie;
 		this.etat = etat;
+		this.photoPrincipal = photoPrincipal;
 	}
 	
 	public void setIdArticle(int idArticle) {
@@ -87,6 +86,10 @@ public class Article {
 
 	public List<Photo> getListeImage() {
 		return listeImage;
+	}
+
+	public Photo getPhotoPrincipal() {
+		return photoPrincipal;
 	}
 	
 	

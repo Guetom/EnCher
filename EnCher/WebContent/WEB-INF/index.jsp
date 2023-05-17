@@ -6,20 +6,6 @@
 
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
 
-<h1>HI</h1>
-<c:choose>
-	<c:when test="${listeArticles.size()>0}">
-		<c:forEach var="c" items="${listeArticles}">
-			<ul>
-				<li>${c.nom}${c.prix} euro</li>
-			</ul>
-		</c:forEach>
-	</c:when>
-	<c:otherwise>
-		<p>Pas d'article actuellement.</p>
-	</c:otherwise>
-</c:choose>
-
 <main>
 
 <div class="p-5 pb-0 mx-auto rounded-3 text-center">
@@ -153,6 +139,39 @@
 		</div>
 	</div>
 </div>
+
+<c:choose>
+	<c:when test="${listeArticles.size()>0}">
+		<div class="m-3">
+			<div class="row justify-content-center">
+			<c:forEach var="c" items="${listeArticles}">
+				<div class="col-auto col-xxl-2 col-xl-3 col-md-4 col-sm-6">
+					<div class="card mx-2 my-3">
+						<img src="${c.photoPrincipal.url}" class="card-img-top img-fluid"
+							alt="...">
+						<div class="card-body">
+							<h5 class="card-title text-center">${c.nom}</h5>
+							<p class="card-text text-truncate">${c.description}</p>
+							<a href="">En savoir plus ...</a>
+						</div>
+						<div class="card-footer">
+							<small class="text-body-secondary">L'enchere commence
+								dans 15 min</small> 
+								<a href="#">${c.proprietaire.pseudo}</a>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+			</div>
+		</div>
+
+	</c:when>
+	<c:otherwise>
+		<p>Pas d'article actuellement.</p>
+	</c:otherwise>
+</c:choose>
+
+
 </main>
 
 </body>
