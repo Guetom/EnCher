@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import fr.eni.EnCher.bo.Categorie;
 import fr.eni.EnCher.bo.Photo;
 import fr.eni.EnCher.bo.Utilisateur;
 import fr.eni.EnCher.dal.DAO;
@@ -19,7 +18,8 @@ import fr.eni.EnCher.exception.EncherException;
 public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 	private final String LISTER = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto";
 	private final String LISTER_UTILISATEUR = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE idUtilisateur=?";
-	private final String AJOUTER = "INSERT INTO UTILISATEURS(pseudo, prenom, nom, idPhoto, tel, email, rue, code_postal, ville, mot_de_passe, credit, isAdmin, dateNaissance) VALUES (?,?,?,?)";
+	private final String UTILISATEUR_LOGIN = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE (email=? AND mot_de_passe=?) OR (pseudo=? AND mot_de_passe=?)";
+	private final String AJOUTER = "INSERT INTO UTILISATEURS(pseudo, prenom, nom, idPhoto, tel, email, rue, code_postal, ville, mot_de_passe, credit, dateNaissance, isAdmin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String MODIFIER = "UPDATE UTILISATEURS SET idArticle=?, rue=?, code_postal=?, ville=? WHERE idRetrait=?";
 	private final String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE idRetrait=?";
 	
@@ -29,6 +29,45 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 		try(Connection con = JdbcTools.getConnection(); 
 				PreparedStatement pStmt = con.prepareStatement(LISTER_UTILISATEUR)){
 			pStmt.setInt(1, idUtilisateur);
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				Photo photoProfil = new Photo(
+						rs.getInt("idPhoto"),
+						rs.getString("url"));
+								
+				utilisateur = new Utilisateur(
+						rs.getInt("idUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("prenom"),
+						rs.getString("nom"),
+						rs.getLong("tel"),
+						rs.getString("email"),
+						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getString("code_postal"),
+						rs.getInt("credit"),
+						rs.getTimestamp("dateCreation").toLocalDateTime(),
+						photoProfil,
+						rs.getBoolean("isAdmin"));
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+	
+	public Utilisateur selectionner(String emailPseudo, String password) throws EncherException {
+		Utilisateur utilisateur = null;
+		
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(UTILISATEUR_LOGIN)){
+			pStmt.setString(1, emailPseudo);
+			pStmt.setString(2, password);
+			pStmt.setString(3, emailPseudo);
+			pStmt.setString(4, password);
 			ResultSet rs = pStmt.executeQuery();
 			
 			if (rs.next()) {
@@ -101,7 +140,7 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 	@Override
 	public void ajouter(Utilisateur t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
-				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
 			pStmt.setString(1, t.getPseudo());
 			pStmt.setString(2, t.getPrenom());
 			pStmt.setString(3, t.getNom());
@@ -113,9 +152,9 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 			pStmt.setString(9, t.getVille());
 			pStmt.setString(10, t.getMotDePasse());
 			pStmt.setInt(11, t.getCredit());
-			pStmt.setBoolean(12, t.isAdmin());
-			pStmt.setDate(13, java.sql.Date.valueOf(t.getDateNaissance()));			
-			pStmt.executeUpdate();
+			pStmt.setDate(12, java.sql.Date.valueOf(t.getDateNaissance()));	
+			pStmt.setBoolean(13, false);
+			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
 				t.setIdUtilisateur(rs.getInt(1));

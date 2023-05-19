@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,11 +49,11 @@ public class RetraitDAOSqlServer implements DAO<Retrait>{
 	@Override
 	public void ajouter(Retrait t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
-				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
 			pStmt.setString(1, t.getRue());
 			pStmt.setString(2, t.getCodePostal());
 			pStmt.setString(3, t.getVille());
-			pStmt.executeUpdate();
+			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
 				t.setIdRetrait(rs.getInt(1));

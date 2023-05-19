@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import fr.eni.EnCher.bo.Photo;
@@ -27,9 +28,9 @@ public class PhotoDAOSqlServer implements DAO<Photo>{
 	@Override
 	public void ajouter(Photo t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
-				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
 			pStmt.setString(1, t.getUrl());
-			pStmt.executeUpdate();
+			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
 				t.setIdPhoto(rs.getInt(1));

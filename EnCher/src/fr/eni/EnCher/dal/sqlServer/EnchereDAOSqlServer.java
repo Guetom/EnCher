@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -28,12 +29,12 @@ public class EnchereDAOSqlServer implements DAO<Enchere>{
 	@Override
 	public void ajouter(Enchere t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
-				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
 			pStmt.setTimestamp(1, Timestamp.valueOf(t.getDateHeureEnchere()));
 			pStmt.setInt(2, t.getMontant());
 			pStmt.setInt(3, t.getEncherisseur().getIdUtilisateur());
 			pStmt.setInt(4, t.getArticle().getIdArticle());
-			pStmt.executeUpdate();
+			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
 				t.setIdEnchere(rs.getInt(1));

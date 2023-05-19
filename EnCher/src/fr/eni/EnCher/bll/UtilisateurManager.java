@@ -22,6 +22,10 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectionner(choix);
 	}
 	
+	public Utilisateur login(String email, String password) throws EncherException{
+		return utilisateurDAO.selectionner(email, password);
+	}
+	
 	public void modfier(Utilisateur utilisateur) throws EncherException{
 		
 		EncherException encherException = new EncherException();
@@ -40,14 +44,14 @@ public class UtilisateurManager {
 		
 		EncherException encherException = new EncherException();
 		
-		validerContenu(utilisateur, encherException);
-		
-		if(encherException.hasErreurs()) {
-			throw encherException;
-		}
-		else {
+//		validerContenu(utilisateur, encherException);
+//		
+//		if(encherException.hasErreurs()) {
+//			throw encherException;
+//		}
+//		else {
 			utilisateurDAO.ajouter(utilisateur);
-		}
+//		}
 	}
 	
 	public void supprimer(Utilisateur utilisateur) throws EncherException{

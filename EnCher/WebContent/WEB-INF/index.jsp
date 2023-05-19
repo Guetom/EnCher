@@ -20,6 +20,10 @@
 	</div>
 </div>
 
+<c:if test="${ !empty sessionScope.pseudo}">
+    <p>Hello ${ sessionScope.pseudo } !</p>
+</c:if>
+
 <!-- Champ de recherche -->
 <div class="container mt-5">
 	<div class="row d-flex justify-content-center">
@@ -84,9 +88,7 @@
 					<button class="btn btn-primary btn-block">Rechercher</button>
 				</div>
 				<div class="mt-3">
-					<a data-toggle="collapse" href="#more-filters" role="button"
-						aria-expanded="false" aria-controls="more-filters"
-						class="advanced"> Plus d'options de filtrages... <i
+					<a data-bs-toggle="collapse" href="#more-filters" role="button" aria-expanded="false" aria-controls="more-filters" class="advanced"> Plus d'options de filtrages... <i
 						class="fa fa-angle-down"></i>
 					</a>
 					<div class="collapse" id="more-filters">
@@ -98,15 +100,15 @@
 										for="radio1"> Achats </label>
 									<ul>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check1"> <label
+											type="checkbox" value="" id="check1" checked> <label
 											class="form-check-label" for="check1"> Enchères
 												ouvertes </label></li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check2"> <label
+											type="checkbox" value="" id="check2" checked> <label
 											class="form-check-label" for="check2"> Mes enchères </label>
 										</li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check3"> <label
+											type="checkbox" value="" id="check3" checked> <label
 											class="form-check-label" for="check3"> Enchères
 												remportées </label></li>
 									</ul>
@@ -174,8 +176,8 @@
 
 </main>
 
-</body>
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
-
+<script src="./js/index.js" async></script>
+</body>
 </html>
