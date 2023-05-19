@@ -1,0 +1,51 @@
+.enchere .carousel-indicators {
+    background-color:#454545ce
+}
+
+.enchere .carousel-control-prev-icon, .enchere .carousel-control-next-icon {
+    background-color:#454545f3;
+    width:20px;
+    height:20px;
+}
+
+.enchere h3 {
+    text-decoration:underline;
+}
+
+.enchere h2 {
+    overflow-wrap:break-word;
+}
+
+.enchere .prix {
+    color:rgb(62, 124, 0);
+    font-weight:bold;
+}
+
+.enchere .retrait p {
+    margin-bottom:0;
+}
+
+#carouselExampleIndicators .carousel-item img, .enchere .image-preview-article {  
+    object-fit: contain;
+    object-position: center;
+    overflow: hidden;
+    height:50vh;
+    width: 100%;
+}
+
+.enchere .image-preview-article {
+    background-color:white;
+}
+
+.enchere .form-modif-article div:not(.enregistrer-annuler-modif div), .enchere .form-modif-article fieldset {
+    margin: 15px 3rem;
+}
+
+.enchere .form-modif-article fieldset.modif-retrait-article div {
+    margin: 15px 0;
+}
+
+.enchere .form-modif-article .enregistrer-annuler-modif {
+    flex-wrap:wrap;
+}
+

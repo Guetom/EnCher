@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
-.auction-page h1, .auction-page .card h4 {
+.auction-page h1, .auction-page .card h4, .enchere h2 {
     font-family: 'Poppins';
 }
 

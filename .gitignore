@@ -1,9 +1,10 @@
-# Sauf
-!/EnCher/
-!/Template/
-
 # Tout
 /*
 /EnCher/build
 /EnCher/.settings
 *.class
+
+# Sauf
+!/EnCher/
+!/Template/
+

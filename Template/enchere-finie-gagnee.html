@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchères</title>
+
+    <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/enchere.css">
+
+</head>
+<body class="enchere">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light bg-gradient sticky-top">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="./img/placeholder-logo-4.png" alt="Logo EnCher" style="height:60px;"
+                class="img-fluid"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
+              <!-- Modifié 'justify-content-end' à la place de 'justify-self-end' -->
+              <ul class="navbar-nav ms-auto mt-2 mt-lg-0"> <!-- Ajout de 'ms-auto' ici -->
+                <li class="nav-item mx-sm-1">
+                  <a class="nav-link" href="#">Enchères</a>
+                </li>
+                <li class="nav-item mx-sm-1">
+                  <a class="nav-link" href="#">Vendre un article</a>
+                </li>
+                <li class="nav-item mx-sm-3">
+                  <div class="dropdown">
+                    <a class="navbar-brand dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                      <img src="./img/shrek.jpg" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li><a class="dropdown-item" href="#">Mon profil</a></li>
+                      <li><a class="dropdown-item disconnect" href="#">Se déconnecter</a></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        
+        <!-- Entête (titre) de l'enchère -->
+        <div class="p-5 pb-4 text-center">
+            <h2 class="fs-1">Vous avez remporté la vente ! 🎉</h2>
+        </div>
+
+        <!-- Boîte contenant les informations de l'enchère -->
+        <section class="w-75 bg-light mx-auto border shadow-sm rounded-1">
+
+            <div class="row py-5">
+                <!-- Images -->
+                <div class="col-lg-5 col-12 px-5 py-1">
+                    <div id="carouselExampleIndicators" class="carousel slide bg-white border shadow-sm"> <!--data-bs-ride="carousel"-->
+                        <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="./img/pcOccasion.jpg" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="./img/shrek.jpg" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="./img/placeholder-logo-4.png" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+
+                <!-- Section principale (informations de l'enchère) -->
+                <div class="col-lg-7 col-12 px-3">
+
+                    <!-- Entête (titre) de l'enchère -->
+                    <div class="entete pb-3">
+                        <h3 class="fs-2">PC Gamer pour travailler</h2>
+                    </div>
+
+                    <div class="description row p-1">
+                        <div class="col-lg-2 col-12"><h5>Description :</h5></div>
+                        <div class="col-lg-10 col-12"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni soluta at magnam nam quis ut sint. Tempora iste commodi accusantium ea nam magni quaerat ad molestiae, facilis facere sit tenetur.</p></div>
+                    </div>
+
+                    <div class="categorie row py-1">
+                        <div class="col-lg-2 col-12"><h5>Catégorie :</h5></div>
+                        <div class="col-lg-10 col-12"><p>Informatique</p></div>
+                    </div>
+
+                    <div class="votre-offre row p-1">
+                        <div class="col-lg-2 col-12"><h5>Votre offre :</h5></div>
+                        <div class="col-lg-10 col-12"><p><span class="prix">260</span> points</p></div>
+                    </div>
+
+                    <div class="mise-a-prix row p-1">
+                        <div class="col-lg-2 col-12"><h5>Mise à prix :</h5></div>
+                        <div class="col-lg-10 col-12"><p><span class="prix">170</span> points</p></div>
+                    </div>
+
+                    <div class="fin-enchere row p-1">
+                        <div class="col-lg-2 col-12"><h5>Fin de l'enchère :</h5></div>
+                        <div class="col-lg-10 col-12"><p>25/05/2023</p></div>
+                    </div>
+
+                    <div class="retrait row p-1">
+                        <div class="col-lg-2 col-12"><h5>Retrait :</h5></div>
+                        <div class="col-lg-10 col-12">
+                            <p>10 Rue de fautmettrelaruela</p>
+                            <p>44000 Ville</p>
+                        </div>
+                    </div>
+
+                    <div class="vendeur row p-1">
+                        <div class="col-md-2 col-12"><h5>Vendeur :</h5></div>
+                        <div class="col-md-10 col-12"><a href="">Julien (qui n'a pas encore de setup mais qui le vend dejà)</a></div>
+                    </div>
+
+                    <div class="vendeur row p-1">
+                      <div class="col-md-2 col-12"><h5>Téléphone :</h5></div>
+                      <div class="col-md-10 col-12"><p>07 80 80 10 24</p></div>
+                    </div>
+
+                    <form class="retour-accueil row px-lg-1 px-5 pt-3">
+                        <button type="submit" class="btn btn-lg btn-secondary col-lg-3">Retour à l'accueil</button></div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Accueil</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Enchères</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Vendre un article</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Mon profil</a></li>
+        </ul>
+        <p class="text-center text-muted">&copy; 2023, Équipe 1</p>
+      </footer>
+
+      <!-- Bootstrap JavaScript Libraries -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+      </script>
+
+</body>
+</html>
