@@ -23,6 +23,25 @@ public class Utilisateur {
 	private boolean admin;
 	
 	private List<Article> listeArticle;
+	
+	
+
+	public Utilisateur(String pseudo, String prenom, String nom, long numeroTel, String email, LocalDate dateNaissance,
+			String rue, String ville, String codePostal, String motDePasse, int credit, Photo photoProfil) {
+		super();
+		this.pseudo = pseudo;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.numeroTel = numeroTel;
+		this.email = email;
+		this.dateNaissance = dateNaissance;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.photoProfil = photoProfil;
+	}
 
 	public Utilisateur(int idUtilisateur, String pseudo, String prenom, String nom, long numeroTel, String email,
 			LocalDate dateNaissance, String rue, String ville, String codePostal, int credit,

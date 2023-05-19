@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	@Override
 	public void ajouter(Article t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
-				PreparedStatement pStmt = con.prepareStatement(AJOUTER)){
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
 			pStmt.setString(1, t.getEtat());
 			pStmt.setString(2, t.getNom());
 			pStmt.setString(3, t.getDescription());
@@ -104,7 +105,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 			pStmt.setInt(7, t.getRetrait().getIdRetrait());
 			pStmt.setTimestamp(8, java.sql.Timestamp.valueOf(t.getDateDebut()));
 			pStmt.setTimestamp(9, java.sql.Timestamp.valueOf(t.getDateFin()));
-			pStmt.executeUpdate();
+			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
 				t.setIdArticle(rs.getInt(1));

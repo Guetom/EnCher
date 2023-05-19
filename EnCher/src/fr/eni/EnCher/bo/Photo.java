@@ -20,6 +20,10 @@ public class Photo {
 	public String getUrl() {
 		return url;
 	}
+	public Photo(String url) {
+		super();
+		this.url = url;
+	}
 	
 	
 	
