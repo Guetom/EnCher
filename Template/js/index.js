@@ -14,6 +14,7 @@ const addListenerForCheckedRadioButton = (radioElement, checkboxesElement, other
 const changeStateAllCheckboxes = (checkboxesElement, isDisabled) => {
     checkboxesElement.forEach(function (checkbox) {
         checkbox.disabled = isDisabled;
+        checkbox.checked = !isDisabled;
     });
 }
 
