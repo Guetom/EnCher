@@ -21,10 +21,8 @@
 </div>
 
 <c:if test="${ !empty sessionScope.pseudo}">
-    <p>Hello ${ sessionScope.pseudo } !</p>
-</c:if>
-
-<!-- Champ de recherche -->
+	<p>Hello ${ sessionScope.pseudo } !</p>
+</c:if> <!-- Champ de recherche -->
 <div class="container mt-5">
 	<div class="row d-flex justify-content-center">
 		<div class="col-md-10">
@@ -32,10 +30,10 @@
 				<h5>Filtrez votre recherche :</h5>
 				<div class="input-group mt-3">
 					<button class="btn btn-secondary dropdown-toggle" type="button"
-						id="dropdownMenuButton" data-toggle="dropdown"
+						id="dropdownMenuButton" data-bs-toggle="dropdown"
 						aria-expanded="false">Catégorie</button>
 
-					<div class="dropdown-menu dropdown-menu-dark shadow p-2"
+					<div class="dropdown-menu  shadow p-2"
 						aria-labelledby="dropdownMenuButton">
 						<ul>
 							<li><a class="dropdown-item rounded-2 active" href="#">Toutes
@@ -88,7 +86,9 @@
 					<button class="btn btn-primary btn-block">Rechercher</button>
 				</div>
 				<div class="mt-3">
-					<a data-bs-toggle="collapse" href="#more-filters" role="button" aria-expanded="false" aria-controls="more-filters" class="advanced"> Plus d'options de filtrages... <i
+					<a data-bs-toggle="collapse" href="#more-filters" role="button"
+						aria-expanded="false" aria-controls="more-filters"
+						class="advanced"> Plus d'options de filtrages... <i
 						class="fa fa-angle-down"></i>
 					</a>
 					<div class="collapse" id="more-filters">
@@ -146,24 +146,23 @@
 	<c:when test="${listeArticles.size()>0}">
 		<div class="m-3">
 			<div class="row justify-content-center">
-			<c:forEach var="c" items="${listeArticles}">
-				<div class="col-auto col-xxl-2 col-xl-3 col-md-4 col-sm-6">
-					<div class="card mx-2 my-3">
-						<img src="${c.photoPrincipal.url}" class="card-img-top img-fluid"
-							alt="...">
-						<div class="card-body">
-							<h5 class="card-title text-center">${c.nom}</h5>
-							<p class="card-text text-truncate">${c.description}</p>
-							<a href="">En savoir plus ...</a>
-						</div>
-						<div class="card-footer">
-							<small class="text-body-secondary">L'enchere commence
-								dans 15 min</small> 
-								<a href="#">${c.proprietaire.pseudo}</a>
+				<c:forEach var="c" items="${listeArticles}">
+					<div class="col-auto col-xxl-2 col-xl-3 col-md-4 col-sm-6">
+						<div class="card mx-2 my-3">
+							<img src="${c.photoPrincipal.url}" class="card-img-top img-fluid"
+								alt="...">
+							<div class="card-body">
+								<h5 class="card-title text-center">${c.nom}</h5>
+								<p class="card-text text-truncate">${c.description}</p>
+								<a href="">En savoir plus ...</a>
+							</div>
+							<div class="card-footer">
+								<small class="text-body-secondary">L'enchere commence
+									dans 15 min</small> <a href="#">${c.proprietaire.pseudo}</a>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
 			</div>
 		</div>
 
@@ -171,13 +170,10 @@
 	<c:otherwise>
 		<p>Pas d'article actuellement.</p>
 	</c:otherwise>
-</c:choose>
-
-
-</main>
+</c:choose> </main>
 
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
-<script src="./js/index.js" async></script>
+<script src="${pageContext.request.contextPath}/js/index.js" async></script>
 </body>
 </html>

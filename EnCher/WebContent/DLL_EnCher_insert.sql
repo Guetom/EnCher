@@ -30,6 +30,7 @@ INSERT INTO CATEGORIES (libelle) VALUES ('Sport&Loisirs');
     --url
 INSERT INTO PHOTOS (url) VALUES ('https://i.la-croix.com/1400x933/smart/2018/02/23/1200916100/jeune-fille-perle-Vermeer-Musee-Mauritshuis-Haye_0.jpg');
 INSERT INTO PHOTOS (url) VALUES ('https://image.jeuxvideo.com/medias/166254/1662538644-9887-card.png');
+INSERT INTO PHOTOS (url) VALUES ('https://i.la-croix.com/1400x933/smart/2018/02/23/1200916100/jeune-fille-perle-Vermeer-Musee-Mauritshuis-Haye_0.jpg');
 
 --UTILISATEURS: IDENTITY: idUtilisateur,
     --pseudo, prenom, nom, NULL idPhoto, NULL tel, email, rue, code_postal, ville, mot_de_passe, isAdmin, credit, dateCreation, dateNaissance
@@ -69,12 +70,13 @@ VALUES ('CR', 'G502X+', 'Clic plus vite que son ombre', 167, 1, 3, 2, CURRENT_TI
 	--idArticle, idPhoto
 INSERT INTO ARTICLES_PHOTOS (idArticle, idPhoto) VALUES (1, 1);
 INSERT INTO ARTICLES_PHOTOS (idArticle, idPhoto) VALUES (2, 2);
+INSERT INTO ARTICLES_PHOTOS (idArticle, idPhoto) VALUES (1, 3);
 
 -- Insertions dans la table ARTICLES_TAGS:
 	--idArticle, idTag
 INSERT INTO ARTICLES_TAGS (idArticle, idTag) VALUES (1, 1);
 INSERT INTO ARTICLES_TAGS (idArticle, idTag) VALUES (2, 2);
-
+INSERT INTO ARTICLES_TAGS (idArticle, idTag) VALUES (1, 3);
 -- Insertions dans la table ENCHERES: IDENTITY: idEnchere,
     --dateheure, montant, idUtilisateur, idArticle
 INSERT INTO ENCHERES (dateheure, montant, idUtilisateur, idArticle) VALUES ('2023-05-17T10:00:00', 500500, 1, 1);

@@ -64,7 +64,7 @@ CREATE TABLE UTILISATEURS (
     rue              VARCHAR(255) NOT NULL,
     code_postal      VARCHAR(5) NOT NULL,
     ville            VARCHAR(255) NOT NULL,
-    mot_de_passe     VARCHAR(30) NOT NULL,
+    mot_de_passe     VARCHAR(255) NOT NULL,
     credit           INTEGER NOT NULL,
     isAdmin          BIT NOT NULL,
 	dateCreation     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

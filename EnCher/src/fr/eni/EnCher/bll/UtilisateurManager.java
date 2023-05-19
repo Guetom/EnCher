@@ -80,8 +80,14 @@ public class UtilisateurManager {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_NOM_INVALIDE);
 	    }
 
-	    if (utilisateur.getPhotoProfil() != null && utilisateur.getNumeroTel() <= 0) {
-	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALIDE);
+	    String telephone;
+	    if (utilisateur.getNumeroTel() >= 100000000 && utilisateur.getNumeroTel() <= 999999999) {
+	        telephone = String.format("%010d", utilisateur.getNumeroTel());
+	    } else {
+	        telephone = Long.toString(utilisateur.getNumeroTel());
+	    }
+	    if (utilisateur.getNumeroTel() != 0L && (telephone.length() != 10 || !telephone.startsWith("0") || !telephone.matches("^\\d{10}$"))) {
+	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALIDE);
 	    }
 	    
 	    String emailRegex = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b";
