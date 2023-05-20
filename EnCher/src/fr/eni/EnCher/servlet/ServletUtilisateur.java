@@ -6,7 +6,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.annotation.WebServlet;
@@ -47,9 +46,12 @@ public class ServletUtilisateur extends HttpServlet {
 		} else if (request.getServletPath().equals("/connexion")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/deconnection")) {
-			HttpSession session = request.getSession();
-			session.invalidate();
-			request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp").forward(request, response);
+			HttpSession session = request.getSession(false);
+	        if(session != null){
+	            session.invalidate();
+	        }
+	        response.sendRedirect(request.getContextPath() + "/connexion");
+	        
 		} else if (request.getServletPath().equals("/profil")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
@@ -112,6 +114,7 @@ public class ServletUtilisateur extends HttpServlet {
 				
 				try {
 					utilisateurManager.ajouter(user);
+					response.sendRedirect(request.getContextPath() + "/connexion");
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -136,13 +139,19 @@ public class ServletUtilisateur extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//Utilisateur avec le bon login et mdp donc trouvé
 				if (user != null) {
-					HttpSession session = request.getSession();
-
-			        session.setAttribute("pseudo", user.getPseudo());
-			        session.setAttribute("URL_photoProfil", user.getPhotoProfil().getUrl());
-			        
-			        request.getRequestDispatcher(request.getContextPath());
+					//Vérification si il y a une ancienne session
+					HttpSession oldSession = request.getSession(false);
+		            if (oldSession != null) {
+		                oldSession.invalidate();
+		            }
+		            HttpSession newSession = request.getSession(true);
+		            newSession.setMaxInactiveInterval(60*60); //durée de vie de la session 60 * 60 sec = 1 heure
+		            
+		            newSession.setAttribute("user", user);
+		            
+		            response.sendRedirect(request.getContextPath() + "/");
 				}
 				
 			} else {
