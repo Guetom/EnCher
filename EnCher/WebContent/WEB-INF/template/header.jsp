@@ -1,48 +1,96 @@
+<%@page import="fr.eni.EnCher.bo.Utilisateur"%>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>EnCher</title>
+<title>EnCher</title>
 
-    <!-- Bootstrap and CSS CUSTOM -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-    
+<!-- Bootstrap and CSS CUSTOM -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<link href="${pageContext.request.contextPath}/css/style.css"
+	rel="stylesheet">
+
 </head>
 
-<body class="auction-page min-vh-100">
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light bg-gradient sticky-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/assets/logo.png" alt="Logo EnCher" style="height:60px;"
-            class="img-fluid"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
-          <!-- Modifié 'justify-content-end' à la place de 'justify-self-end' -->
-          <ul class="navbar-nav ms-auto mt-2 mt-lg-0"> <!-- Ajout de 'ms-auto' ici -->
-            <li class="nav-item mx-sm-1">
-              <a class="nav-link" href="#">Enchères</a>
-            </li>
-            <li class="nav-item mx-sm-1">
-              <a class="nav-link" href="#">Vendre un article</a>
-            </li>
-            <li class="nav-item mx-sm-3">
-              <div class="dropdown">
-                <a class="navbar-brand dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                  <img src="${pageContext.request.contextPath}/assets/profil.jpg" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" href="#">Mon profil</a></li>
-                  <li><a class="dropdown-item disconnect" href="#">Se déconnecter</a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
+<body>
+	<header class="sticky-top bg-light">
+		<nav
+			class="navbar navbar-expand-md px-3 border-2 border-bottom border-primary">
+			<div class="container-fluid">
+				<a class="" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/logo.png" height="35">
+				</a>
+				<!-- <a class="navbar-brand mx-1" href="#">
+                    <span class="fs-3 fw-bold">EnCher</span>
+                </a> -->
+				<button data-bs-toggle="collapse" class="navbar-toggler"
+					data-bs-target="#nav">
+					<span class="visually-hidden">Toggle navigation</span><span
+						class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="nav">
+
+					<ul class="navbar-nav mx-auto">
+						<li class="nav-item"><a class="nav-link" href="#">Enchères</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Vendre
+								un article</a></li>
+					</ul>
+
+					<% Utilisateur user = (Utilisateur) session.getAttribute("user");
+					
+					if(user != null && user.getPhotoProfil() == null){
+						%>
+					<div class="dropdown">
+						<a class="navbar-brand dropdown-toggle" role="button"
+							data-bs-toggle="dropdown"> <img
+							src="${pageContext.request.contextPath}/assets/profil.jpg"
+							alt="Avatar Logo" style="width: 40px;" class="rounded-pill">
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
+							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
+									déconnecter</a></li>
+						</ul>
+					</div>
+					<%
+					}else if(user != null){
+						%>
+					<div class="dropdown">
+						<a class="navbar-brand dropdown-toggle" role="button"
+							data-bs-toggle="dropdown"> <img
+							src="${ sessionScope.user.photoProfil.url }" alt="Avatar Logo"
+							style="width: 40px;" class="rounded-pill">
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
+							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
+									déconnecter</a></li>
+						</ul>
+					</div>
+					<%
+					}
+					else{
+						%><div class="btn-group d-flex" role="group">
+						<a class="btn btn-primary fw-bold rounded-end rounded-4"
+							type="button"
+							href="${pageContext.request.contextPath}/inscription">S'inscrire</a>
+						<a
+							class="btn btn-outline-secondary fw-bold rounded-start rounded-4"
+							type="button" href="${pageContext.request.contextPath}/connexion">Se
+							connecter</a>
+					</div>
+					<%
+					}
+					%>
+
+
+				</div>
+			</div>
+		</nav>
+	</header>

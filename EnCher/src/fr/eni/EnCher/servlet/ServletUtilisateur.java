@@ -149,8 +149,7 @@ public class ServletUtilisateur extends HttpServlet {
 		            HttpSession newSession = request.getSession(true);
 		            newSession.setMaxInactiveInterval(60*60); //durée de vie de la session 60 * 60 sec = 1 heure
 		            
-		            newSession.setAttribute("pseudo", user.getPseudo());
-		            newSession.setAttribute("URL_photoProfil", user.getPhotoProfil().getUrl());
+		            newSession.setAttribute("user", user);
 		            
 		            response.sendRedirect(request.getContextPath() + "/");
 				}

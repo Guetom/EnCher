@@ -6,8 +6,7 @@
 
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
 
-<main>
-
+<main> <section>
 <div class="p-5 pb-0 mx-auto rounded-3 text-center">
 	<div class="container-fluid">
 		<h1 class="display-5 fw-bold">
@@ -19,21 +18,27 @@
 		</h2>
 	</div>
 </div>
-
-<c:if test="${ !empty sessionScope.pseudo}">
-	<p>Hello ${ sessionScope.pseudo } !</p>
-</c:if> <!-- Champ de recherche -->
+</section> <section>
 <div class="container mt-5">
 	<div class="row d-flex justify-content-center">
 		<div class="col-md-10">
 			<form class="card p-3 bg-light py-4 shadow-sm">
 				<h5>Filtrez votre recherche :</h5>
 				<div class="input-group mt-3">
-					<button class="btn btn-secondary dropdown-toggle" type="button"
-						id="dropdownMenuButton" data-bs-toggle="dropdown"
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-expanded="false">Catégorien</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Toutes les catégories</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="#">Another action</a></li>
+						</ul>
+					</div>
+					<!-- <button class="btn btn-secondary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
 						aria-expanded="false">Catégorie</button>
 
-					<div class="dropdown-menu  shadow p-2"
+					<div class="dropdown-menu shadow p-2"
 						aria-labelledby="dropdownMenuButton">
 						<ul>
 							<li><a class="dropdown-item rounded-2 active" href="#">Toutes
@@ -78,7 +83,7 @@
 							<li><a class="dropdown-item rounded-2" href="#">Téléphonie,
 									mobilité</a></li>
 						</ul>
-					</div>
+					</div> -->
 
 					<input type="text" class="form-control"
 						aria-label="Text input with dropdown button"
@@ -141,36 +146,37 @@
 		</div>
 	</div>
 </div>
-
-<c:choose>
-	<c:when test="${listeArticles.size()>0}">
-		<div class="m-3">
-			<div class="row justify-content-center">
-				<c:forEach var="c" items="${listeArticles}">
-					<div class="col-auto col-xxl-2 col-xl-3 col-md-4 col-sm-6">
-						<div class="card mx-2 my-3">
-							<img src="${c.photoPrincipal.url}" class="card-img-top img-fluid"
-								alt="...">
-							<div class="card-body">
-								<h5 class="card-title text-center">${c.nom}</h5>
-								<p class="card-text text-truncate">${c.description}</p>
-								<a href="">En savoir plus ...</a>
-							</div>
-							<div class="card-footer">
-								<small class="text-body-secondary">L'enchere commence
-									dans 15 min</small> <a href="#">${c.proprietaire.pseudo}</a>
-							</div>
+</section> <section class="p-2">
+<div class="d-flex justify-content-evenly flex-wrap">
+	<c:choose>
+		<c:when test="${listeArticles.size()>0}">
+			<c:forEach var="c" items="${listeArticles}">
+				<div class="card border-1 m-2" style="width: 22em;">
+					<img src="${c.photoPrincipal.url}" class="" alt="${c.nom}"
+						style="max-height: 10em; margin: auto;">
+					<div class="card-body">
+						<div class="d-flex flex-row">
+							<h5 class="card-title w-100">${c.nom}</h5>
+							<span class="badge text-bg-primary align-self-start">${c.prix}
+								&euro;</span>
 						</div>
+						<p class="card-text text-truncate">${c.description}</p>
 					</div>
-				</c:forEach>
-			</div>
-		</div>
+					<div class="card-footer">
+						<small class="text-body-secondary">Mis en ligne il y a 2
+							heures par </small> <a href="">${c.proprietaire.pseudo}</a>
+					</div>
+				</div>
+			</c:forEach>
 
-	</c:when>
-	<c:otherwise>
-		<p>Pas d'article actuellement.</p>
-	</c:otherwise>
-</c:choose> </main>
+		</c:when>
+		<c:otherwise>
+			<h3 class="p-5">Pas d'article pour le moment</h3>
+		</c:otherwise>
+	</c:choose>
+
+</div>
+</section> </main>
 
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
