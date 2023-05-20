@@ -22,7 +22,7 @@
 <body>
 	<header class="sticky-top bg-light">
 		<nav
-			class="navbar navbar-expand-md px-3 border-2 border-bottom border-primary">
+			class="navbar navbar-expand-md px-3 ">
 			<div class="container-fluid">
 				<a class="" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/logo.png" height="35">
 				</a>

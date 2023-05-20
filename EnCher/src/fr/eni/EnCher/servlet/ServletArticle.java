@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.EnCher.bll.ArticleManager;
+import fr.eni.EnCher.bll.CategorieManager;
 import fr.eni.EnCher.dal.Lister;
 import fr.eni.EnCher.exception.EncherException;
 
@@ -39,12 +40,14 @@ public class ServletArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
+		CategorieManager categorieManager = new CategorieManager();
 		String filtre = null;
 		// Page d'acceuil (lister tout les articles
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
 			try {
 				request.setAttribute("listeArticles", articleManager.getManager().selectionner(Lister.TOUT));
+				request.setAttribute("categories", categorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

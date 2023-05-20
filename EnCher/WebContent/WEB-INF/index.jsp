@@ -27,11 +27,13 @@
 				<div class="input-group mt-3">
 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">Catégorien</button>
+							data-bs-toggle="dropdown" aria-expanded="false">Catégorie</button>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Toutes les catégories</a></li>
+							<li><a class="dropdown-item active" href="#">Toutes les catégories</a></li>
 							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
+							<c:forEach var="c" items="${categories}">
+							<li><a class="dropdown-item" href="#">${c.libelle}</a></li>
+							</c:forEach>
 						</ul>
 					</div>
 					<!-- <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -161,6 +163,7 @@
 								&euro;</span>
 						</div>
 						<p class="card-text text-truncate">${c.description}</p>
+						<a class="card-text" href="#">En savoir plus</a>
 					</div>
 					<div class="card-footer">
 						<small class="text-body-secondary">Mis en ligne il y a 2
