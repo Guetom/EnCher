@@ -36,6 +36,24 @@ public class Article {
 		this.photoPrincipal = photoPrincipal;
 	}
 	
+	
+	
+	public Article(String nom, String description, int prix, LocalDateTime dateDebut, LocalDateTime dateFin,
+			Utilisateur proprietaire, Retrait retrait, Categorie categorie, List<Tag> listeTag) {
+		super();
+		this.nom = nom;
+		this.description = description;
+		this.prix = prix;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.proprietaire = proprietaire;
+		this.retrait = retrait;
+		this.categorie = categorie;
+		this.listeTag = listeTag;
+	}
+
+
+
 	public void setIdArticle(int idArticle) {
 		this.idArticle = idArticle;
 	}
