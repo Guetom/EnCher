@@ -22,6 +22,10 @@ public class PhotoManager {
 		return photoDAO.selectionner(choix);
 	}
 	
+	public List<Photo> selectionner(int idArticle) throws EncherException{
+		return photoDAO.selectionner(idArticle);
+	}
+	
 	public void modfier(Photo photo) throws EncherException{
 		photoDAO.modifier(photo);
 	}

@@ -27,6 +27,10 @@ public class ArticleManager {
 		return articleDAO.selectionner(choix);
 	}
 	
+	public Article selectionner(int idArticle) throws EncherException{
+		return articleDAO.selectionner(idArticle);
+	}
+	
 	public void modfier(Article article) throws EncherException{
 		
 		EncherException encherException = new EncherException();

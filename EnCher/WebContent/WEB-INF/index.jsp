@@ -163,11 +163,11 @@
 								&euro;</span>
 						</div>
 						<p class="card-text text-truncate">${c.description}</p>
-						<a class="card-text" href="#">En savoir plus</a>
+						<a class="card-text" href="${pageContext.request.contextPath}/article?id=${c.idArticle}">En savoir plus</a>
 					</div>
 					<div class="card-footer">
 						<small class="text-body-secondary">Mis en ligne il y a 2
-							heures par </small> <a href="">${c.proprietaire.pseudo}</a>
+							heures par </small> <a href="#">${c.proprietaire.pseudo}</a>
 					</div>
 				</div>
 			</c:forEach>

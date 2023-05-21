@@ -20,6 +20,8 @@ import fr.eni.EnCher.exception.EncherException;
 
 public class ArticleDAOSqlServer implements DAO<Article>{
 	private final String LISTER = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle)";
+	private final String LISTER_ID = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle)";
+	private final String LISTER_PHOTOS = "SELECT * FROM PHOTOS JOIN ARTICLES_PHOTOS ON PHOTOS.idPhoto = ARTICLES_PHOTOS.idPhoto WHERE idArticle=?";
 	private final String AJOUTER = "INSERT INTO ARTICLES(etat, nom, description, prix, idCategorie, idUtilisateur, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?,?)";
 	private final String MODIFIER = "UPDATE ARTICLES SET etat=?, nom=?, description=?, prix=?, idCategorie=?, idUtilisateur=?, dateDebut=?, dateFin=? WHERE idArticle=?";
 	private final String SUPPRIMER = "DELETE FROM ARTICLES WHERE idArticle=?";
@@ -91,6 +93,67 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 		}
 		return listeArticle;
 	}
+	
+	public Article selectionner(int idArticle) throws EncherException {
+		Article article = null;
+		
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(LISTER)){
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				
+				Categorie categorie = new Categorie(
+						rs.getInt("idCategorie"),
+						rs.getString("libelle"));
+				
+				Photo photoProfil = new Photo(
+						rs.getInt("idPhoto"),
+						rs.getString("url"));
+								
+				Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("idUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("prenom"),
+						rs.getString("nom"),
+						rs.getInt("tel"),
+						rs.getString("email"),
+						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getString("code_postal"),
+						rs.getInt("credit"),
+						rs.getTimestamp("dateCreation").toLocalDateTime(),
+						photoProfil,
+						rs.getBoolean("isAdmin"));
+				
+				Retrait retrait = new Retrait(
+						rs.getInt("idRetrait"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"));
+				
+				article = new Article(
+						rs.getInt("idArticle"),
+						rs.getString("nom"),
+						rs.getString("description"),
+						rs.getInt("prix"),
+						rs.getTimestamp("dateDebut").toLocalDateTime(),
+						rs.getTimestamp("dateFin").toLocalDateTime(),
+						utilisateur,
+						retrait,
+						categorie,
+						rs.getString("etat"),
+						null);
+				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return article;
+	}
+
 
 	@Override
 	public void ajouter(Article t) throws EncherException {

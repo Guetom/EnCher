@@ -24,6 +24,10 @@ public class EnchereManager {
 		return enchereDAO.selectionner(choix);
 	}
 	
+	public Enchere selectionner(int idArticle) throws EncherException{
+		return enchereDAO.selectionner(idArticle);
+	}
+	
 	public void modfier(Enchere enchere) throws EncherException{
 
 		EncherException encherException = new EncherException();

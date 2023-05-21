@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.EnCher.bll.ArticleManager;
 import fr.eni.EnCher.bll.CategorieManager;
+import fr.eni.EnCher.bll.EnchereManager;
+import fr.eni.EnCher.bll.PhotoManager;
+import fr.eni.EnCher.bo.Article;
+import fr.eni.EnCher.bo.Enchere;
 import fr.eni.EnCher.dal.Lister;
 import fr.eni.EnCher.exception.EncherException;
 
@@ -76,6 +80,26 @@ public class ServletArticle extends HttpServlet {
 		}
 		// Page détail d'un article
 		else if (request.getServletPath().equals("/article")) {
+			PhotoManager photoManager = new PhotoManager();
+			EnchereManager enchereManager = new EnchereManager();
+			int idArticle = 0;
+			idArticle = Integer.parseInt(request.getParameter("id"));
+			Article article = null;
+			Enchere enchere = null;
+			try {
+				article = articleManager.selectionner(idArticle);
+				article.setListeImage(photoManager.selectionner(idArticle));
+				enchere = enchereManager.selectionner(idArticle);
+				
+				request.setAttribute("article", article);
+				request.setAttribute("enchere", enchere);
+			} catch (EncherException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/detail.jsp");
+			rd.forward(request, response);
+			
 			
 		}
 		// Ajouter un article

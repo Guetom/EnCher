@@ -91,6 +91,11 @@ public class Article {
 	public Photo getPhotoPrincipal() {
 		return photoPrincipal;
 	}
+
+	public void setListeImage(List<Photo> listeImage) {
+		this.listeImage = listeImage;
+	}
+	
 	
 	
 	
