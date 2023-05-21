@@ -13,7 +13,16 @@ public class Retrait {
 		this.ville = ville;
 		this.codePostal = codePostal;
 	}
-	
+		
+	public Retrait(String rue, String ville, String codePostal) {
+		super();
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+	}
+
+
+
 	public int getIdRetrait() {
 		return idRetrait;
 	}
