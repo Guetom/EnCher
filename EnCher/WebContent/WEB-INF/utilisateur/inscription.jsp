@@ -15,7 +15,7 @@
 		action="${pageContext.request.contextPath}/inscription">
 		<img class="mb-2"
 			src="${pageContext.request.contextPath}/assets/logo.png "
-			alt="Logo EnCher">
+			alt="Logo EnCher" height="100">
 		<h1 class="h3 mb-5 fw-semibold">Inscrivez-vous</h1>
 
 		<div class="row col-lg-6 m-auto">

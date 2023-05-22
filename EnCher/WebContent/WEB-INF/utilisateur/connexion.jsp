@@ -16,7 +16,7 @@
 		action="${pageContext.request.contextPath}/connexion">
 		<img class="mb-4"
 			src="${pageContext.request.contextPath}/assets/logo.png"
-			alt="Logo EnCher">
+			alt="Logo EnCher" height="100">
 		<h1 class="h3 mb-3 fw-semibold">Connectez-vous</h1>
 
 		<div class="form-floating">

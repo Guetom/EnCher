@@ -147,7 +147,7 @@ public class ServletUtilisateur extends HttpServlet {
 		                oldSession.invalidate();
 		            }
 		            HttpSession newSession = request.getSession(true);
-		            newSession.setMaxInactiveInterval(60*60); //durée de vie de la session 60 * 60 sec = 1 heure
+		            newSession.setMaxInactiveInterval(5*60); //durée de vie de la session 5 * 60 sec = 5 minutes
 		            
 		            newSession.setAttribute("user", user);
 		            

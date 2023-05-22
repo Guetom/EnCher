@@ -24,7 +24,7 @@
 		<nav
 			class="navbar navbar-expand-md px-3 ">
 			<div class="container-fluid">
-				<a class="" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/logo.png" height="35">
+				<a class="" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/logo.png" height="50">
 				</a>
 				<!-- <a class="navbar-brand mx-1" href="#">
                     <span class="fs-3 fw-bold">EnCher</span>

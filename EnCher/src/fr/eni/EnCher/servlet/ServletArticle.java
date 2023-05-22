@@ -96,6 +96,9 @@ public class ServletArticle extends HttpServlet {
 				article = articleManager.selectionner(idArticle);
 				article.setListeImage(photoManager.selectionner(idArticle));
 				enchere = enchereManager.selectionner(idArticle);
+				if (enchere != null) {
+					enchere.setArticle(article);
+				}
 				
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
