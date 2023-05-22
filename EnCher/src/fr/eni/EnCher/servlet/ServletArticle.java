@@ -1,16 +1,41 @@
 package fr.eni.EnCher.servlet;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import javax.websocket.MessageHandler.Whole;
+
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+import org.apache.tomcat.util.http.fileupload.FileItemStream;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.util.Streams;
 
 import fr.eni.EnCher.bll.ArticleManager;
 import fr.eni.EnCher.bll.CategorieManager;
@@ -20,6 +45,7 @@ import fr.eni.EnCher.bll.RetraitManager;
 import fr.eni.EnCher.bo.Article;
 import fr.eni.EnCher.bo.Categorie;
 import fr.eni.EnCher.bo.Enchere;
+import fr.eni.EnCher.bo.Photo;
 import fr.eni.EnCher.bo.Retrait;
 import fr.eni.EnCher.bo.Utilisateur;
 import fr.eni.EnCher.dal.Lister;
@@ -34,8 +60,11 @@ import fr.eni.EnCher.exception.EncherException;
 						"/article",
 						"/article/ajouter"
 		})
+@MultipartConfig
 public class ServletArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+    public static final String UPLOAD_DIRECTORY = "D:/ENCHER_IMAGES";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -137,6 +166,22 @@ public class ServletArticle extends HttpServlet {
 		if (request.getServletPath().equals("/article/ajouter")) {
 			HttpSession session = request.getSession();
 			
+//			ServletFileUpload sfu = new ServletFileUpload();
+//			
+//			FileItemIterator test = sfu.getItemIterator(request);
+//			
+//			while (test.hasNext()) {
+//				FileItemStream item = test.next();
+//				System.out.println(item.isFormField());
+//				if (item.isFormField()) {
+//					System.out.println(item.getFieldName());
+//					System.out.println(sfu.getFileItemFactory());
+//				}else {
+//					System.out.println(item.getFieldName());
+//					System.out.println(item.getName());
+//				}
+//			}
+			
 			if ((request.getParameter("nom") != null || request.getParameter("nom").equals(""))
 					|| (request.getParameter("description") != null || request.getParameter("description").equals(""))
 					|| (request.getParameter("categorie") != null || request.getParameter("categorie").equals(""))
@@ -147,8 +192,8 @@ public class ServletArticle extends HttpServlet {
 					|| (request.getParameter("ville") != null || request.getParameter("ville").equals(""))) {
 				String nom = request.getParameter("nom");
 				String description = request.getParameter("description");
-				int Idcategorie = Integer.parseInt(request.getParameter("categorie"));
-				String photo = request.getParameter("photo");
+				int Idcategorie = 8;
+//				int Idcategorie = Integer.parseInt(request.getParameter("categorie"));
 				int prix = Integer.parseInt(request.getParameter("prix"));
 				LocalDateTime dateDebut = LocalDateTime.parse(request.getParameter("dateDebut"));
 				LocalDateTime dateFin = LocalDateTime.parse(request.getParameter("dateFin"));
@@ -159,6 +204,27 @@ public class ServletArticle extends HttpServlet {
 				Categorie categorie = new Categorie(Idcategorie, "");
 				Retrait retrait = new Retrait(rue, ville, codePostal);
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
+				List<Photo> listePhoto = new ArrayList<Photo>();
+				
+				File uploadDir = new File(UPLOAD_DIRECTORY);
+		        if (!uploadDir.exists()) {
+		            uploadDir.mkdirs();
+		        }
+
+		        for (Part part : request.getParts()) {
+		            String fileName = getFileName(part);
+		            if (fileName != null && !fileName.isEmpty()) {
+		            	int indexDernierPoint = fileName.lastIndexOf(".");
+		            	String newFileName = UUID.randomUUID().toString() + "." + fileName.substring(indexDernierPoint + 1);
+		                String filePath = UPLOAD_DIRECTORY + File.separator + newFileName;
+		                try (InputStream inputStream = part.getInputStream()) {
+		                    Files.copy(inputStream, new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+		                    Photo photo = new Photo(newFileName);
+		                    listePhoto.add(photo);
+		                }
+		            }
+		        }
+				
 				
 				Article article = new Article(nom, 
 						description, 
@@ -169,18 +235,31 @@ public class ServletArticle extends HttpServlet {
 						retrait, 
 						categorie, 
 						null);
+				article.setListeImage(listePhoto);
 				
 				try {
 					retraitManager.ajouter(retrait);
 					articleManager.ajouter(article);
+					for (Photo photo : listePhoto) {
+						photoManager.ajouter(photo);
+					}
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
 			
 		}
 	}
+    private String getFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        String[] elements = contentDisposition.split(";");
+        for (String element : elements) {
+            if (element.trim().startsWith("filename")) {
+                return element.substring(element.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 
 }

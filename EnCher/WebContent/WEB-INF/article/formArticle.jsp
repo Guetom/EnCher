@@ -33,7 +33,7 @@
                   </div>
 
                   <div class="modif-description form-floating">
-                    <textarea class="form-control" placeholder="Description" id="description" style="height: 100px" required></textarea>
+                    <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required></textarea>
                     <label for="description" class="px-3 text-muted">Description</label>
                   </div>
 
@@ -75,7 +75,7 @@
                       </div>
 
                       <div class="modif-codePostal form-floating">
-                        <input type="number" class="form-control" id="codePostal" name="codePostal" min="0" max="99999" placeholder=" " required>
+                        <input type="text" class="form-control" id="codePostal" name="codePostal" min="0" max="99999" placeholder=" " required>
                         <label for="codePostal" class="px-3 text-muted">Code Postal</label>
                       </div>
 
