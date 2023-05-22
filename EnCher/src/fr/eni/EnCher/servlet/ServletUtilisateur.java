@@ -81,7 +81,7 @@ public class ServletUtilisateur extends HttpServlet {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/modifier.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/utilisateur/formProfil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/supprimer")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/supprimer.jsp").forward(request, response);
 		}
