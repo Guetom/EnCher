@@ -26,6 +26,10 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectionner(email, password);
 	}
 	
+	public Utilisateur selection(String pseudo) throws EncherException{
+		return utilisateurDAO.selectionner(pseudo);
+	}
+	
 	public void modfier(Utilisateur utilisateur) throws EncherException{
 		
 		EncherException encherException = new EncherException();
