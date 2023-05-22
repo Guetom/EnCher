@@ -47,7 +47,3 @@
     background-color: rgba(var(--bs-danger-rgb),var(--bs-bg-opacity));
     color: white;
 }
-
-.dropdown a img {
-	width:40px;
-}
