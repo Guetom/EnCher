@@ -210,5 +210,105 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 			e.printStackTrace();
 		}
 	}
+	
+	public String filtrage(boolean[] checkBoxes, int idUtilisateur, int idCategorie, String rechercheUtilisateur) {
+	    /*
+	    checkBoxes:
 
+	    checkBoxes[0] : corespond à la position du radio button 'Achats'(si true) ou 'Mes ventes'(si false)
+	    checkBoxes[1], checkBoxes[2] et checkBoxes[3] corespond aux 3 check box en dessous le radio button
+	    */
+
+	    //  /!\ Si l'utiisateur n'est pas connecter le radio button est 'disabled',
+	    //  l'appel de cette fonction ce fera avec un tableau par défaut comme ceci: 
+
+	    int nbCheckBoxesRenseignes = 0;
+	    for (int i = 0; i < checkBoxes.length; i++) {
+	        //La première cellule contrairement aux autres est de toute façons rensigner car elle corespond a un radio button (Radio button: 'Achats' -> true / 'Mes ventes' -> false)
+	        if(i!=0) nbCheckBoxesRenseignes++;
+	    }
+	    //Si les check box ne sont pas renseigner correctement il n'y a pas d'articles trouvés
+	    if(nbCheckBoxesRenseignes == 0){
+	        return null;
+	    }
+	    else {
+	        int nbParametresRenseignes = 0;
+	        if(idCategorie!=0) nbParametresRenseignes++;
+	        if(rechercheUtilisateur!="") nbParametresRenseignes++;
+	        if(nbCheckBoxesRenseignes>1) nbParametresRenseignes++;
+	        int parametresRestants = nbParametresRenseignes;//variable servant a gérer les "AND" pour les paramètres
+
+	        String requete = "SELECT " +
+	        //colonnes d'ARTICLES
+	        "ARTICLES.idArticle AS A_idArticle, ARTICLES.etat AS A_etat, ARTICLES.nom AS A_nom, ARTICLES.description AS A_description, ARTICLES.prix AS A_prix, ARTICLES.idCategorie AS A_idCategorie, ARTICLES.idUtilisateur AS A_idUtilisateur, ARTICLES.idRetrait AS A_idRetrait, ARTICLES.dateDebut AS A_dateDebut, ARTICLES.dateFin AS A_dateFin, " +
+	        //colonnes d'ENCHERES
+	        "ENCHERES.idEnchere AS E_idEnchere, ENCHERES.dateheure AS E_dateheure, ENCHERES.montant AS E_montant, ENCHERES.idUtilisateur AS E_idUtilisateur, ENCHERES.idArticle AS E_idArticle, " +
+	        //colonnes de TAGS, valeurs concaténées
+	        "STRING_AGG(TAGS.idTag, ';') AS T_idTag, STRING_AGG(TAGS.libelle, ';') AS T_libelle " +
+
+	        //ENCHERES
+	        "LEFT JOIN ( SELECT idEnchere, dateheure, montant, idUtilisateur, idArticle " +
+	            "FROM ENCHERES " +
+	        ") AS ENCHERES ON ARTICLES.idArticle = ENCHERES.idArticle " +
+	        //ARTICLES_TAGS
+	        "LEFT JOIN ( SELECT idArticle, idTag " +
+		        "FROM ARTICLES_TAGS " +
+	        ") AS ARTICLES_TAGS ON ARTICLES.idArticle = ARTICLES_TAGS.idArticle " +
+	        //TAGS
+	        "LEFT JOIN ( SELECT idTag, libelle " +
+	            "FROM TAGS " +
+	        ") AS TAGS ON ARTICLES_TAGS.idTag = TAGS.idTag " +
+
+	        //Début du filtrage
+	        "WHERE (";
+	        
+	        //'Catégorie'
+	        if(idCategorie!=0){
+	            requete += "ARTICLES.idCategorie =" + idCategorie;
+	            parametresRestants--;
+	            requete += parametresRestants!=0 ? " AND " : "";
+	        }
+	        //'Rechercher'
+	        if(rechercheUtilisateur!=""){
+	            requete += "(ARTICLES.nom LIKE '%" + rechercheUtilisateur + "%' OR TAGS.libelle LIKE '%" + rechercheUtilisateur + "%')";
+	            parametresRestants--;
+	            requete += parametresRestants!=0 ? " AND " : "";
+	        }
+	        //CREER("CR")
+	        //EN_COURS("EC")
+	        //VENDU("VD")
+	        //RETIRER("RT")
+
+	        //Radio button 'Achats'
+	        if(checkBoxes[0]==true){
+	            requete += "(";
+	            if(checkBoxes[1]) requete += "ARTICLES.etat = 'EC'";//enchères ouvertes
+	            if(checkBoxes[1] && checkBoxes[2]) requete += " OR ";
+	            if(checkBoxes[2]) requete += "ENCHERES.idUtilisateur = " + idUtilisateur;//mes enchères
+	            if((checkBoxes[1] || checkBoxes[2]) && checkBoxes[3]) requete += " OR ";
+	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND ENCHERES.idUtilisateur = " + idUtilisateur + ")";//mes enchères remportées
+	            requete += ") ";
+	        }
+	        //Radio button 'Mes ventes'
+	        if(checkBoxes[0]==false){
+	            requete += "(";
+	            if(checkBoxes[1]) requete += "(ARTICLES.etat = 'EC' AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes en cours
+	            if(checkBoxes[1] && checkBoxes[2]) requete += " OR ";
+	            if(checkBoxes[2]) requete += "(ARTICLES.etat = 'CR' AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes non débutées
+	            if((checkBoxes[1] || checkBoxes[2]) && checkBoxes[3]) requete += " OR ";
+	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes terminées
+	            requete += ") ";
+	        }
+
+	        //filtration ENCHERES permanente, pour avoir seulement celle avec le montant le plus haut.
+	        requete+= "AND (ENCHERES.idEnchere IS NULL OR ENCHERES.montant = ( " +
+	            "SELECT MAX(montant) -- Sélection du montant maximum parmi les enchères associées à l'article " +
+	            "FROM ENCHERES " +
+	            "WHERE ENCHERES.idArticle = ARTICLES.idArticle)) " +
+	        ") GROUP BY " +
+	        "ARTICLES.idArticle, ARTICLES.etat, ARTICLES.nom, ARTICLES.description, ARTICLES.prix, ARTICLES.idCategorie, ARTICLES.idUtilisateur, ARTICLES.idRetrait, ARTICLES.dateDebut, ARTICLES.dateDebut, ARTICLES.dateFin, " +
+		    "ENCHERES.idEnchere, ENCHERES.dateheure, ENCHERES.montant, ENCHERES.idUtilisateur, ENCHERES.idArticle;";
+	        return requete;
+	    }
+	}
 }
