@@ -16,11 +16,6 @@
     overflow-wrap:break-word;
 }
 
-.enchere .prix {
-    color:rgb(62, 124, 0);
-    font-weight:bold;
-}
-
 .enchere .retrait p {
     margin-bottom:0;
 }
