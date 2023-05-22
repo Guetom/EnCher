@@ -1,3 +1,4 @@
+<%@page import="fr.eni.EnCher.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -36,62 +37,16 @@
 							</c:forEach>
 						</ul>
 					</div>
-					<!-- <button class="btn btn-secondary dropdown-toggle" type="button"
-						id="dropdownMenuButton" data-toggle="dropdown"
-						aria-expanded="false">Catégorie</button>
-
-					<div class="dropdown-menu shadow p-2"
-						aria-labelledby="dropdownMenuButton">
-						<ul>
-							<li><a class="dropdown-item rounded-2 active" href="#">Toutes
-									les catégories</a></li>
-						</ul>
-						<hr class="dropdown-divider">
-						<ul class="scrollable-menu">
-							<li><a class="dropdown-item rounded-2" href="#">Animalerie</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Art,
-									antiquités</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Auto,
-									moto</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Bateaux,
-									voiles, nautisme</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Beauté,
-									bien-être, parfums</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Bijoux,
-									montres</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Bricolage</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Céramique,
-									verres</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Collections</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">DVD,
-									Cinéma</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Électroménager</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Image,
-									son</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Immobilier</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Informatique,
-									réseaux</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Instruments
-									de musique</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Jardin,
-									terasses</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Jouets
-									et jeux</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Jeux-vidéos</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Livres,
-									BD</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Musique,
-									CD, vinyles</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Téléphonie,
-									mobilité</a></li>
-						</ul>
-					</div> -->
 
 					<input type="text" class="form-control"
 						aria-label="Text input with dropdown button"
 						placeholder="Un beaauuuuu salon de jardin...">
 					<button class="btn btn-primary btn-block">Rechercher</button>
 				</div>
+				<% Utilisateur user = (Utilisateur) session.getAttribute("user");
+					
+					if(user != null){
+						%>
 				<div class="mt-3">
 					<a data-bs-toggle="collapse" href="#more-filters" role="button"
 						aria-expanded="false" aria-controls="more-filters"
@@ -144,6 +99,10 @@
 						</div>
 					</div>
 				</div>
+				
+						<%
+					}
+						%>
 			</form>
 		</div>
 	</div>
