@@ -224,8 +224,8 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 
 	    int nbCheckBoxesRenseignes = 0;
 	    for (int i = 0; i < checkBoxes.length; i++) {
-	        //La première cellule contrairement aux autres est de toute façons rensigner car elle corespond a un radio button (Radio button: 'Achats' -> true / 'Mes ventes' -> false)
-	        if(i!=0) nbCheckBoxesRenseignes++;
+	        //La première cellule ([0]) est ignoré car contrairement aux autres elle est de toute façons rensigner. Elle corespond a un radio button (Radio button: 'Achats' -> true / 'Mes ventes' -> false)
+	        if(checkBoxes[i]) nbCheckBoxesRenseignes++;
 	    }
 	    //Si les check box ne sont pas renseigner correctement il n'y a pas d'articles trouvés
 	    if(nbCheckBoxesRenseignes == 0){
