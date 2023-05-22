@@ -10,7 +10,7 @@
     </filter>
     <filter-mapping>
         <filter-name>Authentification</filter-name>
-        <url-pattern>/connexion</url-pattern>
-        <url-pattern>/inscription</url-pattern>
+        <url-pattern>/profil/modifier</url-pattern>
+        <url-pattern>/profil/supprimer</url-pattern>
     </filter-mapping>
 </web-app>

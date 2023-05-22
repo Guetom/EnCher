@@ -53,6 +53,32 @@ public class ServletUtilisateur extends HttpServlet {
 	        response.sendRedirect(request.getContextPath() + "/connexion");
 	        
 		} else if (request.getServletPath().equals("/profil")) {
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			Utilisateur user = null;
+			HttpSession session = request.getSession(false);
+			String pseudo = "";
+			pseudo = request.getParameter("pseudo");
+			if (!pseudo.isEmpty()) {
+				//Afficher le profil en parametre
+				try {
+					user = utilisateurManager.selection(pseudo);
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}else if (session.getAttribute("user") != null && pseudo.isEmpty()) {
+				//Afficher le profil de l'utilisateur connecté
+				Utilisateur userConnect = (Utilisateur) session.getAttribute("user");
+				try {
+					user = utilisateurManager.selection(userConnect.getPseudo());
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				response.sendRedirect(request.getContextPath() + "/connexion");
+			}
+			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/modifier.jsp").forward(request, response);

@@ -18,6 +18,7 @@ import fr.eni.EnCher.exception.EncherException;
 public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 	private final String LISTER = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto";
 	private final String LISTER_UTILISATEUR = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE idUtilisateur=?";
+	private final String UTILISATEUR_PSEUDO = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE pseudo=?";
 	private final String UTILISATEUR_LOGIN = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE (email=? AND mot_de_passe=?) OR (pseudo=? AND mot_de_passe=?)";
 	private final String AJOUTER = "INSERT INTO UTILISATEURS(pseudo, prenom, nom, idPhoto, tel, email, rue, code_postal, ville, mot_de_passe, credit, dateNaissance, isAdmin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String MODIFIER = "UPDATE UTILISATEURS SET idArticle=?, rue=?, code_postal=?, ville=? WHERE idRetrait=?";
@@ -68,6 +69,42 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 			pStmt.setString(2, password);
 			pStmt.setString(3, emailPseudo);
 			pStmt.setString(4, password);
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				Photo photoProfil = new Photo(
+						rs.getInt("idPhoto"),
+						rs.getString("url"));
+								
+				utilisateur = new Utilisateur(
+						rs.getInt("idUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("prenom"),
+						rs.getString("nom"),
+						rs.getLong("tel"),
+						rs.getString("email"),
+						rs.getTimestamp("dateNaissance").toLocalDateTime().toLocalDate(),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getString("code_postal"),
+						rs.getInt("credit"),
+						rs.getTimestamp("dateCreation").toLocalDateTime(),
+						photoProfil,
+						rs.getBoolean("isAdmin"));
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+	
+	public Utilisateur selectionner(String pseudo) throws EncherException {
+		Utilisateur utilisateur = null;
+		
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(UTILISATEUR_PSEUDO)){
+			pStmt.setString(1, pseudo);
 			ResultSet rs = pStmt.executeQuery();
 			
 			if (rs.next()) {
