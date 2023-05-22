@@ -21,7 +21,7 @@
 
 		<div class="form-floating">
 			<input type="text" class="form-control" id="emailPseudo" name="emailPseudo"
-				placeholder="" required> <label for="emailPseudo">Adresse email ou Pseudo</label>
+				placeholder=" " required> <label for="emailPseudo">Adresse email ou Pseudo</label>
 		</div>
 		<div class="form-floating">
 			<input type="password" class="form-control" id="password"

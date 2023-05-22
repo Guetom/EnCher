@@ -10,12 +10,12 @@
 <main> 
 <section class="enchere">
 
-<!-- Entï¿½te (titre) de l'enchï¿½re -->
+<!-- Entête (titre) de l'enchère -->
         <div class="p-5 pb-4 text-center">
-            <h2 class="fs-1">Dï¿½tail de la vente</h2>
+            <h2 class="fs-1">Détail de la vente</h2>
         </div>
 
-        <!-- Boï¿½te contenant les informations de l'enchï¿½re -->
+        <!-- Boîte contenant les informations de l'enchère -->
         <section class="w-75 mx-auto border shadow-sm rounded-1">
 
             <div class="row py-5">
@@ -52,10 +52,10 @@
 					</c:otherwise>
 				</c:choose>
 
-                <!-- Section principale (informations de l'enchï¿½re) -->
+                <!-- Section principale (informations de l'enchère) -->
                 <div class="col-lg-7 col-12 px-3">
 
-                    <!-- Entï¿½te (titre) de l'enchï¿½re -->
+                    <!-- Entête (titre) de l'enchère -->
                     <div class="entete pb-3">
                         <h3 class="fs-2">${ article.nom }</h2>
                     </div>
@@ -66,12 +66,12 @@
                     </div>
 
                     <div class="categorie row py-1">
-                        <div class="col-lg-2 col-12"><h5>Catï¿½gorie :</h5></div>
+                        <div class="col-lg-2 col-12"><h5>Catégorie :</h5></div>
                         <div class="col-lg-10 col-12"><p>${ article.categorie.libelle }</p></div>
                     </div>
 
                     <div class="mise-a-prix row p-1">
-                        <div class="col-lg-2 col-12"><h5>Mise ï¿½ prix :</h5></div>
+                        <div class="col-lg-2 col-12"><h5>Mise à prix :</h5></div>
                         <div class="col-lg-10 col-12"><p><span class="prix">${ article.prix }</span> points</p></div>
                     </div>
                     
@@ -88,7 +88,7 @@
 					</c:choose>
 
                     <div class="fin-enchere row p-1">
-                        <div class="col-lg-2 col-12"><h5>Fin de l'enchï¿½re :</h5></div>
+                        <div class="col-lg-2 col-12"><h5>Fin de l'enchère :</h5></div>
                         <div class="col-lg-10 col-12"><p>${ article.dateFin }</p></div>
                     </div>
 
@@ -100,7 +100,7 @@
                     <form class="proposition row p-1">
                         <div class="col-lg-2 col-md-4 col-12"><h5>Faire une proposition :</h5></div>
                         <div class="col-md-5 col-6"><input type="number" id="proposition" class="form-control" min="${ enchere.montant }" value="${ enchere.montant }"></div>
-                        <div class="col-lg-5 col-md-3 col-6"><button type="submit" class="btn btn-primary">Enchï¿½rir</button></div>
+                        <div class="col-lg-5 col-md-3 col-6"><button type="submit" class="btn btn-primary">Enchérir</button></div>
                     </form>
 
                 </div>
