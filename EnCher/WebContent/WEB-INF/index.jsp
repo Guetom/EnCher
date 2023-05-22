@@ -56,7 +56,7 @@
 							<li><a class="dropdown-item rounded-2" href="#">Bateaux,
 									voiles, nautisme</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">Beauté,
-									bien-être, parfums</a></li>
+									bien-étre, parfums</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">Bijoux,
 									montres</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">Bricolage</a></li>
@@ -65,7 +65,7 @@
 							<li><a class="dropdown-item rounded-2" href="#">Collections</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">DVD,
 									Cinéma</a></li>
-							<li><a class="dropdown-item rounded-2" href="#">Électroménager</a></li>
+							<li><a class="dropdown-item rounded-2" href="#">électroménager</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">Image,
 									son</a></li>
 							<li><a class="dropdown-item rounded-2" href="#">Immobilier</a></li>
@@ -116,8 +116,7 @@
 										</li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" checked> <label
-											class="form-check-label" for="check3"> Enchères
-												remportées </label></li>
+											class="form-check-label" for="check3"> Enchères remportées </label></li>
 									</ul>
 
 								</div>
@@ -149,7 +148,7 @@
 	</div>
 </div>
 </section> <section class="p-2">
-<div class="d-flex justify-content-evenly flex-wrap">
+<div class="d-flex justify-content-center flex-wrap">
 	<c:choose>
 		<c:when test="${listeArticles.size()>0}">
 			<c:forEach var="c" items="${listeArticles}">
