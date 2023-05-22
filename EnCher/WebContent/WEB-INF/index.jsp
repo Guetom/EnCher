@@ -14,8 +14,8 @@
 			Et en <span class="text-success">hausse</span> !
 		</h1>
 		<h2 class="fs-4 fw-normal">
-			Le site parfait pour vos petites (<span>et grosses</span>) enchères !
-			</br>Commencez dès maintenant, et acquérez de nombreuses affaires !
+			Le site parfait pour vos petites (<span>et grosses</span>) enchÃ¨res !
+			</br>Commencez dÃ¨s maintenant, et acquÃ©rez de nombreuses affaires !
 		</h2>
 	</div>
 </div>
@@ -28,9 +28,9 @@
 				<div class="input-group mt-3">
 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">Catégorie</button>
+							data-bs-toggle="dropdown" aria-expanded="false">CatÃ©gorie</button>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item active" href="#">Toutes les catégories</a></li>
+							<li><a class="dropdown-item active" href="#">Toutes les catÃ©gories</a></li>
 							<li><hr class="dropdown-divider"></li>
 							<c:forEach var="c" items="${categories}">
 							<li><a class="dropdown-item" href="#">${c.libelle}</a></li>
@@ -63,16 +63,15 @@
 									<ul>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check1" checked> <label
-											class="form-check-label" for="check1"> Enchères
+											class="form-check-label" for="check1"> EnchÃ¨res
 												ouvertes </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check2" checked> <label
-											class="form-check-label" for="check2"> Mes enchères </label>
+											class="form-check-label" for="check2"> Mes enchÃ¨res </label>
 										</li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" checked> <label
-											class="form-check-label" for="check3"> Enchères
-												remportées </label></li>
+											class="form-check-label" for="check3"> EnchÃ¨res remportÃ©es </label></li>
 									</ul>
 
 								</div>
@@ -88,11 +87,11 @@
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check2" disabled> <label
 											class="form-check-label" for="check2"> Ventes non
-												débutées </label></li>
+												dÃ©butÃ©es </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" disabled> <label
 											class="form-check-label" for="check3"> Ventes
-												terminées </label></li>
+												terminÃ©es </label></li>
 									</ul>
 								</div>
 							</div>
@@ -108,7 +107,7 @@
 	</div>
 </div>
 </section> <section class="p-2">
-<div class="d-flex justify-content-evenly flex-wrap">
+<div class="d-flex justify-content-center flex-wrap">
 	<c:choose>
 		<c:when test="${listeArticles.size()>0}">
 			<c:forEach var="c" items="${listeArticles}">

@@ -109,6 +109,5 @@
       </main>
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/js/index.js" async></script>
 </body>
 </html>

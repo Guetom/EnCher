@@ -30,20 +30,24 @@
 	background-color: #eeeeee;
 }
 
-.auction-page .dropdown-menu ul {
+.dropdown-menu ul {
     list-style-type: none;
     padding-left:0;
 }
 
-.auction-page #more-filters {
+#more-filters {
     transition: 0.2s;
 }
 
-.auction-page #more-filters div {
+#more-filters div {
     transition: 1s;
 }
 
-.auction-page .dropdown-menu .disconnect:hover {
+.dropdown-menu .disconnect:hover {
     background-color: rgba(var(--bs-danger-rgb),var(--bs-bg-opacity));
     color: white;
+}
+
+.dropdown a img {
+	width:40px;
 }
