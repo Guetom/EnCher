@@ -1,13 +1,21 @@
-.profil .infos-principales h3, .profil .infos-principales h4 {
+.profil {
+    text-align: center;
+}
+
+.profil .infos-principales h3, .profil .infos-principales h4, .profil h2, .profil .photo-profil-container h3 {
     font-family: 'Poppins';
 }
 
-.profil .infos-principales h3 { 
+.profil h2 {
+    font-size: 3rem;
+}
+
+.profil .infos-principales h3, .profil .photo-profil-container h3 { 
     font-size: 15px;
     word-break: break-all;
 }
 
-.profil .infos-principales h3:first-of-type {
+.profil .infos-principales h3:first-of-type, .profil .photo-profil-container h3 {
     margin-top: 0.5rem;
     font-size: 1.75rem;
 }
@@ -19,7 +27,7 @@
     align-items: center;
 }
 
-.profil .infos-principales .image-profil {
+.profil .infos-principales .image-profil, .profil .photo-profil-container .image-profil {
     width: 200px;
     height: 200px;
     border-radius: 50%;
