@@ -1,0 +1,70 @@
+.profil {
+    text-align: center;
+}
+
+.profil .infos-principales h3, .profil .infos-principales h4, .profil h2, .profil .photo-profil-container h3 {
+    font-family: 'Poppins';
+}
+
+.profil h2 {
+    font-size: 3rem;
+}
+
+.profil .infos-principales h3, .profil .photo-profil-container h3 { 
+    font-size: 15px;
+    word-break: break-all;
+}
+
+.profil .infos-principales h3:first-of-type, .profil .photo-profil-container h3 {
+    margin-top: 0.5rem;
+    font-size: 1.75rem;
+}
+
+.profil .infos-principales {
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profil .infos-principales .image-profil, .profil .photo-profil-container .image-profil {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profil .carte-profil {
+    text-align:center;
+}
+
+.profil .a-rejoint-le {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.profil .carte-profil .infos-secondaires {
+    text-align: start;
+}
+
+.profil .carte-profil .infos-secondaires span.titre-info-secondaire {
+    font-weight:bold;
+    text-decoration:underline;
+}
+
+
+.profil .carte-profil .infos-secondaires p {
+    margin-bottom:0;
+}
+
+.profil .carte-profil .infos-secondaires .adresse {
+    display:flex;
+    justify-content:flex-start;
+}
+
+.profil .carte-profil .infos-secondaires .adresse .title {
+    padding-right: 5px
+}
+
+.profil .carte-profil .infos-secondaires .adresse .cp-ville p {
+    word-break: break-word;
+}

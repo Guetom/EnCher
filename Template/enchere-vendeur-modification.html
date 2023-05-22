@@ -61,7 +61,7 @@
             <div class="row py-5">
                 <!-- Images de prévisualisation -->
                 <div class="col-lg-5 col-12 px-5 py-1">
-                    <img class="image-preview-article border shadow-sm" src="./img/no-image.svg">
+                    <img class="image-preview border shadow-sm" src="./img/no-image.svg">
                 </div>
 
                 <!-- Section principale (informations de l'enchère) -->
@@ -170,27 +170,7 @@
       integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
       </script>
 
-      <script async>
-
-        let inputFile = document.querySelector(".photo-article");
-        inputFile.addEventListener("change", previewImage);
-
-        function previewImage(event) {
-          let input = event.target;
-          let imagePreview = document.querySelector('.image-preview-article');
-
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-              imagePreview.setAttribute('src', e.target.result);
-              imagePreview.style.display = 'block';
-            };
-
-            reader.readAsDataURL(input.files[0]);
-          }
-        }
-      </script>
+      <script src="./js/preview-image.js" async></script>
 
 </body>
 </html>

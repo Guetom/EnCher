@@ -37,7 +37,7 @@
 				<div class="collapse navbar-collapse" id="nav">
 
 					<ul class="navbar-nav mx-auto">
-						<li class="nav-item"><a class="nav-link" href="#">Enchères</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">EnchÃ¨res</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Vendre
 								un article</a></li>
 					</ul>
@@ -55,7 +55,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									dÃ©connecter</a></li>
 						</ul>
 					</div>
 					<%
@@ -70,7 +70,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									dÃ©connecter</a></li>
 						</ul>
 					</div>
 					<%

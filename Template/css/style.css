@@ -47,3 +47,9 @@
     background-color: rgba(var(--bs-danger-rgb),var(--bs-bg-opacity));
     color: white;
 }
+
+
+.prix {
+    color:rgb(62, 124, 0);
+    font-weight:bold;
+}
