@@ -15,7 +15,7 @@ import fr.eni.EnCher.dal.Lister;
 import fr.eni.EnCher.exception.EncherException;
 
 public class CategorieDAOSqlServer implements DAO<Categorie>{
-	private final String LISTER = "SELECT * FROM CATEGORIES";
+	private final String LISTER = "SELECT * FROM CATEGORIES ORDER BY libelle ASC";
 	private final String AJOUTER = "INSERT INTO CATEGORIES([libelle]) VALUES (?)";
 	private final String MODIFIER = "UPDATE CATEGORIES SET [libelle]=? WHERE idCategorie=?";
 	private final String SUPPRIMER = "DELETE FROM CATEGORIES WHERE idCategorie=?";

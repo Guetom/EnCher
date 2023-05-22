@@ -53,9 +53,35 @@ public class ServletUtilisateur extends HttpServlet {
 	        response.sendRedirect(request.getContextPath() + "/connexion");
 	        
 		} else if (request.getServletPath().equals("/profil")) {
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			Utilisateur user = null;
+			HttpSession session = request.getSession(false);
+			String pseudo = "";
+			pseudo = request.getParameter("pseudo");
+			if (!pseudo.isEmpty()) {
+				//Afficher le profil en parametre
+				try {
+					user = utilisateurManager.selection(pseudo);
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}else if (session.getAttribute("user") != null && pseudo.isEmpty()) {
+				//Afficher le profil de l'utilisateur connecté
+				Utilisateur userConnect = (Utilisateur) session.getAttribute("user");
+				try {
+					user = utilisateurManager.selection(userConnect.getPseudo());
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				response.sendRedirect(request.getContextPath() + "/connexion");
+			}
+			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/modifier.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/utilisateur/formProfil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/supprimer")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/supprimer.jsp").forward(request, response);
 		}
@@ -147,7 +173,7 @@ public class ServletUtilisateur extends HttpServlet {
 		                oldSession.invalidate();
 		            }
 		            HttpSession newSession = request.getSession(true);
-		            newSession.setMaxInactiveInterval(60*60); //durée de vie de la session 60 * 60 sec = 1 heure
+		            newSession.setMaxInactiveInterval(5*60); //durée de vie de la session 5 * 60 sec = 5 minutes
 		            
 		            newSession.setAttribute("user", user);
 		            

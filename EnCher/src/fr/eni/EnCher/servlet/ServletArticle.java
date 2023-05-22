@@ -96,6 +96,9 @@ public class ServletArticle extends HttpServlet {
 				article = articleManager.selectionner(idArticle);
 				article.setListeImage(photoManager.selectionner(idArticle));
 				enchere = enchereManager.selectionner(idArticle);
+				if (enchere != null) {
+					enchere.setArticle(article);
+				}
 				
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
@@ -116,7 +119,7 @@ public class ServletArticle extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/ajout.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
 			rd.forward(request, response);
 			
 		}

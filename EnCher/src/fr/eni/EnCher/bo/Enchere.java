@@ -42,6 +42,12 @@ public class Enchere {
 	public Article getArticle() {
 		return article;
 	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	
+	
 	
 	
 	

@@ -40,20 +40,20 @@ public class Authentification implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-//		HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//
-//        HttpSession session = req.getSession(false);
-//        
-//        //Check si il y a une session
-//        if (session == null) {
-//        	//Il y a pas de session
-//            chain.doFilter(request, response);
-//        } else {
-//            //Il y a une session
-//            res.sendRedirect(req.getContextPath() + "/");
-//        }
-        chain.doFilter(request, response);
+		HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        HttpSession session = req.getSession(false);
+        
+        //Check si il y a une session
+        if (session == null || session.getAttribute("user") == null) {
+        	//Il y a pas de session
+        	res.sendRedirect(req.getContextPath() + "/connexion");
+        } else {
+            //Il y a une session
+            chain.doFilter(request, response);
+        }
+//        chain.doFilter(request, response);
 	}
 
 	/**
