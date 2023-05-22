@@ -37,7 +37,7 @@
 				<div class="collapse navbar-collapse" id="nav">
 
 					<ul class="navbar-nav mx-auto">
-						<li class="nav-item"><a class="nav-link" href="#">Enchères</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">EnchÃ¨res</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Vendre
 								un article</a></li>
 					</ul>
@@ -50,12 +50,12 @@
 						<a class="navbar-brand dropdown-toggle" role="button"
 							data-bs-toggle="dropdown"> <img
 							src="${pageContext.request.contextPath}/assets/profil.jpg"
-							alt="Avatar Logo" class="rounded-pill">
+							alt="Avatar Logo" height="60" class="rounded-pill">
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									dÃ©connecter</a></li>
 						</ul>
 					</div>
 					<%
@@ -65,12 +65,12 @@
 						<a class="navbar-brand dropdown-toggle" role="button"
 							data-bs-toggle="dropdown"> <img
 							src="${ sessionScope.user.photoProfil.url }" alt="Avatar Logo"
-							style="width: 40px;" class="rounded-pill">
+							height="50" class="rounded-pill">
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									dÃ©connecter</a></li>
 						</ul>
 					</div>
 					<%
