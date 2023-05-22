@@ -5,12 +5,12 @@
     <welcome-file>/</welcome-file>
   </welcome-file-list>
   <filter>
-        <filter-name>Authentification</filter-name>
-        <filter-class>fr.eni.EnCher.servlet.Authentification</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>Authentification</filter-name>
-        <url-pattern>/profil/modifier</url-pattern>
-        <url-pattern>/profil/supprimer</url-pattern>
-    </filter-mapping>
+    <filter-name>Authentification</filter-name>
+    <filter-class>fr.eni.EnCher.servlet.Authentification</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Authentification</filter-name>
+    <url-pattern>/profil/modifier</url-pattern>
+    <url-pattern>/profil/supprimer</url-pattern>
+  </filter-mapping>
 </web-app>
