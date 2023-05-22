@@ -136,7 +136,7 @@
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" disabled> <label
 											class="form-check-label" for="check3"> Ventes
-												termininées </label></li>
+												terminées </label></li>
 									</ul>
 								</div>
 							</div>
