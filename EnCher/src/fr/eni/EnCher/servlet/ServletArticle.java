@@ -154,7 +154,7 @@ public class ServletArticle extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
 			rd.forward(request, response);
-			
+
 		}
 	}
 
@@ -169,23 +169,7 @@ public class ServletArticle extends HttpServlet {
 		RetraitManager retraitManager = new RetraitManager();
 		if (request.getServletPath().equals("/article/ajouter")) {
 			HttpSession session = request.getSession();
-			
-//			ServletFileUpload sfu = new ServletFileUpload();
-//			
-//			FileItemIterator test = sfu.getItemIterator(request);
-//			
-//			while (test.hasNext()) {
-//				FileItemStream item = test.next();
-//				System.out.println(item.isFormField());
-//				if (item.isFormField()) {
-//					System.out.println(item.getFieldName());
-//					System.out.println(sfu.getFileItemFactory());
-//				}else {
-//					System.out.println(item.getFieldName());
-//					System.out.println(item.getName());
-//				}
-//			}
-			
+						
 			if ((request.getParameter("nom") != null || request.getParameter("nom").equals(""))
 					|| (request.getParameter("description") != null || request.getParameter("description").equals(""))
 					|| (request.getParameter("categorie") != null || request.getParameter("categorie").equals(""))
@@ -252,6 +236,7 @@ public class ServletArticle extends HttpServlet {
 			
 		}
 	}
+	
     private String getFileName(Part part) {
         String contentDisposition = part.getHeader("content-disposition");
         String[] elements = contentDisposition.split(";");

@@ -64,7 +64,7 @@
 					<div class="dropdown">
 						<a class="navbar-brand dropdown-toggle" role="button"
 							data-bs-toggle="dropdown"> <img
-							src="${ sessionScope.user.photoProfil.url }" alt="Avatar Logo"
+							src="${pageContext.request.contextPath}/image/${ sessionScope.user.photoProfil.url }" alt="Avatar Logo"
 							height="50" class="rounded-pill">
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
