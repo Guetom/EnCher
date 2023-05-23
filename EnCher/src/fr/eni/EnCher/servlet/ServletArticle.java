@@ -80,7 +80,7 @@ public class ServletArticle extends HttpServlet {
 //				request.setAttribute("listeArticles", listeArticle);
 //				request.setAttribute("categories", listeCategorie);
 //			} catch (EncherException e) {
-//				// TODO Auto-generated catch block
+//				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 //				e.printStackTrace();
 //			}
 //			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
@@ -105,7 +105,7 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/detail.jsp");
@@ -118,7 +118,7 @@ public class ServletArticle extends HttpServlet {
 			try {
 				request.setAttribute("categories", CategorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
@@ -236,7 +236,7 @@ public class ServletArticle extends HttpServlet {
 					articleManager.ajouter(article);
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				} catch (EncherException e) {
-					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}
 			}

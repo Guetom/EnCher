@@ -10,7 +10,7 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_UTILISATEUR_PSEUDO_INVALIDE = 20001;
 
 	/**
-	 * Le prÃ©nom de l'utilisateur est invalide.
+	 * Le prénom de l'utilisateur est invalide.
 	 */
 	public static final int REGLE_UTILISATEUR_PRENOM_INVALIDE = 20002;
 
@@ -20,7 +20,7 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_UTILISATEUR_NOM_INVALIDE = 20003;
 
 	/**
-	 * Le numÃ©ro de tÃ©lÃ©phone de l'utilisateur est invalide.
+	 * Le numéro de téléphone de l'utilisateur est invalide.
 	 */
 	public static final int REGLE_UTILISATEUR_TEL_INVALIDE = 20004;
 
@@ -55,12 +55,12 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_UTILISATEUR_MDP_INVALIDE = 20010;
 
 	/**
-	 * Le crÃ©dit de l'utilisateur ne peut pas Ãªtre infÃ©rieur Ã  zÃ©
+	 * Le crédit de l'utilisateur ne peut pas Ãªtre inférieur Ã  zé
 	 */
 	public static final int REGLE_UTILISATEUR_CREDIT_INVALIDE = 20011;
 
 	/**
-	 * La date de crÃ©ation de l'utilisateur est invalide.
+	 * La date de création de l'utilisateur est invalide.
 	 */
 	public static final int REGLE_UTILISATEUR_DATECREATION_INVALIDE = 20012;
 
@@ -68,6 +68,11 @@ public abstract class CodesResultatBLL {
 	 * La photo de l'utilisateur est invalide.
 	 */
 	public static final int REGLE_UTILISATEUR_PHOTO_INVALIDE = 20013;
+	
+	/**
+	 * L'identifiant de connexion ou le mot de passe est incorrect.
+	 */
+	public static final int RELGE_UTILISATEUR_CONNEXION_INVALIDE = 20014;
 
 	/* ARTICLES */
 
@@ -82,17 +87,17 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_ARTICLE_DESCRIPTION_INVALIDE = 20101;
 
 	/**
-	 * Le prix de l'article ne peut pas ï¿½tre nï¿½gatif.
+	 * Le prix de l'article ne peut pas ètre nègatif.
 	 */
 	public static final int REGLE_ARTICLE_PRIX_NEGATIF = 20102;
 
 	/**
-	 * La catï¿½gorie d'article est invalide.
+	 * La catègorie d'article est invalide.
 	 */
 	public static final int REGLE_ARTICLE_CATEGORIE_INVALIDE = 20103;
 
 	/**
-	 * Aucun utilisateur n'est liï¿½ ï¿½ l'article.
+	 * Aucun utilisateur n'est lié è l'article.
 	 */
 	public static final int REGLE_ARTICLE_UTILISATEUR_INVALIDE = 20104;
 
@@ -102,42 +107,47 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_ARTICLE_RETRAIT_INVALIDE = 20105;
 
 	/**
-	 * Impossible de mettre la date de dï¿½but d'enchï¿½res dans le passï¿½.
+	 * Impossible de mettre la date de début d'enchères dans le passé.
 	 */
 	public static final int REGLE_ARTICLE_DATE_DEBUT_DANS_LE_PASSE = 20106;
 
 	/**
-	 * Impossible de mettre la date de fin d'enchï¿½res dans le passï¿½.
+	 * Impossible de mettre la date de fin d'enchères dans le passè.
 	 */
 	public static final int REGLE_ARTICLE_DATE_FIN_DANS_LE_PASSE = 20107;
 
 	/**
-	 * Impossible de mettre la date de dï¿½but d'enchï¿½res aprï¿½s la date de fin
-	 * d'enchï¿½res.
+	 * Impossible de mettre la date de début d'enchères après la date de fin
+	 * d'enchères.
 	 */
 	public static final int REGLE_ARTICLE_DATE_DEBUT_APRES_FIN = 20108;
+	
+	/**
+	 * La description ne doit pas dépasser 255 caractères.
+	 */
+	public static final int REGLE_ARTICLE_DESCRIPTION_TROP_GRANDE = 20109;
 
 	/* Categories */
 
 	/**
-	 * Le libellï¿½ de la catï¿½gorie est invalide.
+	 * Le libellé de la catégorie est invalide.
 	 */
 	public static final int REGLE_CATEGORIE_LIBELLE_INVALIDE = 20200;
 
-	/* EnchÃ¨res */
+	/* Enchères */
 
 	/**
-	 * La date et l'heure de l'enchÃ¨re sont obligatoires.
+	 * La date et l'heure de l'enchère sont obligatoires.
 	 */
 	public static final int REGLE_ENCHERE_DATE_INVALIDE = 20300;
 
 	/**
-	 * Le montant de l'enchÃ¨re doit Ãªtre supÃ©rieur Ã  zÃ©ro.
+	 * Le montant de l'enchêre doit être supérieur à zéro.
 	 */
 	public static final int REGLE_ENCHERE_MONTANT_INVALIDE = 20301;
 
 	/**
-	 * L'enchÃ©risseur est invalide.
+	 * L'enchérisseur est invalide.
 	 */
 	public static final int REGLE_ENCHERE_ENCHERISSEUR_INVALIDE = 20302;
 
@@ -171,7 +181,7 @@ public abstract class CodesResultatBLL {
 	/* Tags */
 
 	/**
-	 * Le libellï¿½ du tag est invalide.
+	 * Le libellé du tag est invalide.
 	 */
 	public static final int REGLE_TAG_LIBELLE_INVALIDE = 20500;
 

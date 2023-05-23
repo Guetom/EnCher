@@ -10,6 +10,7 @@
     <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
+	<jsp:include page="/WEB-INF/template/alert.jsp"></jsp:include>
 	<main
 		class="d-flex flex-column justify-content-center flex-grow-1 form-signin w-100 m-auto">
 	<form method="post"
