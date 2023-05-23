@@ -23,7 +23,19 @@ public class UtilisateurManager {
 	}
 	
 	public Utilisateur login(String email, String password) throws EncherException{
-		return utilisateurDAO.selectionner(email, password);
+		EncherException encherException = new EncherException();
+		Utilisateur util = utilisateurDAO.selectionner(email, password);
+		
+		if(util == null) {
+			encherException.ajouterErreur(CodesResultatBLL.RELGE_UTILISATEUR_CONNEXION_INVALIDE);
+		}
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		} else {
+			return util;
+		}
+		
 	}
 	
 	public Utilisateur selection(String pseudo) throws EncherException{
@@ -48,14 +60,14 @@ public class UtilisateurManager {
 		
 		EncherException encherException = new EncherException();
 		
-//		validerContenu(utilisateur, encherException);
-//		
-//		if(encherException.hasErreurs()) {
-//			throw encherException;
-//		}
-//		else {
+		validerContenu(utilisateur, encherException);
+		
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		}
+		else {
 			utilisateurDAO.ajouter(utilisateur);
-//		}
+		}
 	}
 	
 	public void supprimer(Utilisateur utilisateur) throws EncherException{

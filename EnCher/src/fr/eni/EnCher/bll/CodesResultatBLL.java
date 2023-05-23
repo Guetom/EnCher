@@ -68,6 +68,11 @@ public abstract class CodesResultatBLL {
 	 * La photo de l'utilisateur est invalide.
 	 */
 	public static final int REGLE_UTILISATEUR_PHOTO_INVALIDE = 20013;
+	
+	/**
+	 * L'identifiant de connexion ou le mot de passe est incorrect.
+	 */
+	public static final int RELGE_UTILISATEUR_CONNEXION_INVALIDE = 20014;
 
 	/* ARTICLES */
 

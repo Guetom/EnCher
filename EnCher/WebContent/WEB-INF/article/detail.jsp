@@ -6,6 +6,7 @@
 <html>
 
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/template/alert.jsp"></jsp:include>
 
 <main> 
 <section class="enchere">

@@ -64,6 +64,7 @@ public class ServletUtilisateur extends HttpServlet {
 					user = utilisateurManager.selection(pseudo);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}				
 			}else if (session.getAttribute("user") != null && pseudo.isEmpty()) {
@@ -73,6 +74,7 @@ public class ServletUtilisateur extends HttpServlet {
 					user = utilisateurManager.selection(userConnect.getPseudo());
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}
 			}else {
@@ -128,7 +130,7 @@ public class ServletUtilisateur extends HttpServlet {
 				try {
 					photoManager.ajouter(photo);
 				} catch (EncherException e1) {
-					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
 					e1.printStackTrace();
 				}
 				
@@ -140,9 +142,13 @@ public class ServletUtilisateur extends HttpServlet {
 				
 				try {
 					utilisateurManager.ajouter(user);
+					
+					request.getSession().setAttribute("messageSucces", "Votre compte a bien été créé");
 					response.sendRedirect(request.getContextPath() + "/connexion");
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+					request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp").forward(request, response);
 					e.printStackTrace();
 				}
 
@@ -163,6 +169,9 @@ public class ServletUtilisateur extends HttpServlet {
 					user = utilisateurManager.login(emailPseudo, motDePasse);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+					request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp").forward(request, response);
+					
 					e.printStackTrace();
 				}
 				//Utilisateur avec le bon login et mdp donc trouvé

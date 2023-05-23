@@ -1,5 +1,6 @@
 package fr.eni.EnCher.exception;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EncherException extends Exception {
@@ -8,6 +9,7 @@ public class EncherException extends Exception {
 	
 	public EncherException() {
 		super();
+		this.listeCodesErreur = new ArrayList<Integer>();
 	}
 
 	/**

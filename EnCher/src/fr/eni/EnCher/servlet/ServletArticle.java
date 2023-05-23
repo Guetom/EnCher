@@ -61,7 +61,7 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("listeArticles", articleManager.getManager().selectionner(Lister.TOUT));
 				request.setAttribute("categories", categorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
@@ -103,7 +103,7 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/detail.jsp");
@@ -116,7 +116,7 @@ public class ServletArticle extends HttpServlet {
 			try {
 				request.setAttribute("categories", categorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
@@ -174,7 +174,7 @@ public class ServletArticle extends HttpServlet {
 					retraitManager.ajouter(retrait);
 					articleManager.ajouter(article);
 				} catch (EncherException e) {
-					// TODO Auto-generated catch block
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}
 				

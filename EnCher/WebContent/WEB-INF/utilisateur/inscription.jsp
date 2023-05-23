@@ -10,6 +10,7 @@
     <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center bg-light">
+	<jsp:include page="/WEB-INF/template/alert.jsp"></jsp:include>
 	<main class="m-auto">
 	<form method="post"
 		action="${pageContext.request.contextPath}/inscription">

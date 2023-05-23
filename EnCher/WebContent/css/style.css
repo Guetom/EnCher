@@ -47,3 +47,7 @@
     background-color: rgba(var(--bs-danger-rgb),var(--bs-bg-opacity));
     color: white;
 }
+
+.enchere-alert {
+	z-index:5000;
+}

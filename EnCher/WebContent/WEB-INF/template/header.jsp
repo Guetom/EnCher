@@ -94,3 +94,5 @@
 			</div>
 		</nav>
 	</header>
+	
+<jsp:include page="/WEB-INF/template/alert.jsp"></jsp:include>
