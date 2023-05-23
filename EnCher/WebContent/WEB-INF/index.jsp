@@ -112,7 +112,7 @@
 		<c:when test="${listeArticles.size()>0}">
 			<c:forEach var="c" items="${listeArticles}">
 				<div class="card border-1 m-2" style="width: 22em;">
-					<img src="${c.photoPrincipal.url}" class="" alt="${c.nom}"
+					<img src="${pageContext.request.contextPath}/image/${c.photoPrincipal.url}" class="" alt="${c.nom}"
 						style="max-height: 10em; margin: auto;">
 					<div class="card-body">
 						<div class="d-flex flex-row">

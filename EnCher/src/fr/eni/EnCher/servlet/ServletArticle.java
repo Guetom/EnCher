@@ -239,14 +239,11 @@ public class ServletArticle extends HttpServlet {
 						retrait, 
 						categorie, 
 						null);
-				article.setListeImage(listePhoto);
 				
 				try {
 					retraitManager.ajouter(retrait);
+					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
-					for (Photo photo : listePhoto) {
-						photoManager.ajouter(photo);
-					}
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
