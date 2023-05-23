@@ -76,13 +76,13 @@ public class UtilisateurManager {
 	
 	private void validerContenu(Utilisateur utilisateur, EncherException encherException) throws EncherException{
 		
-		/*if (utilisateur.getPhotoProfil() == null) {
-			utilisateur.setPhotoProfil("");
-	    }*/
-		
-		/*if (utilisateur.getDateCreation() == null) {
-			utilisateur.setDateCreation();
-	    }*/
+		/*if (utilisateur.getPhotoProfil() == null || utilisateur.getPhotoProfil().isEmpty()) {
+		    utilisateur.setPhotoProfil("");
+		}
+
+		if (utilisateur.getDateCreation() == null) {
+		    utilisateur.setDateCreation(new Date()); // Ou toute autre valeur par défaut appropriée
+		}*/
 		
 	    if (utilisateur.getPseudo() == null || utilisateur.getPseudo().isEmpty()) {
 	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_INVALIDE);
@@ -102,7 +102,7 @@ public class UtilisateurManager {
 	    } else {
 	        telephone = Long.toString(utilisateur.getNumeroTel());
 	    }
-	    if (utilisateur.getNumeroTel() != 0L && (telephone.length() != 10 || !telephone.startsWith("0") || !telephone.matches("^\\d{10}$"))) {
+	    if (utilisateur.getNumeroTel() != 0L || (telephone.length() != 10 || !telephone.startsWith("0") || !telephone.matches("^\\d{10}$"))) {
 	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALIDE);
 	    }
 	    
@@ -124,7 +124,6 @@ public class UtilisateurManager {
 	    }
 
 	    if (utilisateur.getMotDePasse() == null || utilisateur.getMotDePasse().isEmpty()) {
-	    	//TODO verif hash
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MDP_INVALIDE);
 	    }
 

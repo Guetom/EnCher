@@ -51,11 +51,11 @@ public class ArticleManager {
 		
 		validerContenu(article, encherException);
 		
-		if(encherException.hasErreurs()) {
-			throw encherException;
-		} else {
+//		if(encherException.hasErreurs()) {
+//			throw encherException;
+//		} else {
 			articleDAO.ajouter(article);
-		}
+//		}
 	}
 	
 	public void supprimer(Article article) throws EncherException{

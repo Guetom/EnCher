@@ -10,21 +10,21 @@
 <main> 
 <section class="enchere">
 
-<!-- Entête (titre) de l'enchère -->
+<!-- Entï¿½te (titre) de l'enchï¿½re -->
         <div class="p-5 pb-4 text-center">
             <h2 class="fs-1">Vendre un article</h2>
         </div>
 
-        <!-- Boîte contenant les informations de l'enchère -->
+        <!-- Boï¿½te contenant les informations de l'enchï¿½re -->
         <section class="w-75 mx-auto border shadow-sm rounded-1">
 
             <div class="row py-5">
-                <!-- Images de prévisualisation -->
+                <!-- Images de prï¿½visualisation -->
                 <div class="col-lg-5 col-12 px-5 py-1">
                     <img class="image-preview border shadow-sm" src="${pageContext.request.contextPath}/assets/no-image.svg">
                 </div>
 
-                <!-- Section principale (informations de l'enchère) -->
+                <!-- Section principale (informations de l'enchï¿½re) -->
                 <form class="form-modif-article col-lg-7 col-12 px-3" method="post" action="${pageContext.request.contextPath}/article/ajouter" enctype="multipart/form-data">
 
                   <div class="modif-nom-article form-floating">
@@ -33,17 +33,18 @@
                   </div>
 
                   <div class="modif-description form-floating">
-                    <textarea class="form-control" placeholder="Description" id="description" style="height: 100px" required></textarea>
+                    <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required></textarea>
                     <label for="description" class="px-3 text-muted">Description</label>
                   </div>
 
                   <div class="form-floating">
-                    <select class="form-select" id="categorie" aria-label="Choissisez votre catégorie" required>
+                    <select class="form-select" id="categorie" name="categorie" aria-label="Choissisez votre catï¿½gorie" required>
+
                     <c:forEach var="c" items="${categories}">
 						<option value="${c.idCategorie}">${c.libelle}</a></option>
 					</c:forEach>
                     </select>
-                    <label for="categorie-article">Catègorie</label>
+                    <label for="categorie-article">Catï¿½gorie</label>
                   </div>
 
                     <div class="photo-article">
@@ -53,17 +54,17 @@
 
                     <div class="modif-prix-article form-floating">
                       <input type="number" class="form-control" id="prix" name="prix" placeholder=" " min="0" value="0" required>
-                      <label for="prix" class="px-3 text-muted">Mise è prix</label>
+                      <label for="prix" class="px-3 text-muted">Mise ï¿½ prix</label>
                     </div>
 
                     <div class="modif-dateDebut form-floating">
                       <input type="datetime-local" class="form-control" id="dateDebut" name="dateDebut" required>
-                      <label for="dateDebut" class="px-3 text-muted">Date de dèbut de l'enchère</label>
+                      <label for="dateDebut" class="px-3 text-muted">Date de dï¿½but de l'enchï¿½re</label>
                     </div>
 
                     <div class="modif-dateFin form-floating">
                       <input type="datetime-local" class="form-control" id="dateFin" name="dateFin" required>
-                      <label for="dateFin" class="px-3 text-muted">Date de fin de l'enchère</label>
+                      <label for="dateFin" class="px-3 text-muted">Date de fin de l'enchï¿½re</label>
                     </div>
 
                     <fieldset class="modif-retrait-article border border-dark rounded-3 p-3">
@@ -75,7 +76,7 @@
                       </div>
 
                       <div class="modif-codePostal form-floating">
-                        <input type="number" class="form-control" id="codePostal" name="codePostal" min="0" max="99999" placeholder=" " required>
+                        <input type="text" class="form-control" id="codePostal" name="codePostal" min="0" max="99999" placeholder=" " required>
                         <label for="codePostal" class="px-3 text-muted">Code Postal</label>
                       </div>
 
