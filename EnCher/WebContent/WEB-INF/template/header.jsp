@@ -37,8 +37,8 @@
 				<div class="collapse navbar-collapse" id="nav">
 
 					<ul class="navbar-nav mx-auto">
-						<li class="nav-item"><a class="nav-link" href="#">Enchères</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Vendre
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Enchères</a></li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/article/ajouter">Vendre
 								un article</a></li>
 					</ul>
 

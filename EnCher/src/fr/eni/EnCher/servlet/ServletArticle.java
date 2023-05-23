@@ -1,19 +1,12 @@
 package fr.eni.EnCher.servlet;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,17 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import javax.websocket.MessageHandler.Whole;
-
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileItemIterator;
-import org.apache.tomcat.util.http.fileupload.FileItemStream;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.util.http.fileupload.util.Streams;
-
 import fr.eni.EnCher.bll.ArticleManager;
 import fr.eni.EnCher.bll.CategorieManager;
 import fr.eni.EnCher.bll.EnchereManager;
@@ -180,8 +162,7 @@ public class ServletArticle extends HttpServlet {
 					|| (request.getParameter("ville") != null || request.getParameter("ville").equals(""))) {
 				String nom = request.getParameter("nom");
 				String description = request.getParameter("description");
-				int Idcategorie = 8;
-//				int Idcategorie = Integer.parseInt(request.getParameter("categorie"));
+				int Idcategorie = Integer.parseInt(request.getParameter("categorie"));
 				int prix = Integer.parseInt(request.getParameter("prix"));
 				LocalDateTime dateDebut = LocalDateTime.parse(request.getParameter("dateDebut"));
 				LocalDateTime dateFin = LocalDateTime.parse(request.getParameter("dateFin"));
@@ -228,12 +209,12 @@ public class ServletArticle extends HttpServlet {
 					retraitManager.ajouter(retrait);
 					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
+					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
 		}
 	}
 	
