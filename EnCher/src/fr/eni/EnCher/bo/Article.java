@@ -56,6 +56,20 @@ public class Article {
 		this.idArticle = idArticle;
 	}
 
+	public Article(int idArticle, String nom, String description, int prix, LocalDateTime dateDebut,
+			LocalDateTime dateFin, Utilisateur proprietaire, Categorie categorie, String etat, Photo photo) {
+		this.idArticle = idArticle;
+		this.nom = nom;
+		this.description = description;
+		this.prix = prix;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.proprietaire = proprietaire;
+		this.categorie = categorie;
+		this.etat = etat;
+		this.photoPrincipal = photo;
+	}
+
 
 
 	public void setIdArticle(int idArticle) {

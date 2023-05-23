@@ -27,6 +27,10 @@ public class ArticleManager {
 		return articleDAO.selectionner(choix);
 	}
 	
+	public List<Article> selectionner(boolean[] checkBoxes, int idUtilisateur, int idCategorie, String rechercheUtilisateur) throws EncherException{
+		return articleDAO.selectionner(checkBoxes, idUtilisateur, idCategorie, rechercheUtilisateur);
+	}
+	
 	public Article selectionner(int idArticle) throws EncherException{
 		return articleDAO.selectionner(idArticle);
 	}
