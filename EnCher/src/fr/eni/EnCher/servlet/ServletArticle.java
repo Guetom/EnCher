@@ -74,18 +74,18 @@ public class ServletArticle extends HttpServlet {
 		// Page d'acceuil (lister tout les articles
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
-			try {
-				listeArticle = ArticleManager.getManager().selectionner(Lister.TOUT);
-				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
-				request.setAttribute("listeArticles", listeArticle);
-				request.setAttribute("categories", listeCategorie);
-			} catch (EncherException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
-			rd.forward(request, response);
-//			doPost(request, response);			
+//			try {
+//				listeArticle = ArticleManager.getManager().selectionner(Lister.TOUT);
+//				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
+//				request.setAttribute("listeArticles", listeArticle);
+//				request.setAttribute("categories", listeCategorie);
+//			} catch (EncherException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+//			rd.forward(request, response);
+			doPost(request, response);			
 			
 		}
 		// Page détail d'un article
