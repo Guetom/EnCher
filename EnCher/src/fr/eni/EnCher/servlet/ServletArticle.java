@@ -83,12 +83,16 @@ public class ServletArticle extends HttpServlet {
 		PhotoManager photoManager = new PhotoManager();
 		EnchereManager enchereManager = new EnchereManager();
 		String filtre = null;
+		List<Article> listeArticle;
+		List<Categorie> listeCategorie;
 		// Page d'acceuil (lister tout les articles
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
 			try {
-				request.setAttribute("listeArticles", articleManager.getManager().selectionner(Lister.TOUT));
-				request.setAttribute("categories", categorieManager.getManager().selectionner(Lister.TOUT));
+				listeArticle = articleManager.getManager().selectionner(Lister.TOUT);
+				listeCategorie = categorieManager.getManager().selectionner(Lister.TOUT);
+				request.setAttribute("listeArticles", listeArticle);
+				request.setAttribute("categories", listeCategorie);
 			} catch (EncherException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

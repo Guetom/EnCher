@@ -21,7 +21,7 @@ import fr.eni.EnCher.exception.EncherException;
 public class ArticleDAOSqlServer implements DAO<Article>{
 	private final String LISTER = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle)";
 	private final String LISTER_ID = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle) AND ARTICLES.idArticle=?";
-	private final String AJOUTER = "INSERT INTO ARTICLES(nom, description, prix, idCategorie, idUtilisateur, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?)";
+	private final String AJOUTER = "INSERT INTO ARTICLES(nom, description, prix, idCategorie, idUtilisateur, idRetrait, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?,?)";
 	private final String MODIFIER = "UPDATE ARTICLES SET etat=?, nom=?, description=?, prix=?, idCategorie=?, idUtilisateur=?, dateDebut=?, dateFin=? WHERE idArticle=?";
 	private final String SUPPRIMER = "DELETE FROM ARTICLES WHERE idArticle=?";
 
