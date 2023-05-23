@@ -123,8 +123,7 @@
 					<div class="card-body">
 						<div class="d-flex flex-row">
 							<h5 class="card-title w-100">${c.nom}</h5>
-							<span class="badge text-bg-primary align-self-start">${c.prix}
-								&euro;</span>
+							<span class="badge text-bg-primary align-self-start">${c.prix} crédits</span>
 						</div>
 						<p class="card-text text-truncate">${c.description}</p>
 						<a class="card-text" href="${pageContext.request.contextPath}/article?id=${c.idArticle}">En savoir plus</a>

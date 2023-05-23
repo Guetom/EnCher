@@ -40,7 +40,8 @@ import fr.eni.EnCher.exception.EncherException;
 		urlPatterns= {
 						"",
 						"/article",
-						"/article/ajouter"
+						"/article/ajouter",
+						"/article/encherir"
 		})
 @MultipartConfig
 public class ServletArticle extends HttpServlet {
@@ -210,6 +211,24 @@ public class ServletArticle extends HttpServlet {
 					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else if (request.getServletPath().equals("/article/encherir")) {
+			HttpSession session = request.getSession();
+			
+			if ((request.getParameter("proposition") != null || request.getParameter("proposition").equals(""))
+					|| (request.getParameter("idArticle") != null || request.getParameter("idArticle").equals(""))) {
+				int proposition = Integer.parseInt(request.getParameter("proposition"));
+				int idArticle = Integer.parseInt(request.getParameter("idArticle"));
+				Utilisateur user = (Utilisateur) session.getAttribute("user");
+				Article artTemp = new Article(idArticle);
+				Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, artTemp);
+				try {
+					enchereManager.ajouter(enchere);
+					response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

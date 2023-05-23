@@ -46,14 +46,14 @@ public class EnchereManager {
 		
 		EncherException encherException = new EncherException();
 		
-		validerContenu(enchere, encherException);
+//		validerContenu(enchere, encherException);
 		
-		if(encherException.hasErreurs()) {
-			throw encherException;
-		}
-		else {
+//		if(encherException.hasErreurs()) {
+//			throw encherException;
+//		}
+//		else {
 			enchereDAO.ajouter(enchere);
-		}
+//		}
 	}
 	
 	public void supprimer(Enchere enchere) throws EncherException{

@@ -52,6 +52,10 @@ public class Article {
 		this.listeTag = listeTag;
 	}
 
+	public Article(int idArticle) {
+		this.idArticle = idArticle;
+	}
+
 
 
 	public void setIdArticle(int idArticle) {
