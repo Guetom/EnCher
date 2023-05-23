@@ -39,6 +39,7 @@
 					<ul class="navbar-nav mx-auto">
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Enchères</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/article/ajouter">Vendre
+
 								un article</a></li>
 					</ul>
 
@@ -55,7 +56,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									d�connecter</a></li>
 						</ul>
 					</div>
 					<%
@@ -70,7 +71,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									déconnecter</a></li>
+									d�connecter</a></li>
 						</ul>
 					</div>
 					<%

@@ -39,6 +39,7 @@
 
                   <div class="form-floating">
                     <select class="form-select" id="categorie" name="categorie" aria-label="Choissisez votre cat�gorie" required>
+
                     <c:forEach var="c" items="${categories}">
 						<option value="${c.idCategorie}">${c.libelle}</a></option>
 					</c:forEach>

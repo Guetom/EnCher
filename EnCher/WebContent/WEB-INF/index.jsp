@@ -8,14 +8,14 @@
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
 
 <main> <section>
-<div class="p-5 pb-0 mx-auto rounded-3 text-center">
+<div class="p-5 pb-0 mx-auto rounded-3 text-center accueil-texte-principal">
 	<div class="container-fluid">
 		<h1 class="display-5 fw-bold">
 			Et en <span class="text-success">hausse</span> !
 		</h1>
 		<h2 class="fs-4 fw-normal">
-			Le site parfait pour vos petites (<span>et grosses</span>) enchÃ¨res !
-			</br>Commencez dÃ¨s maintenant, et acquÃ©rez de nombreuses affaires !
+			Le site parfait pour vos petites (<span>et grosses</span>) enchères !
+			</br>Commencez dès maintenant, et acquérez de nombreuses affaires !
 		</h2>
 	</div>
 </div>
@@ -26,17 +26,23 @@
 			<form class="card p-3 bg-light py-4 shadow-sm">
 				<h5>Filtrez votre recherche :</h5>
 				<div class="input-group mt-3">
-					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">CatÃ©gorie</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item active" href="#">Toutes les catÃ©gories</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<c:forEach var="c" items="${categories}">
-							<li><a class="dropdown-item" href="#">${c.libelle}</a></li>
-							</c:forEach>
-						</ul>
-					</div>
+				
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Catégorie
+              </button>
+              
+              <div class="dropdown-menu shadow p-2" aria-labelledby="dropdownMenuButton">
+                <ul>
+                  <li><a class="dropdown-item rounded-2 active" href="#">Toutes les catégories</a></li>
+                </ul>
+                <hr class="dropdown-divider">
+                <ul class="scrollable-menu mb-0">
+                  <c:forEach var="c" items="${categories}">
+				  <li><a class="dropdown-item" href="#">${c.libelle}</a></li>
+				  </c:forEach>
+                </ul>
+              </div>
 
 					<input type="text" class="form-control"
 						aria-label="Text input with dropdown button"
@@ -63,15 +69,15 @@
 									<ul>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check1" checked> <label
-											class="form-check-label" for="check1"> EnchÃ¨res
+											class="form-check-label" for="check1"> Enchères
 												ouvertes </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check2" checked> <label
-											class="form-check-label" for="check2"> Mes enchÃ¨res </label>
+											class="form-check-label" for="check2"> Mes enchères </label>
 										</li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" checked> <label
-											class="form-check-label" for="check3"> EnchÃ¨res remportÃ©es </label></li>
+											class="form-check-label" for="check3"> Enchères remportées </label></li>
 									</ul>
 
 								</div>
@@ -87,11 +93,11 @@
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check2" disabled> <label
 											class="form-check-label" for="check2"> Ventes non
-												dÃ©butÃ©es </label></li>
+												débutées </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" disabled> <label
 											class="form-check-label" for="check3"> Ventes
-												terminÃ©es </label></li>
+												terminées </label></li>
 									</ul>
 								</div>
 							</div>

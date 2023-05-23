@@ -71,6 +71,10 @@ public class ArticleManager {
 		}
 	}
 	
+	private String filtrage(boolean[] checkBoxes, int idUtilisateur, int idCategorie, String rechercheUtilisateur) {
+		return articleDAO.filtrage(checkBoxes, idUtilisateur, idCategorie, rechercheUtilisateur);
+	}
+	
 	private void validerContenu(Article article, EncherException encherException) throws EncherException{
 	    
 	    if (article.getNom() == null || article.getNom().isEmpty()) {
