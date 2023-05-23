@@ -38,13 +38,13 @@ public class RetraitManager {
 	public void ajouter(Retrait retrait) throws EncherException{
 		EncherException encherException = new EncherException();
 		
-		validerContenu(retrait, encherException);
+//		validerContenu(retrait, encherException);
 		
-		if(encherException.hasErreurs()) {
-			throw encherException;
-		} else {
+//		if(encherException.hasErreurs()) {
+//			throw encherException;
+//		} else {
 			retraitDAO.ajouter(retrait);
-		}
+//		}
 	}
 	
 	public void supprimer(Retrait retrait) throws EncherException{

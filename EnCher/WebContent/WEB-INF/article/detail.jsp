@@ -32,7 +32,7 @@
                         <div class="carousel-inner">
                           <c:forEach var="c" items="${article.listeImage}" varStatus="loop">
 						<div class="carousel-item ${loop.first ? 'active' : ''}">
-                            <img src="${c.url}" class="d-block w-100" alt="...">
+                            <img src="${pageContext.request.contextPath}/image/${c.url}" class="d-block w-100" alt="...">
                           </div>
                         </c:forEach>
                         </div>

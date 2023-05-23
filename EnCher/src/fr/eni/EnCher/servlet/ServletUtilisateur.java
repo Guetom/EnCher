@@ -1,18 +1,27 @@
 package fr.eni.EnCher.servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.UUID;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import fr.eni.EnCher.bll.PhotoManager;
 import fr.eni.EnCher.bll.UtilisateurManager;
@@ -23,9 +32,18 @@ import fr.eni.EnCher.exception.EncherException;
 /**
  * Servlet implementation class ServletUtilisateur
  */
-@WebServlet(urlPatterns = { "/inscription", "/connexion", "/deconnection", "/profil", "/profil/modifier", "/profil/supprimer" })
+@WebServlet(urlPatterns = { 
+		"/inscription", 
+		"/connexion", 
+		"/deconnection", 
+		"/profil", 
+		"/profil/modifier", 
+		"/profil/supprimer" })
+@MultipartConfig
 public class ServletUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+    public static final String UPLOAD_DIRECTORY = "D:/ENCHER_IMAGES";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,7 +60,8 @@ public class ServletUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getServletPath().equals("/inscription")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp").forward(request, response);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
+			rd.forward(request, response);
 		} else if (request.getServletPath().equals("/connexion")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/deconnection")) {
@@ -94,6 +113,7 @@ public class ServletUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getServletPath().equals("/inscription")) {
+			HttpSession session = request.getSession();
 			if ((request.getParameter("pseudo") != null || request.getParameter("pseudo").equals(""))
 					|| (request.getParameter("nom") != null || request.getParameter("nom").equals(""))
 					|| (request.getParameter("prenom") != null || request.getParameter("prenom").equals(""))
@@ -111,7 +131,6 @@ public class ServletUtilisateur extends HttpServlet {
 				String pseudo = request.getParameter("pseudo");
 				String nom = request.getParameter("nom");
 				String prenom = request.getParameter("prenom");
-				Photo photo = new Photo(request.getParameter("photo"));
 				String date_naissanceStr = request.getParameter("date_naissance");
 				LocalDate date_naissance = LocalDate.parse(date_naissanceStr);
 				String email = request.getParameter("email");
@@ -125,11 +144,31 @@ public class ServletUtilisateur extends HttpServlet {
 				
 				PhotoManager photoManager = new PhotoManager();
 				
-				try {
-					photoManager.ajouter(photo);
-				} catch (EncherException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				File uploadDir = new File(UPLOAD_DIRECTORY);
+		        if (!uploadDir.exists()) {
+		            uploadDir.mkdirs();
+		        }
+		        Part part = request.getPart("photo");
+		        Photo photo = null;
+		        if (part != null) {
+		        	String fileName = getFileName(part);
+		            if (fileName != null && !fileName.isEmpty()) {
+		            	int indexDernierPoint = fileName.lastIndexOf(".");
+		            	String newFileName = UUID.randomUUID().toString() + "." + fileName.substring(indexDernierPoint + 1);
+		                String filePath = UPLOAD_DIRECTORY + File.separator + newFileName;
+		                try (InputStream inputStream = part.getInputStream()) {
+		                    Files.copy(inputStream, new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+		                    photo = new Photo(newFileName);
+		                }
+		            }
+					try {
+						photoManager.ajouter(photo);
+					} catch (EncherException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}else {
+					photo = new Photo("profil.jpg");
 				}
 				
 				Utilisateur user = new Utilisateur(pseudo, prenom, nom, tel, email, date_naissance, rue, ville,
@@ -229,5 +268,16 @@ public class ServletUtilisateur extends HttpServlet {
 
 		return hexString.toString();
 	}
+
+    private String getFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        String[] elements = contentDisposition.split(";");
+        for (String element : elements) {
+            if (element.trim().startsWith("filename")) {
+                return element.substring(element.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 
 }

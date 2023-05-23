@@ -21,7 +21,9 @@ import fr.eni.EnCher.exception.EncherException;
 public class ArticleDAOSqlServer implements DAO<Article>{
 	private final String LISTER = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle)";
 	private final String LISTER_ID = "SELECT * FROM ARTICLES JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie JOIN UTILISATEURS ON ARTICLES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN RETRAITS ON ARTICLES.idRetrait= RETRAITS.idRetrait LEFT JOIN ARTICLES_PHOTOS ON ARTICLES.idArticle = ARTICLES_PHOTOS.idArticle LEFT JOIN PHOTOS ON ARTICLES_PHOTOS.idPhoto = PHOTOS.idPhoto WHERE ARTICLES_PHOTOS.idPhoto IN (SELECT MIN(idPhoto) FROM ARTICLES_PHOTOS GROUP BY idArticle) AND ARTICLES.idArticle=?";
-	private final String AJOUTER = "INSERT INTO ARTICLES(etat, nom, description, prix, idCategorie, idUtilisateur, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?,?)";
+	private final String AJOUTER = "INSERT INTO ARTICLES(nom, description, prix, idCategorie, idUtilisateur, idRetrait, dateDebut, dateFin) VALUES (?,?,?,?,?,?,?,?)";
+	private final String AJOUTER_CORRESPONDANCE = "INSERT INTO ARTICLES_PHOTOS(idArticle, idPhoto) VALUES (?,?)";
+	private final String AJOUTER_PHOTO = "INSERT INTO PHOTOS(url) VALUES (?)";
 	private final String MODIFIER = "UPDATE ARTICLES SET etat=?, nom=?, description=?, prix=?, idCategorie=?, idUtilisateur=?, dateDebut=?, dateFin=? WHERE idArticle=?";
 	private final String SUPPRIMER = "DELETE FROM ARTICLES WHERE idArticle=?";
 
@@ -145,7 +147,6 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 						categorie,
 						rs.getString("etat"),
 						null);
-				
 			}			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -159,15 +160,14 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	public void ajouter(Article t) throws EncherException {
 		try(Connection con = JdbcTools.getConnection(); 
 				PreparedStatement pStmt = con.prepareStatement(AJOUTER, Statement.RETURN_GENERATED_KEYS)){
-			pStmt.setString(1, t.getEtat());
-			pStmt.setString(2, t.getNom());
-			pStmt.setString(3, t.getDescription());
-			pStmt.setInt(4, t.getPrix());
-			pStmt.setInt(5, t.getCategorie().getIdCategorie());
-			pStmt.setInt(6, t.getProprietaire().getIdUtilisateur());
-			pStmt.setInt(7, t.getRetrait().getIdRetrait());
-			pStmt.setTimestamp(8, java.sql.Timestamp.valueOf(t.getDateDebut()));
-			pStmt.setTimestamp(9, java.sql.Timestamp.valueOf(t.getDateFin()));
+			pStmt.setString(1, t.getNom());
+			pStmt.setString(2, t.getDescription());
+			pStmt.setInt(3, t.getPrix());
+			pStmt.setInt(4, t.getCategorie().getIdCategorie());
+			pStmt.setInt(5, t.getProprietaire().getIdUtilisateur());
+			pStmt.setInt(6, t.getRetrait().getIdRetrait());
+			pStmt.setTimestamp(7, java.sql.Timestamp.valueOf(t.getDateDebut()));
+			pStmt.setTimestamp(8, java.sql.Timestamp.valueOf(t.getDateFin()));
 			pStmt.execute();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if(rs.next()) {
@@ -176,6 +176,12 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if (t.getListeImage().size() >  0) {
+			for (Photo photo : t.getListeImage()) {
+				ajouter(photo);
+				ajouterCorrespondance(t, photo);
+			}
 		}
 	}
 
@@ -197,6 +203,12 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if (t.getListeImage().size() >  0) {
+			for (Photo photo : t.getListeImage()) {
+				ajouter(photo);
+				ajouterCorrespondance(t, photo);
+			}
+		}
 	}
 
 	@Override
@@ -211,6 +223,33 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 		}
 	}
 	
+
+	public void ajouter(Photo t) throws EncherException {
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER_PHOTO, Statement.RETURN_GENERATED_KEYS)){
+			pStmt.setString(1, t.getUrl());
+			pStmt.execute();
+			ResultSet rs = pStmt.getGeneratedKeys();
+			if(rs.next()) {
+				t.setIdPhoto(rs.getInt(1));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void ajouterCorrespondance(Article a, Photo p) throws EncherException{
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(AJOUTER_CORRESPONDANCE)){
+			pStmt.setInt(1, a.getIdArticle());
+			pStmt.setInt(2, p.getIdPhoto());
+			pStmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public String filtrage(boolean[] checkBoxes, int idUtilisateur, int idCategorie, String rechercheUtilisateur) {
 	    /*
 	    checkBoxes:
