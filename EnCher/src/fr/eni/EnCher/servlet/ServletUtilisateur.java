@@ -43,7 +43,7 @@ import fr.eni.EnCher.exception.EncherException;
 public class ServletUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    public static final String UPLOAD_DIRECTORY = "D:/ENCHER_IMAGES";
+    public static final String UPLOAD_DIRECTORY = "//16se19-6rh3p02/encher_images";
 
 	/**
 	 * @see HttpServlet#HttpServlet()

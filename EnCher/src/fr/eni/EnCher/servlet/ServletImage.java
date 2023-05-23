@@ -22,7 +22,7 @@ public class ServletImage extends HttpServlet {
 	
     public void init() throws ServletException {
 
-        this.imagePath = "D:\\ENCHER_IMAGES";
+        this.imagePath = "//16se19-6rh3p02/encher_images";
     }
        
     /**
