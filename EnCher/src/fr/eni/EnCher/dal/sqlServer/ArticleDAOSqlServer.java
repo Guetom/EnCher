@@ -260,6 +260,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 
 	    //  /!\ Si l'utiisateur n'est pas connecter le radio button est 'disabled',
 	    //  l'appel de cette fonction ce fera avec un tableau par défaut comme ceci: 
+	    //  filtrage( { true, true, false, false}, idUtilisateur, idCategorie, rechercheUtilisateur)
 
 	    int nbCheckBoxesRenseignes = 0;
 	    for (int i = 0; i < checkBoxes.length; i++) {
@@ -280,23 +281,79 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        String requete = "SELECT " +
 	        //colonnes d'ARTICLES
 	        "ARTICLES.idArticle AS A_idArticle, ARTICLES.etat AS A_etat, ARTICLES.nom AS A_nom, ARTICLES.description AS A_description, ARTICLES.prix AS A_prix, ARTICLES.idCategorie AS A_idCategorie, ARTICLES.idUtilisateur AS A_idUtilisateur, ARTICLES.idRetrait AS A_idRetrait, ARTICLES.dateDebut AS A_dateDebut, ARTICLES.dateFin AS A_dateFin, " +
+	        //colonne de ARTICLES_PHOTOS, valeurs concaténées
+	        "(SELECT STRING_AGG(idPhoto, ';') FROM (" +
+	            "SELECT DISTINCT idPhoto FROM ARTICLES_PHOTOS WHERE idArticle = ARTICLES.idArticle" +
+	        ") AS DistinctPhotos ) AS A_P_idPhoto, " +
+	        //colonne de PHOTOS, valeurs concaténées
+	        "(SELECT STRING_AGG(url, ';') FROM (" +
+	            "SELECT url FROM PHOTOS WHERE idPhoto IN (" +
+	            "SELECT DISTINCT idPhoto FROM ARTICLES_PHOTOS WHERE idArticle = ARTICLES.idArticle)" +
+	        ") AS DistinctUrls ) AS A_P_url, " +
+	        //colonnes de CATEGORIES
+	        "C.idCategorie AS C_idCategorie, C.libelle AS C_libelle, " +
+	        //colonne de ARTICLES_TAGS, valeurs concaténées
+	        "(SELECT STRING_AGG( idTag, ';') FROM (" +
+			    "SELECT DISTINCT idTag FROM ARTICLES_TAGS WHERE idArticle = ARTICLES.idArticle" +
+		    ") AS DistinctTags) AS T_idTag, " +
+	        //colonne de TAGS, valeurs concaténées
+	        "(SELECT STRING_AGG( libelle, ';') FROM (" +
+			    "SELECT libelle FROM TAGS WHERE idTag IN (" +
+			    "SELECT DISTINCT idTag FROM ARTICLES_TAGS WHERE idArticle = ARTICLES.idArticle)" +
+		    ") AS DistinctLibelles) AS T_libelle, " +
+	        //colonnes d'UTILISATEUR (créateur de l'article)
+	        "A_U.idUtilisateur AS A_U_idUtilisateur, A_U.pseudo AS A_U_pseudo, A_U.idPhoto AS A_U_idPhoto, " +
+	        //colonne de PHOTO (créateur de l'article)
+	        "A_U_P.url AS A_U_P_url, " +
 	        //colonnes d'ENCHERES
-	        "ENCHERES.idEnchere AS E_idEnchere, ENCHERES.dateheure AS E_dateheure, ENCHERES.montant AS E_montant, ENCHERES.idUtilisateur AS E_idUtilisateur, ENCHERES.idArticle AS E_idArticle, " +
-	        //colonnes de TAGS, valeurs concaténées
-	        "STRING_AGG(TAGS.idTag, ';') AS T_idTag, STRING_AGG(TAGS.libelle, ';') AS T_libelle " +
+	        "E.idEnchere AS E_idEnchere, E.dateheure AS E_dateheure, E.montant AS E_montant, E.idUtilisateur AS E_idUtilisateur, E.idArticle AS E_idArticle, " +
+	        //colonnes d'UTILISATEUR (créateur de l'enchère)
+	        "E_U.idUtilisateur AS E_U_idUtilisateur, E_U.pseudo AS E_U_pseudo, E_U.idPhoto AS E_U_idPhoto," +
+	        //colonne de PHOTO (créateur de l'enchère)
+			"E_U_P.url AS E_U_P_url " +
 
-	        //ENCHERES
-	        "LEFT JOIN ( SELECT idEnchere, dateheure, montant, idUtilisateur, idArticle " +
-	            "FROM ENCHERES " +
-	        ") AS ENCHERES ON ARTICLES.idArticle = ENCHERES.idArticle " +
+	        //
+	        "FROM ARTICLES " +
+	        //ARTICLES_PHOTOS
+	        "LEFT JOIN ( SELECT idArticle, idPhoto " +
+	            "FROM ARTICLES_PHOTOS " +
+	        ") AS A_P ON ARTICLES.idArticle = A_P.idArticle " +
+	        //PHOTOS (article)
+	        "LEFT JOIN ( SELECT idPhoto, url " +
+	            "FROM PHOTOS " +
+	        ") AS P ON A_P.idPhoto = P.idPhoto " +
+	        //CATEGORIES
+	        "LEFT JOIN ( SELECT idCategorie, libelle " +
+	            "FROM CATEGORIES " +
+	        ") AS C ON ARTICLES.idCategorie = C.idCategorie " +
 	        //ARTICLES_TAGS
 	        "LEFT JOIN ( SELECT idArticle, idTag " +
-		        "FROM ARTICLES_TAGS " +
-	        ") AS ARTICLES_TAGS ON ARTICLES.idArticle = ARTICLES_TAGS.idArticle " +
+	            "FROM ARTICLES_TAGS " +
+	        ") AS A_T ON ARTICLES.idArticle = A_T.idArticle " +
 	        //TAGS
 	        "LEFT JOIN ( SELECT idTag, libelle " +
 	            "FROM TAGS " +
-	        ") AS TAGS ON ARTICLES_TAGS.idTag = TAGS.idTag " +
+	        ") AS T ON A_T.idTag = T.idTag " +
+	        //UTILISATEURS (créateur de l'article)
+	        "LEFT JOIN ( SELECT idUtilisateur, pseudo, idPhoto " +
+	            "FROM UTILISATEURS " +
+	        ") AS A_U ON ARTICLES.idUtilisateur = A_U.idUtilisateur " +
+	        //PHOTOS (créateur de l'article)
+	        "LEFT JOIN ( SELECT idPhoto, url " +
+	            "FROM PHOTOS " +
+	        ") AS A_U_P ON A_U.idPhoto = A_U_P.idPhoto " +
+	        //ENCHERES
+	        "LEFT JOIN ( SELECT idEnchere, dateheure, montant, idUtilisateur, idArticle " +
+	            "FROM ENCHERES " +
+	        ") AS E ON ARTICLES.idArticle = E.idArticle " +
+	        //UTILISATEURS (créateur de l'enchère)
+	        "LEFT JOIN ( SELECT idUtilisateur, pseudo, idPhoto " +
+	            "FROM UTILISATEURS " +
+	        ") AS E_U ON E.idUtilisateur = E_U.idUtilisateur " +
+	        //PHOTOS (créateur de l'enchère)
+	        "LEFT JOIN ( SELECT idPhoto, url " +
+	            "FROM PHOTOS " +
+	        ") AS E_U_P ON E_U.idPhoto = E_U_P.idPhoto " +
 
 	        //Début du filtrage
 	        "WHERE (";
@@ -309,7 +366,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        }
 	        //'Rechercher'
 	        if(rechercheUtilisateur!=""){
-	            requete += "(ARTICLES.nom LIKE '%" + rechercheUtilisateur + "%' OR TAGS.libelle LIKE '%" + rechercheUtilisateur + "%')";
+	            requete += "(ARTICLES.nom LIKE '%" + rechercheUtilisateur + "%' OR T.libelle LIKE '%" + rechercheUtilisateur + "%')";
 	            parametresRestants--;
 	            requete += parametresRestants!=0 ? " AND " : "";
 	        }
@@ -323,9 +380,9 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	            requete += "(";
 	            if(checkBoxes[1]) requete += "ARTICLES.etat = 'EC'";//enchères ouvertes
 	            if(checkBoxes[1] && checkBoxes[2]) requete += " OR ";
-	            if(checkBoxes[2]) requete += "ENCHERES.idUtilisateur = " + idUtilisateur;//mes enchères
+	            if(checkBoxes[2]) requete += "E.idUtilisateur = " + idUtilisateur;//mes enchères
 	            if((checkBoxes[1] || checkBoxes[2]) && checkBoxes[3]) requete += " OR ";
-	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND ENCHERES.idUtilisateur = " + idUtilisateur + ")";//mes enchères remportées
+	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND E.idUtilisateur = " + idUtilisateur + ")";//mes enchères remportées
 	            requete += ") ";
 	        }
 	        //Radio button 'Mes ventes'
@@ -341,12 +398,17 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 
 	        //filtration ENCHERES permanente, pour avoir seulement celle avec le montant le plus haut.
 	        requete+= "AND (ENCHERES.idEnchere IS NULL OR ENCHERES.montant = ( " +
-	            "SELECT MAX(montant) -- Sélection du montant maximum parmi les enchères associées à l'article " +
+	            "SELECT MAX(montant) " +
 	            "FROM ENCHERES " +
 	            "WHERE ENCHERES.idArticle = ARTICLES.idArticle)) " +
 	        ") GROUP BY " +
-	        "ARTICLES.idArticle, ARTICLES.etat, ARTICLES.nom, ARTICLES.description, ARTICLES.prix, ARTICLES.idCategorie, ARTICLES.idUtilisateur, ARTICLES.idRetrait, ARTICLES.dateDebut, ARTICLES.dateDebut, ARTICLES.dateFin, " +
-		    "ENCHERES.idEnchere, ENCHERES.dateheure, ENCHERES.montant, ENCHERES.idUtilisateur, ENCHERES.idArticle;";
+	        "ARTICLES.idArticle, ARTICLES.etat, ARTICLES.nom, ARTICLES.description, ARTICLES.prix, ARTICLES.idCategorie, ARTICLES.idUtilisateur, ARTICLES.idRetrait, ARTICLES.dateDebut, ARTICLES.dateFin, " +
+		    "C.idCategorie, C.libelle, " +
+		    "A_U.idUtilisateur, A_U.pseudo, A_U.idPhoto, " +
+		    "A_U_P.url, " +
+		    "E.idEnchere, E.dateheure, E.montant, E.idUtilisateur, E.idArticle, " +
+		    "E_U.idUtilisateur, E_U.pseudo, E_U.idPhoto, " +
+		    "E_U_P.url;";
 	        return requete;
 	    }
 	}
