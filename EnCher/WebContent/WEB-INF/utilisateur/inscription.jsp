@@ -57,7 +57,6 @@
 			</div>
 
 			<div class="form-floating col-lg-6 mb-4">
-				<label for="photo" class="form-label">Images de l'article :</label>
 				<input class="form-control" type="file" id="photo" name="photo" 
 					accept="image/*"> <label for="photo"
 					class="px-3 text-muted">Photo de profil</label>

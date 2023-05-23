@@ -81,7 +81,7 @@ public class UtilisateurManager {
 		}
 
 		if (utilisateur.getDateCreation() == null) {
-		    utilisateur.setDateCreation(new Date()); // Ou toute autre valeur par dÃ©faut appropriÃ©e
+		    utilisateur.setDateCreation(new Date()); // Ou toute autre valeur par défaut appropriée
 		}*/
 		
 	    if (utilisateur.getPseudo() == null || utilisateur.getPseudo().isEmpty()) {

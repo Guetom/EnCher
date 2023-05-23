@@ -85,6 +85,10 @@ public class ArticleManager {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_INVALIDE);
 	    }
 	    
+	    if (article.getDescription().length() > 255) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_TROP_GRANDE);
+	    }
+	    
 	    if (article.getPrix() < 0) {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_NEGATIF);
 	    }

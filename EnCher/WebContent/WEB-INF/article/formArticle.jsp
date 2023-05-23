@@ -98,6 +98,6 @@
       </main>
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/js/preview-image" async></script>
+<script src="${pageContext.request.contextPath}/js/preview-image.js" async></script>
 </body>
 </html>

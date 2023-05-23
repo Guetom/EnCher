@@ -27,7 +27,7 @@
                     <div id="carouselExampleIndicators" class="carousel slide bg-white border shadow-sm"> <!--data-bs-ride="carousel"-->
                         <div class="carousel-indicators">
                           <c:forEach var="c" items="${article.listeImage}" varStatus="loop">
-						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${ loop.count }" aria-label="Slide ${ loop.count }"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${ loop.count-1 }" aria-label="Slide ${ loop.count }" ${loop.first ? 'class="active" aria-current="true"' : ''}></button>
 						</c:forEach>
                         </div>
                         <div class="carousel-inner">
@@ -46,6 +46,7 @@
                           <span class="visually-hidden">Next</span>
                         </button>
                       </div>
+
                     </div>
 					</c:when>
 					<c:otherwise>
