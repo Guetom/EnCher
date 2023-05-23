@@ -23,6 +23,10 @@ public class Retrait {
 
 
 
+	public Retrait() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getIdRetrait() {
 		return idRetrait;
 	}

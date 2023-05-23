@@ -22,6 +22,7 @@
     <filter-name>Authentification</filter-name>
     <url-pattern>/profil/modifier</url-pattern>
     <url-pattern>/profil/supprimer</url-pattern>
+    <url-pattern>/article/encherir</url-pattern>
     <url-pattern>/article/ajouter</url-pattern>
     <url-pattern>/article/modifier</url-pattern>
     <url-pattern>/article/supprimer</url-pattern>

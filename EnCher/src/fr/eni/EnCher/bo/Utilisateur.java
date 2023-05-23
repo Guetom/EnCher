@@ -63,6 +63,12 @@ public class Utilisateur {
 		this.admin = admin;
 	}
 
+	public Utilisateur(int idUtilisateur, String pseudo, Photo photoProfil) {
+		this.idUtilisateur = idUtilisateur;
+		this.pseudo = pseudo;
+		this.photoProfil = photoProfil;
+	}
+
 	public int getIdUtilisateur() {
 		return idUtilisateur;
 	}

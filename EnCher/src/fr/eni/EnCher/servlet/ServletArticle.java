@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.apache.taglibs.standard.lang.jstl.BooleanLiteral;
+
 import fr.eni.EnCher.bll.ArticleManager;
 import fr.eni.EnCher.bll.CategorieManager;
 import fr.eni.EnCher.bll.EnchereManager;
@@ -40,7 +43,8 @@ import fr.eni.EnCher.exception.EncherException;
 		urlPatterns= {
 						"",
 						"/article",
-						"/article/ajouter"
+						"/article/ajouter",
+						"/article/encherir"
 		})
 @MultipartConfig
 public class ServletArticle extends HttpServlet {
@@ -70,36 +74,19 @@ public class ServletArticle extends HttpServlet {
 		// Page d'acceuil (lister tout les articles
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
-			try {
-				listeArticle = articleManager.getManager().selectionner(Lister.TOUT);
-				listeCategorie = categorieManager.getManager().selectionner(Lister.TOUT);
-				request.setAttribute("listeArticles", listeArticle);
-				request.setAttribute("categories", listeCategorie);
-			} catch (EncherException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
-			rd.forward(request, response);
-//			if(request.getParameter("filtre")!=null)
-//			{
-//				filtre = request.getParameterValues("filtre")[0];
+//			try {
+//				listeArticle = ArticleManager.getManager().selectionner(Lister.TOUT);
+//				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
+//				request.setAttribute("listeArticles", listeArticle);
+//				request.setAttribute("categories", listeCategorie);
+//			} catch (EncherException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
 //			}
-//			switch (filtre) {
-//			case "cat:Voiture":
-//				//Filtre a ajouter
-//				break;
-//
-//			default:
-//				//Tout
-//				try {
-//					request.setAttribute("listeArticles", articleManager.getManager().selectionner(Lister.TOUT));
-//				} catch (EncherException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				break;
-//			}
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+//			rd.forward(request, response);
+			doPost(request, response);			
+			
 		}
 		// Page détail d'un article
 		else if (request.getServletPath().equals("/article")) {
@@ -129,7 +116,7 @@ public class ServletArticle extends HttpServlet {
 		// Ajouter un article
 		else if (request.getServletPath().equals("/article/ajouter")) {
 			try {
-				request.setAttribute("categories", categorieManager.getManager().selectionner(Lister.TOUT));
+				request.setAttribute("categories", CategorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -144,13 +131,51 @@ public class ServletArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		ArticleManager articleManager = new ArticleManager();
 		CategorieManager categorieManager = new CategorieManager();
 		PhotoManager photoManager = new PhotoManager();
 		EnchereManager enchereManager = new EnchereManager();
 		RetraitManager retraitManager = new RetraitManager();
-		if (request.getServletPath().equals("/article/ajouter")) {
-			HttpSession session = request.getSession();
+		if (request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
+			Utilisateur user = (Utilisateur) session.getAttribute("user");
+			int idUtilisateur = (user == null)? 0 : user.getIdUtilisateur();
+			int idCategorie = (request.getParameter("categorie") == null)? 0 : Integer.parseInt(request.getParameter("categorie"));
+			String recherche = (request.getParameter("recherche") == null)? "" : request.getParameter("recherche");
+			boolean radio1 = request.getParameter("radio1") != null;
+			boolean radio2 = request.getParameter("radio2") != null;
+			boolean check1 = request.getParameter("check1") != null;
+			boolean check2 = request.getParameter("check2") != null;
+			boolean check3 = request.getParameter("check3") != null;
+			boolean check4 = request.getParameter("check4") != null;
+			boolean check5 = request.getParameter("check5") != null;
+			boolean check6 = request.getParameter("check6") != null;
+			request.setAttribute("recherche", recherche);
+			
+			List<Article> listeArticle;
+			List<Categorie> listeCategorie;
+			boolean filtre[];
+			if (user != null) {
+				filtre = (radio1)? new boolean[]{true,check1,check2,check3} : new boolean[]{false,check4,check5,check6};
+			}else {
+				filtre = new boolean[]{true,true,false,false};
+			}
+						
+			try {
+				listeArticle = ArticleManager.getManager().selectionner(filtre, idUtilisateur, idCategorie, recherche);
+				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
+				request.setAttribute("listeArticles", listeArticle);
+				request.setAttribute("categories", listeCategorie);
+			} catch (EncherException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+			rd.forward(request, response);
+			
+			
+			
+		}else if (request.getServletPath().equals("/article/ajouter")) {
 						
 			if ((request.getParameter("nom") != null || request.getParameter("nom").equals(""))
 					|| (request.getParameter("description") != null || request.getParameter("description").equals(""))
@@ -210,6 +235,23 @@ public class ServletArticle extends HttpServlet {
 					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
+				} catch (EncherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else if (request.getServletPath().equals("/article/encherir")) {
+			
+			if ((request.getParameter("proposition") != null || request.getParameter("proposition").equals(""))
+					|| (request.getParameter("idArticle") != null || request.getParameter("idArticle").equals(""))) {
+				int proposition = Integer.parseInt(request.getParameter("proposition"));
+				int idArticle = Integer.parseInt(request.getParameter("idArticle"));
+				Utilisateur user = (Utilisateur) session.getAttribute("user");
+				Article artTemp = new Article(idArticle);
+				Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, artTemp);
+				try {
+					enchereManager.ajouter(enchere);
+					response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
