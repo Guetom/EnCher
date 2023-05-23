@@ -26,6 +26,14 @@ public class Enchere {
 	public void setIdEnchere(int idEnchere) {
 		this.idEnchere = idEnchere;
 	}
+	
+	public Enchere(LocalDateTime dateHeureEnchere, int montant, Utilisateur encherisseur, Article article) {
+		super();
+		this.dateHeureEnchere = dateHeureEnchere;
+		this.montant = montant;
+		this.encherisseur = encherisseur;
+		this.article = article;
+	}
 
 	public LocalDateTime getDateHeureEnchere() {
 		return dateHeureEnchere;

@@ -95,6 +95,59 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 		return listeArticle;
 	}
 	
+	public List<Article> selectionner(boolean[] checkBoxes, int idUtilisateur, int idCategorie, String rechercheUtilisateur) throws EncherException {
+		List<Article> listeArticle = new ArrayList<Article>();
+		Article article = null;
+		String requete = filtrage(checkBoxes, idUtilisateur, idCategorie, rechercheUtilisateur);
+		
+		try(Connection con = JdbcTools.getConnection(); 
+				PreparedStatement pStmt = con.prepareStatement(requete)){
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				Categorie categorie = new Categorie(
+						rs.getInt("C_idCategorie"),
+						rs.getString("C_libelle"));
+				
+				Photo photoProfil = new Photo(
+						rs.getInt("A_U_idPhoto"),
+						rs.getString("A_U_P_url"));
+								
+				Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("A_U_idUtilisateur"),
+						rs.getString("A_U_pseudo"),
+						photoProfil);
+				
+				Retrait retrait = new Retrait();
+				
+				String ImageArticle = rs.getString("A_P_url");
+				String[] image = ImageArticle.split(";");
+				Photo photo = new Photo(
+						rs.getInt("A_P_idPhoto"),
+						image[0]);
+				
+				article = new Article(
+						rs.getInt("A_idArticle"),
+						rs.getString("A_nom"),
+						rs.getString("A_description"),
+						rs.getInt("A_prix"),
+						rs.getTimestamp("A_dateDebut").toLocalDateTime(),
+						rs.getTimestamp("A_dateFin").toLocalDateTime(),
+						utilisateur,
+						categorie,
+						rs.getString("A_etat"),
+						photo);
+				
+				listeArticle.add(article);
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeArticle;
+	}
+	
 	public Article selectionner(int idArticle) throws EncherException {
 		Article article = null;
 		
@@ -397,7 +450,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        }
 
 	        //filtration ENCHERES permanente, pour avoir seulement celle avec le montant le plus haut.
-	        requete+= "AND (ENCHERES.idEnchere IS NULL OR ENCHERES.montant = ( " +
+	        requete+= "AND (E.idEnchere IS NULL OR E.montant = ( " +
 	            "SELECT MAX(montant) " +
 	            "FROM ENCHERES " +
 	            "WHERE ENCHERES.idArticle = ARTICLES.idArticle)) " +

@@ -56,7 +56,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									dï¿½connecter</a></li>
+									déconnecter</a></li>
 						</ul>
 					</div>
 					<%
@@ -71,7 +71,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
-									dï¿½connecter</a></li>
+									déconnecter</a></li>
 						</ul>
 					</div>
 					<%

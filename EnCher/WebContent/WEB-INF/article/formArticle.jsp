@@ -38,13 +38,13 @@
                   </div>
 
                   <div class="form-floating">
-                    <select class="form-select" id="categorie" name="categorie" aria-label="Choissisez votre catï¿½gorie" required>
+                    <select class="form-select" id="categorie" name="categorie" aria-label="Choissisez votre catégorie" required>
 
                     <c:forEach var="c" items="${categories}">
-						<option value="${c.idCategorie}">${c.libelle}</a></option>
+						<option value="${c.idCategorie}">${c.libelle}</option>
 					</c:forEach>
                     </select>
-                    <label for="categorie-article">Catï¿½gorie</label>
+                    <label for="categorie-article">Catégorie</label>
                   </div>
 
                     <div class="photo-article">
