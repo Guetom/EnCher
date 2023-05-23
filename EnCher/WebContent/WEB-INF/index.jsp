@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
 
 <main> <section>
-<div class="p-5 pb-0 mx-auto rounded-3 text-center">
+<div class="p-5 pb-0 mx-auto rounded-3 text-center accueil-texte-principal">
 	<div class="container-fluid">
 		<h1 class="display-5 fw-bold">
 			Et en <span class="text-success">hausse</span> !
@@ -26,17 +26,23 @@
 			<form class="card p-3 bg-light py-4 shadow-sm">
 				<h5>Filtrez votre recherche :</h5>
 				<div class="input-group mt-3">
-					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">Catégorie</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item active" href="#">Toutes les catégories</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<c:forEach var="c" items="${categories}">
-							<li><a class="dropdown-item" href="#">${c.libelle}</a></li>
-							</c:forEach>
-						</ul>
-					</div>
+				
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Catégorie
+              </button>
+              
+              <div class="dropdown-menu shadow p-2" aria-labelledby="dropdownMenuButton">
+                <ul>
+                  <li><a class="dropdown-item rounded-2 active" href="#">Toutes les catégories</a></li>
+                </ul>
+                <hr class="dropdown-divider">
+                <ul class="scrollable-menu mb-0">
+                  <c:forEach var="c" items="${categories}">
+				  <li><a class="dropdown-item" href="#">${c.libelle}</a></li>
+				  </c:forEach>
+                </ul>
+              </div>
 
 					<input type="text" class="form-control"
 						aria-label="Text input with dropdown button"
