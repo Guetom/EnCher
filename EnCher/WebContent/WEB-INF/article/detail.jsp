@@ -1,12 +1,13 @@
+<%@page import="fr.eni.EnCher.bo.Article"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/template/alert.jsp"></jsp:include>
 
 <main> 
 <section class="enchere">
@@ -88,11 +89,15 @@
 					    	<h5>Pas encore de proposition</h5>
 					    </c:otherwise>
 					</c:choose>
-
+					
                     <div class="fin-enchere row p-1">
-                        <div class="col-lg-2 col-12"><h5>Fin de l'enchère :</h5></div>
-                        <div class="col-lg-10 col-12"><p>${ article.dateFin }</p></div>
-                    </div>
+					    <div class="col-lg-2 col-12"><h5>Fin de l'enchère :</h5></div>
+					    <div class="col-lg-10 col-12">
+					        <fmt:parseDate var="date" value="${article.dateFin}" pattern="yyyy-MM-dd'T'HH:mm" />
+					        <fmt:formatDate value="${date}" pattern="dd/MM/yyyy HH:mm" var="formattedDate" />
+					        <p>${formattedDate}</p>
+					    </div>
+					</div>
 
                     <div class="vendeur row p-1">
                         <div class="col-md-2 col-12"><h5>Vendeur :</h5></div>
@@ -102,7 +107,7 @@
                     <form class="proposition row p-1" method="post" action="${pageContext.request.contextPath}/article/encherir" enctype="multipart/form-data">
                         <div class="col-lg-2 col-md-4 col-12"><h5>Faire une proposition :</h5></div>
                         <div class="col-md-5 col-6">
-                        <input type="number" id="proposition" name="proposition" class="form-control" min="${ enchere.montant }" value="${ enchere.montant }">
+                        <input type="number" id="proposition" name="proposition" class="form-control" min="${enchere.montant}" value="${enchere.montant}">
                         <input type="hidden" id="idArticle" name="idArticle" value="${ article.idArticle }" /></div>
                         <div class="col-lg-5 col-md-3 col-6"><button type="submit" class="btn btn-primary">Enchérir</button></div>
                     </form>
