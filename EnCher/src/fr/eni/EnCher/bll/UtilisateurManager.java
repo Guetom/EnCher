@@ -102,7 +102,7 @@ public class UtilisateurManager {
 	    } else {
 	        telephone = Long.toString(utilisateur.getNumeroTel());
 	    }
-	    if (utilisateur.getNumeroTel() != 0L || (telephone.length() != 10 || !telephone.startsWith("0") || !telephone.matches("^\\d{10}$"))) {
+	    if (utilisateur.getNumeroTel() == 0L || (telephone.length() != 10 || !telephone.startsWith("0") || !telephone.matches("^\\d{10}$"))) {
 	        encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_TEL_INVALIDE);
 	    }
 	    
@@ -134,5 +134,7 @@ public class UtilisateurManager {
 	    if (utilisateur.getDateNaissance() == null) {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_DATENAISSANCE_INVALIDE);
 	    }
+	    
+	    
 	}
 }

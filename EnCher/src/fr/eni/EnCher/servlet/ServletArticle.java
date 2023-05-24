@@ -64,6 +64,7 @@ public class ServletArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ArticleManager articleManager = new ArticleManager();
 		CategorieManager categorieManager = new CategorieManager();
 		PhotoManager photoManager = new PhotoManager();
@@ -75,7 +76,7 @@ public class ServletArticle extends HttpServlet {
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
 			try {
-				listeArticle = ArticleManager.getManager().selectionner(Lister.TOUT);
+				listeArticle = ArticleManager.getManager().selectionner(new boolean[]{true,true,false,false}, 0, 0, "");
 				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
 				request.setAttribute("listeArticles", listeArticle);
 				request.setAttribute("categories", listeCategorie);
@@ -137,6 +138,7 @@ public class ServletArticle extends HttpServlet {
 		PhotoManager photoManager = new PhotoManager();
 		EnchereManager enchereManager = new EnchereManager();
 		RetraitManager retraitManager = new RetraitManager();
+		request.getSession().removeAttribute("listeArticles");
 		if (request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			Utilisateur user = (Utilisateur) session.getAttribute("user");
 			int idUtilisateur = (user == null)? 0 : user.getIdUtilisateur();
@@ -234,6 +236,7 @@ public class ServletArticle extends HttpServlet {
 					retraitManager.ajouter(retrait);
 					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
+					request.getSession().setAttribute("messageSucces", "L'article a bien été créé.");
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				} catch (EncherException e) {
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
