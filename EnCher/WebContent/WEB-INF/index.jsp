@@ -23,12 +23,12 @@
 <div class="container mt-5">
 	<div class="row d-flex justify-content-center">
 		<div class="col-md-10">
-			<form class="card p-3 bg-light py-4 shadow-sm" method="post" action="${pageContext.request.contextPath}" enctype="multipart/form-data">
+			<form class="card p-3 bg-light py-4 shadow-sm" method="post" action="${pageContext.request.contextPath}/" enctype="multipart/form-data">
 				<h5>Filtrez votre recherche :</h5>
 				<div class="input-group mt-3">
 				
 				<select class="form-select" id="categorie" name="categorie" aria-label="Choissisez votre catégorie">
-					<option class="dropdown-item" value="0" selected="selected">Toute les catégories</option>
+					<option class="dropdown-item" value="0" selected="selected">Toutes les catégories</option>
 				<c:forEach var="c" items="${categories}">
 				  <option class="dropdown-item" value="${c.idCategorie}">${c.libelle}</option>
 				 </c:forEach>
@@ -75,34 +75,34 @@
 										for="radio1"> Achats </label>
 									<ul>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check1" checked> <label
+											type="checkbox" value="" id="check1" name="check1" checked> <label
 											class="form-check-label" for="check1"> Enchères
 												ouvertes </label></li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check2" checked> <label
+											type="checkbox" value="" id="check2" name="check2" checked> <label
 											class="form-check-label" for="check2"> Mes enchères </label>
 										</li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check3" checked> <label
+											type="checkbox" value="" id="check3" name="check3" checked> <label
 											class="form-check-label" for="check3"> Enchères remportées </label></li>
 									</ul>
 
 								</div>
 								<div class="col-md-6">
-									<input class="form-check-input" type="radio" name="radio1"
+									<input class="form-check-input" type="radio" name="radio2"
 										id="radio2"> <label class="form-check-label"
 										for="radio2"> Mes ventes </label>
 									<ul>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check4" disabled> <label
+											type="checkbox" value="" id="check4" name="check4" disabled> <label
 											class="form-check-label" for="check4"> Mes ventes en
 												cours </label></li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check5" disabled> <label
+											type="checkbox" value="" id="check5" name="check5" disabled> <label
 											class="form-check-label" for="check5"> Ventes non
 												débutées </label></li>
 										<li class="form-check"><input class="form-check-input"
-											type="checkbox" value="" id="check6" disabled> <label
+											type="checkbox" value="" id="check6" name="check6" disabled> <label
 											class="form-check-label" for="check6"> Ventes
 												terminées </label></li>
 									</ul>

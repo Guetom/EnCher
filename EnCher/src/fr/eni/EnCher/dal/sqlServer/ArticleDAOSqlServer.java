@@ -121,10 +121,14 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 				
 				Retrait retrait = new Retrait();
 				
-				String ImageArticle = rs.getString("A_P_url");
-				String[] image = ImageArticle.split(";");
+				String imageArticle = rs.getString("A_P_url");
+				String[] image = imageArticle.split(";");
+				
+				String idImageArticle = rs.getString("A_P_idPhoto");
+				String[] idImage = idImageArticle.split(";");
+				
 				Photo photo = new Photo(
-						rs.getInt("A_P_idPhoto"),
+						Integer.parseInt(idImage[0]),
 						image[0]);
 				
 				article = new Article(
@@ -307,20 +311,20 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	    /*
 	    checkBoxes:
 
-	    checkBoxes[0] : corespond Ã  la position du radio button 'Achats'(si true) ou 'Mes ventes'(si false)
+	    checkBoxes[0] : correspond à  la position du radio button 'Achats'(si true) ou 'Mes ventes'(si false)
 	    checkBoxes[1], checkBoxes[2] et checkBoxes[3] corespond aux 3 check box en dessous le radio button
 	    */
 
 	    //  /!\ Si l'utiisateur n'est pas connecter le radio button est 'disabled',
-	    //  l'appel de cette fonction ce fera avec un tableau par dÃ©faut comme ceci: 
+	    //  l'appel de cette fonction ce fera avec un tableau par défaut comme ceci: 
 	    //  filtrage( { true, true, false, false}, idUtilisateur, idCategorie, rechercheUtilisateur)
 
 	    int nbCheckBoxesRenseignes = 0;
 	    for (int i = 0; i < checkBoxes.length; i++) {
-	        //La premiÃ¨re cellule ([0]) est ignorÃ© car contrairement aux autres elle est de toute faÃ§ons rensigner. Elle corespond a un radio button (Radio button: 'Achats' -> true / 'Mes ventes' -> false)
+	        //La première cellule ([0]) est ignoré car contrairement aux autres elle est de toute faisons rensigner. Elle corespond a un radio button (Radio button: 'Achats' -> true / 'Mes ventes' -> false)
 	        if(checkBoxes[i]) nbCheckBoxesRenseignes++;
 	    }
-	    //Si les check box ne sont pas renseigner correctement il n'y a pas d'articles trouvÃ©s
+	    //Si les check box ne sont pas renseigner correctement il n'y a pas d'articles trouvés
 	    if(nbCheckBoxesRenseignes == 0){
 	        return null;
 	    }
@@ -329,40 +333,40 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        if(idCategorie!=0) nbParametresRenseignes++;
 	        if(rechercheUtilisateur!="") nbParametresRenseignes++;
 	        if(nbCheckBoxesRenseignes>1) nbParametresRenseignes++;
-	        int parametresRestants = nbParametresRenseignes;//variable servant a gÃ©rer les "AND" pour les paramÃ¨tres
+	        int parametresRestants = nbParametresRenseignes;//variable servant a gérer les "AND" pour les paramètres
 
 	        String requete = "SELECT " +
 	        //colonnes d'ARTICLES
 	        "ARTICLES.idArticle AS A_idArticle, ARTICLES.etat AS A_etat, ARTICLES.nom AS A_nom, ARTICLES.description AS A_description, ARTICLES.prix AS A_prix, ARTICLES.idCategorie AS A_idCategorie, ARTICLES.idUtilisateur AS A_idUtilisateur, ARTICLES.idRetrait AS A_idRetrait, ARTICLES.dateDebut AS A_dateDebut, ARTICLES.dateFin AS A_dateFin, " +
-	        //colonne de ARTICLES_PHOTOS, valeurs concatÃ©nÃ©es
+	        //colonne de ARTICLES_PHOTOS, valeurs concaténées
 	        "(SELECT STRING_AGG(idPhoto, ';') FROM (" +
 	            "SELECT DISTINCT idPhoto FROM ARTICLES_PHOTOS WHERE idArticle = ARTICLES.idArticle" +
 	        ") AS DistinctPhotos ) AS A_P_idPhoto, " +
-	        //colonne de PHOTOS, valeurs concatÃ©nÃ©es
+	        //colonne de PHOTOS, valeurs concaténées
 	        "(SELECT STRING_AGG(url, ';') FROM (" +
 	            "SELECT url FROM PHOTOS WHERE idPhoto IN (" +
 	            "SELECT DISTINCT idPhoto FROM ARTICLES_PHOTOS WHERE idArticle = ARTICLES.idArticle)" +
 	        ") AS DistinctUrls ) AS A_P_url, " +
 	        //colonnes de CATEGORIES
 	        "C.idCategorie AS C_idCategorie, C.libelle AS C_libelle, " +
-	        //colonne de ARTICLES_TAGS, valeurs concatÃ©nÃ©es
+	        //colonne de ARTICLES_TAGS, valeurs concaténées
 	        "(SELECT STRING_AGG( idTag, ';') FROM (" +
 			    "SELECT DISTINCT idTag FROM ARTICLES_TAGS WHERE idArticle = ARTICLES.idArticle" +
 		    ") AS DistinctTags) AS T_idTag, " +
-	        //colonne de TAGS, valeurs concatÃ©nÃ©es
+	        //colonne de TAGS, valeurs concaténées
 	        "(SELECT STRING_AGG( libelle, ';') FROM (" +
 			    "SELECT libelle FROM TAGS WHERE idTag IN (" +
 			    "SELECT DISTINCT idTag FROM ARTICLES_TAGS WHERE idArticle = ARTICLES.idArticle)" +
 		    ") AS DistinctLibelles) AS T_libelle, " +
-	        //colonnes d'UTILISATEUR (crÃ©ateur de l'article)
+	        //colonnes d'UTILISATEUR (créateur de l'article)
 	        "A_U.idUtilisateur AS A_U_idUtilisateur, A_U.pseudo AS A_U_pseudo, A_U.idPhoto AS A_U_idPhoto, " +
-	        //colonne de PHOTO (crÃ©ateur de l'article)
+	        //colonne de PHOTO (créateur de l'article)
 	        "A_U_P.url AS A_U_P_url, " +
 	        //colonnes d'ENCHERES
 	        "E.idEnchere AS E_idEnchere, E.dateheure AS E_dateheure, E.montant AS E_montant, E.idUtilisateur AS E_idUtilisateur, E.idArticle AS E_idArticle, " +
-	        //colonnes d'UTILISATEUR (crÃ©ateur de l'enchÃ¨re)
+	        //colonnes d'UTILISATEUR (créateur de l'enchère)
 	        "E_U.idUtilisateur AS E_U_idUtilisateur, E_U.pseudo AS E_U_pseudo, E_U.idPhoto AS E_U_idPhoto," +
-	        //colonne de PHOTO (crÃ©ateur de l'enchÃ¨re)
+	        //colonne de PHOTO (créateur de l'enchère)
 			"E_U_P.url AS E_U_P_url " +
 
 	        //
@@ -387,11 +391,11 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        "LEFT JOIN ( SELECT idTag, libelle " +
 	            "FROM TAGS " +
 	        ") AS T ON A_T.idTag = T.idTag " +
-	        //UTILISATEURS (crÃ©ateur de l'article)
+	        //UTILISATEURS (créateur de l'article)
 	        "LEFT JOIN ( SELECT idUtilisateur, pseudo, idPhoto " +
 	            "FROM UTILISATEURS " +
 	        ") AS A_U ON ARTICLES.idUtilisateur = A_U.idUtilisateur " +
-	        //PHOTOS (crÃ©ateur de l'article)
+	        //PHOTOS (créateur de l'article)
 	        "LEFT JOIN ( SELECT idPhoto, url " +
 	            "FROM PHOTOS " +
 	        ") AS A_U_P ON A_U.idPhoto = A_U_P.idPhoto " +
@@ -399,19 +403,19 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        "LEFT JOIN ( SELECT idEnchere, dateheure, montant, idUtilisateur, idArticle " +
 	            "FROM ENCHERES " +
 	        ") AS E ON ARTICLES.idArticle = E.idArticle " +
-	        //UTILISATEURS (crÃ©ateur de l'enchÃ¨re)
+	        //UTILISATEURS (créateur de l'enchère)
 	        "LEFT JOIN ( SELECT idUtilisateur, pseudo, idPhoto " +
 	            "FROM UTILISATEURS " +
 	        ") AS E_U ON E.idUtilisateur = E_U.idUtilisateur " +
-	        //PHOTOS (crÃ©ateur de l'enchÃ¨re)
+	        //PHOTOS (créateur de l'enchère)
 	        "LEFT JOIN ( SELECT idPhoto, url " +
 	            "FROM PHOTOS " +
 	        ") AS E_U_P ON E_U.idPhoto = E_U_P.idPhoto " +
 
-	        //DÃ©but du filtrage
+	        //Début du filtrage
 	        "WHERE (";
 	        
-	        //'CatÃ©gorie'
+	        //'Catégorie'
 	        if(idCategorie!=0){
 	            requete += "ARTICLES.idCategorie =" + idCategorie;
 	            parametresRestants--;
@@ -431,11 +435,11 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        //Radio button 'Achats'
 	        if(checkBoxes[0]==true){
 	            requete += "(";
-	            if(checkBoxes[1]) requete += "ARTICLES.etat = 'EC'";//enchÃ¨res ouvertes
+	            if(checkBoxes[1]) requete += "ARTICLES.etat = 'EC'";//enchères ouvertes
 	            if(checkBoxes[1] && checkBoxes[2]) requete += " OR ";
-	            if(checkBoxes[2]) requete += "E.idUtilisateur = " + idUtilisateur;//mes enchÃ¨res
+	            if(checkBoxes[2]) requete += "E.idUtilisateur = " + idUtilisateur;//mes enchères
 	            if((checkBoxes[1] || checkBoxes[2]) && checkBoxes[3]) requete += " OR ";
-	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND E.idUtilisateur = " + idUtilisateur + ")";//mes enchÃ¨res remportÃ©es
+	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND E.idUtilisateur = " + idUtilisateur + ")";//mes enchères remportées
 	            requete += ") ";
 	        }
 	        //Radio button 'Mes ventes'
@@ -443,9 +447,9 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	            requete += "(";
 	            if(checkBoxes[1]) requete += "(ARTICLES.etat = 'EC' AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes en cours
 	            if(checkBoxes[1] && checkBoxes[2]) requete += " OR ";
-	            if(checkBoxes[2]) requete += "(ARTICLES.etat = 'CR' AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes non dÃ©butÃ©es
+	            if(checkBoxes[2]) requete += "(ARTICLES.etat = 'CR' AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes non débutées
 	            if((checkBoxes[1] || checkBoxes[2]) && checkBoxes[3]) requete += " OR ";
-	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes terminÃ©es
+	            if(checkBoxes[3]) requete += "((ARTICLES.etat = 'VD' OR ARTICLES.etat = 'RT') AND ARTICLES.idUtilisateur = " + idUtilisateur + ")";//(mes) ventes terminées
 	            requete += ") ";
 	        }
 
