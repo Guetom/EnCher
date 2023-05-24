@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
+<%@page import="fr.eni.EnCher.bo.Utilisateur"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -69,19 +70,22 @@
 
                     <fieldset class="modif-retrait-article border border-dark rounded-3 p-3">
                       <legend class="float-none w-auto px-3">Retrait</legend>
-
+					  
+					  
+					  <% Utilisateur user = (Utilisateur) session.getAttribute("user");
+						%>
                       <div class="modif-rue form-floating">
-                        <input type="text" class="form-control" id="rue" name="rue" placeholder=" " required>
+                        <input type="text" class="form-control" id="rue" name="rue" placeholder=" " value="${ user.getRue() }" required>
                         <label for="rue" class="px-3 text-muted">Rue</label>
                       </div>
 
                       <div class="modif-codePostal form-floating">
-                        <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder=" " required>
+                        <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder=" " value="${ user.getCodePostal() }" required>
                         <label for="codePostal" class="px-3 text-muted">Code Postal</label>
                       </div>
 
                       <div class="modif-ville form-floating">
-                        <input type="text" class="form-control" id="ville" name="ville" placeholder=" " required>
+                        <input type="text" class="form-control" id="ville" name="ville" placeholder=" " value="${ user.getVille() }" required>
                         <label for="ville" class="px-3 text-muted">Ville</label>
                       </div>
 
