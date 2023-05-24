@@ -72,7 +72,7 @@
 								<div class="col-md-6">
 									<input class="form-check-input" type="radio" name="radio1"
 										id="radio1" checked> <label class="form-check-label"
-										for="radio1"> Achats </label>
+										for="radio1"> Articles </label>
 									<ul>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check1" name="check1" checked> <label
@@ -84,14 +84,14 @@
 										</li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check3" name="check3" checked> <label
-											class="form-check-label" for="check3"> Enchères remportées </label></li>
+											class="form-check-label" for="check3"> Mes enchères remportées </label></li>
 									</ul>
 
 								</div>
 								<div class="col-md-6">
 									<input class="form-check-input" type="radio" name="radio2"
 										id="radio2"> <label class="form-check-label"
-										for="radio2"> Mes ventes </label>
+										for="radio2"> Ventes </label>
 									<ul>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check4" name="check4" disabled> <label
@@ -99,11 +99,11 @@
 												cours </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check5" name="check5" disabled> <label
-											class="form-check-label" for="check5"> Ventes non
+											class="form-check-label" for="check5"> Mes ventes non
 												débutées </label></li>
 										<li class="form-check"><input class="form-check-input"
 											type="checkbox" value="" id="check6" name="check6" disabled> <label
-											class="form-check-label" for="check6"> Ventes
+											class="form-check-label" for="check6"> Mes ventes
 												terminées </label></li>
 									</ul>
 								</div>

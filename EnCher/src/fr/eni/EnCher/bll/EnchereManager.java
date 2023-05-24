@@ -46,14 +46,14 @@ public class EnchereManager {
 		
 		EncherException encherException = new EncherException();
 		
-//		validerContenu(enchere, encherException);
+		validerContenu(enchere, encherException);
 		
-//		if(encherException.hasErreurs()) {
-//			throw encherException;
-//		}
-//		else {
+		if(encherException.hasErreurs()) {
+			throw encherException;
+		}
+		else {
 			enchereDAO.ajouter(enchere);
-//		}
+		}
 	}
 	
 	public void supprimer(Enchere enchere) throws EncherException{
@@ -79,8 +79,27 @@ public class EnchereManager {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_ARTICLE_INVALIDE);
 	    }
 	    
-	    if (enchere.getArticle().getDateFin().isBefore(LocalDateTime.now())) {
-	        encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_ARTICLE_INDISPONIBLE);
+//	    if (enchere.getArticle().getDateFin().isBefore(LocalDateTime.now())) {
+//	        encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_ARTICLE_INDISPONIBLE);
+//	    }
+	    
+	    // On sélectionne l'enchère la plus haute par rapport à l'id de l'article de l'enchère en cours
+	    Enchere enchereLaPlusHaute = this.selectionner(enchere.getArticle().getIdArticle());
+	    
+	    // S'il n'y a pas d'autres enchères en cours
+	    if (enchereLaPlusHaute == null) {
+	    	// On regarde si le montant de l'enchère en cours est plus bas ou égal au prix de l'article
+	    	if(enchere.getMontant() <= enchere.getArticle().getPrix()) {
+	    		encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_PLUS_BASSE_INITIAL);
+	    	}
+	    } else if (enchere.getMontant() <= enchereLaPlusHaute.getMontant()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_PLUS_BASSE);
 	    }
+	    
+	    // Si encherisseur = celui qui a créé l'article
+	    if(enchere.getEncherisseur().getIdUtilisateur() == enchere.getArticle().getProprietaire().getIdUtilisateur()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_MEME_ENCHERISSEUR_PROPRIO);
+	    }
+
     }
 }

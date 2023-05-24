@@ -250,14 +250,23 @@ public class ServletArticle extends HttpServlet {
 				int proposition = Integer.parseInt(request.getParameter("proposition"));
 				int idArticle = Integer.parseInt(request.getParameter("idArticle"));
 				Utilisateur user = (Utilisateur) session.getAttribute("user");
-				Article artTemp = new Article(idArticle);
-				Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, artTemp);
+				
+				// Côté BLL, on aura besoins de certaines infos en lien avec l'article, on est obligé de venir le sélectionner
+				Article article = new Article(idArticle);
 				try {
-					enchereManager.ajouter(enchere);
-					response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
-				} catch (EncherException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					article = articleManager.selectionner(idArticle);
+					Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, article);
+					try {
+						enchereManager.ajouter(enchere);
+						response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
+					} catch (EncherException e) {
+						session.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+						response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
+						e.printStackTrace();
+					}
+				} catch (EncherException e1) {
+					session.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
+					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				}
 			}
 		}
