@@ -10,12 +10,12 @@
 <main> 
 <section class="enchere">
 
-<!-- Entï¿½te (titre) de l'enchï¿½re -->
+<!-- Entï¿½te (titre) de l'enchère -->
         <div class="p-5 pb-4 text-center">
             <h2 class="fs-1">Vendre un article</h2>
         </div>
 
-        <!-- Boï¿½te contenant les informations de l'enchï¿½re -->
+        <!-- Boï¿½te contenant les informations de l'enchère -->
         <section class="w-75 mx-auto border shadow-sm rounded-1">
 
             <div class="row py-5">
@@ -24,7 +24,7 @@
                     <img class="image-preview border shadow-sm" src="${pageContext.request.contextPath}/assets/no-image.svg">
                 </div>
 
-                <!-- Section principale (informations de l'enchï¿½re) -->
+                <!-- Section principale (informations de l'enchère) -->
                 <form class="form-modif-article col-lg-7 col-12 px-3" method="post" action="${pageContext.request.contextPath}/article/ajouter" enctype="multipart/form-data">
 
                   <div class="modif-nom-article form-floating">
@@ -54,17 +54,17 @@
 
                     <div class="modif-prix-article form-floating">
                       <input type="number" class="form-control" id="prix" name="prix" placeholder=" " min="0" value="0" required>
-                      <label for="prix" class="px-3 text-muted">Mise ï¿½ prix</label>
+                      <label for="prix" class="px-3 text-muted">Mise à prix</label>
                     </div>
 
                     <div class="modif-dateDebut form-floating">
                       <input type="datetime-local" class="form-control" id="dateDebut" name="dateDebut" required>
-                      <label for="dateDebut" class="px-3 text-muted">Date de dï¿½but de l'enchï¿½re</label>
+                      <label for="dateDebut" class="px-3 text-muted">Date de début de l'enchère</label>
                     </div>
 
                     <div class="modif-dateFin form-floating">
                       <input type="datetime-local" class="form-control" id="dateFin" name="dateFin" required>
-                      <label for="dateFin" class="px-3 text-muted">Date de fin de l'enchï¿½re</label>
+                      <label for="dateFin" class="px-3 text-muted">Date de fin de l'enchère</label>
                     </div>
 
                     <fieldset class="modif-retrait-article border border-dark rounded-3 p-3">
@@ -76,7 +76,7 @@
                       </div>
 
                       <div class="modif-codePostal form-floating">
-                        <input type="text" class="form-control" id="codePostal" name="codePostal" min="0" max="99999" placeholder=" " required>
+                        <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder=" " required>
                         <label for="codePostal" class="px-3 text-muted">Code Postal</label>
                       </div>
 

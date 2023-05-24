@@ -1,9 +1,20 @@
+<%@page import="fr.eni.EnCher.bo.Utilisateur"%>
+
 <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-      <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Accueil</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Enchères</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Vendre un article</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-3 text-muted">Mon profil</a></li>
+      <li class="nav-item"><a href="${pageContext.request.contextPath}/" class="nav-link px-3 text-muted">Accueil</a></li>
+      <li class="nav-item"><a href="${pageContext.request.contextPath}/" class="nav-link px-3 text-muted">Enchères</a></li>
+      <li class="nav-item"><a href="${pageContext.request.contextPath}/article/ajouter" class="nav-link px-3 text-muted">Vendre un article</a></li>
+      
+      <% Utilisateur user = (Utilisateur) session.getAttribute("user");
+					
+					if(user != null){
+						%>
+      <li class="nav-item"><a href="${pageContext.request.contextPath}/profil" class="nav-link px-3 text-muted">Mon profil</a></li>
+      
+      <%
+					}
+						%>
     </ul>
     <p class="text-center text-muted">&copy; 2023, Équipe 1</p>
   </footer>

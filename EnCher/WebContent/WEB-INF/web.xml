@@ -27,4 +27,8 @@
     <url-pattern>/article/modifier</url-pattern>
     <url-pattern>/article/supprimer</url-pattern>
   </filter-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/</location>
+  </error-page>
 </web-app>
