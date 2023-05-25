@@ -101,7 +101,13 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 		String requete = filtrage(checkBoxes, idUtilisateur, idCategorie, rechercheUtilisateur);
 		if(requete!=null) {
 			try(Connection con = JdbcTools.getConnection();
-					PreparedStatement pStmt = con.prepareStatement(requete)){
+				PreparedStatement pStmt = con.prepareStatement(requete)){
+				
+				//la saisie utilisateur pour une recherche est dans une requête paramétré pour évitez toutes injection SQL possible.
+				if(!rechercheUtilisateur.equals("")) {
+					pStmt.setString(1, "%" + rechercheUtilisateur + "%");
+					pStmt.setString(2, "%" + rechercheUtilisateur + "%");
+				}
 				ResultSet rs = pStmt.executeQuery();
 				
 				while (rs.next()) {
@@ -144,7 +150,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 							photo);
 					
 					listeArticle.add(article);
-				}			
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -425,7 +431,7 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 	        }
 	        //'Rechercher'
 	        if(!rechercheUtilisateur.equals("")){
-	            requete += "(ARTICLES.nom LIKE '%" + rechercheUtilisateur + "%' OR T.libelle LIKE '%" + rechercheUtilisateur + "%')";
+	            requete += "(ARTICLES.nom LIKE ? OR T.libelle LIKE ?)";
 	            parametresRestants--;
 	            requete += parametresRestants!=0 ? " AND " : "";
 	        }
