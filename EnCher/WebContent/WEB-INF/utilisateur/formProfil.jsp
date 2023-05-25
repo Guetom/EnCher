@@ -39,7 +39,7 @@ if(user != null){
 					src="${pageContext.request.contextPath}/image/${user.photoProfil.url}" />
 				<h3 class="mb-3">${user.pseudo}</h3>
 				<div class="form-image form-photo-profil">
-					<input class="form-control mx-auto" type="file" id="photo-profil", name="photo-profil"
+					<input class="form-control mx-auto" type="file" id="photo-profil" name="photo-profil"
 						accept="image/*">
 				</div>
 			</div>
@@ -107,5 +107,7 @@ if(user != null){
 </section> </main>
 
 <jsp:include page="/WEB-INF/template/footer.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/js/preview-image.js" async></script>
+
 </body>
 </html>
