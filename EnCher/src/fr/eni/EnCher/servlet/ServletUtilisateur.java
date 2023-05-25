@@ -99,8 +99,8 @@ public class ServletUtilisateur extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			request.setAttribute("user", user);
-			if (session.getAttribute("user") == null){
+			
+			if (session.getAttribute("user") == null && (pseudo == null || pseudo.isEmpty())){
 				response.sendRedirect(request.getContextPath() + "/");
 			}else {
 				request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
