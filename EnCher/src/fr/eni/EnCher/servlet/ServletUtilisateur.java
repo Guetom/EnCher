@@ -116,6 +116,8 @@ public class ServletUtilisateur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		PhotoManager photoManager = new PhotoManager();
 		if (request.getServletPath().equals("/inscription")) {
 			HttpSession session = request.getSession();
 			if ((request.getParameter("pseudo") != null || request.getParameter("pseudo").equals(""))
@@ -145,8 +147,6 @@ public class ServletUtilisateur extends HttpServlet {
 				String password = request.getParameter("password");
 
 				password = hashPassword(password);
-				
-				PhotoManager photoManager = new PhotoManager();
 				
 				File uploadDir = new File(UPLOAD_DIRECTORY);
 		        if (!uploadDir.exists()) {
@@ -178,9 +178,6 @@ public class ServletUtilisateur extends HttpServlet {
 				Utilisateur user = new Utilisateur(pseudo, prenom, nom, tel, email, date_naissance, rue, ville,
 						code_postal, password, 0, photo);
 				
-				
-				UtilisateurManager utilisateurManager = new UtilisateurManager();
-				
 				try {
 					utilisateurManager.ajouter(user);
 					
@@ -204,7 +201,6 @@ public class ServletUtilisateur extends HttpServlet {
 				String emailPseudo = request.getParameter("emailPseudo");
 				String motDePasse = hashPassword(request.getParameter("password"));
 				
-				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur user = null;
 				try {
 					user = utilisateurManager.login(emailPseudo, motDePasse);
@@ -238,7 +234,63 @@ public class ServletUtilisateur extends HttpServlet {
 		} else if (request.getServletPath().equals("/profil")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/modifier.jsp").forward(request, response);
+			HttpSession session = request.getSession();
+			if ((request.getParameter("nom") != null || request.getParameter("nom").equals(""))
+					|| (request.getParameter("prenom") != null || request.getParameter("prenom").equals(""))
+					|| (request.getParameter("prenom") != null || request.getParameter("prenom").equals(""))
+					|| (request.getParameter("date_naissance") != null
+							|| request.getParameter("date_naissance").equals(""))
+					|| (request.getParameter("email") != null || request.getParameter("email").equals(""))
+					|| (request.getParameter("telephone") != null || request.getParameter("telephone").equals(""))
+					|| (request.getParameter("rue") != null || request.getParameter("rue").equals(""))
+					|| (request.getParameter("code_postal") != null || request.getParameter("code_postal").equals(""))
+					|| (request.getParameter("ville") != null || request.getParameter("ville").equals(""))) {
+				
+				Utilisateur userConnect = (Utilisateur) session.getAttribute("user");
+				
+				userConnect.setNom(request.getParameter("nom"));
+				userConnect.setPrenom(request.getParameter("prenom"));
+				userConnect.setDateNaissance(LocalDate.parse(request.getParameter("date_naissance")));
+				userConnect.setEmail(request.getParameter("email"));
+				userConnect.setRue(request.getParameter("rue"));
+				userConnect.setCodePostal(request.getParameter("code_postal"));
+				userConnect.setVille(request.getParameter("ville"));
+				userConnect.setMotDePasse("Pa$$w0rd");
+							
+				File uploadDir = new File(UPLOAD_DIRECTORY);
+		        if (!uploadDir.exists()) {
+		            uploadDir.mkdirs();
+		        }
+		        Part part = request.getPart("photo-profil");
+		        Photo photo = null;
+		        if (part != null) {
+		        	String fileName = getFileName(part);
+		            if (fileName != null && !fileName.isEmpty()) {
+		            	int indexDernierPoint = fileName.lastIndexOf(".");
+		            	String newFileName = UUID.randomUUID().toString() + "." + fileName.substring(indexDernierPoint + 1);
+		                String filePath = UPLOAD_DIRECTORY + File.separator + newFileName;
+		                try (InputStream inputStream = part.getInputStream()) {
+		                    Files.copy(inputStream, new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+		                    photo = new Photo(newFileName);
+		                }
+		            }
+					try {
+						photoManager.ajouter(photo);
+						userConnect.setPhotoProfil(photo);
+					} catch (EncherException e1) {
+						request.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
+						e1.printStackTrace();
+					}
+				}
+		        try {
+					utilisateurManager.modfier(userConnect);
+				} catch (EncherException e) {
+					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+					e.printStackTrace();
+					response.sendRedirect(request.getContextPath() + "/profil");
+				}
+			}
+			response.sendRedirect(request.getContextPath() + "/profil");
 		} else if (request.getServletPath().equals("/profil/supprimer")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/supprimer.jsp").forward(request, response);
 		}

@@ -25,7 +25,7 @@ if(user != null){
 				src="${pageContext.request.contextPath}/image/${utilisateur.photoProfil.url}" />
 			<!-- Nom et prénom -> infos à cacher si pas utilisateur courant ou admin -->
 			<c:if test="${sessionUser == utilisateur.idUtilisateur}">
-				<h3>${utilisateur.prenom},${utilisateur.nom}</h3>
+				<h3>${utilisateur.prenom}, ${utilisateur.nom}</h3>
 			</c:if>
 			<h3>@${utilisateur.pseudo}</h3>
 		</div>
