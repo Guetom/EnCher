@@ -176,6 +176,11 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_ENCHERE_MEME_ENCHERISSEUR_PROPRIO = 20307; 
 	
+	/**
+	 * Vous n'avez pas assez de crédit pour enchérir sur cette offre.
+	 */
+	public static final int REGLE_ENCHERE_PAS_ASSEZ_CREDIT = 20308;
+	
 	/* Retrait */
 
 	/**

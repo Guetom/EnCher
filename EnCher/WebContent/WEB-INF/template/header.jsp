@@ -53,10 +53,16 @@
 							src="${pageContext.request.contextPath}/assets/profil.jpg"
 							alt="Avatar Logo" height="60" class="rounded-pill">
 						</a>
-						<ul class="dropdown-menu dropdown-menu-end">
+						<div class="dropdown-menu dropdown-menu-end">
+						
+						</div>
+						<ul >
+							<li><h5 class="dropdown-header">${user.pseudo}</h5></li>
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
 									déconnecter</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><h5 class="dropdown-header">Crédit : <span class="prix">${user.credit}</span></h5></li>
 						</ul>
 					</div>
 					<%
@@ -69,9 +75,12 @@
 							height="50" class="rounded-pill">
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
+							<li><h4 class="dropdown-header">${user.pseudo}</h5></li>
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
 									déconnecter</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><h5 class="dropdown-header">Crédit : <span class="text-success">${user.credit}</span></h5></li>
 						</ul>
 					</div>
 					<%

@@ -100,6 +100,11 @@ public class EnchereManager {
 	    if(enchere.getEncherisseur().getIdUtilisateur() == enchere.getArticle().getProprietaire().getIdUtilisateur()) {
 	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_MEME_ENCHERISSEUR_PROPRIO);
 	    }
+	    
+	 // Si encherisseur = celui qui a créé l'article
+	    if(enchere.getEncherisseur().getCredit() < enchere.getMontant()) {
+	    	encherException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_PAS_ASSEZ_CREDIT);
+	    }
 
     }
 }

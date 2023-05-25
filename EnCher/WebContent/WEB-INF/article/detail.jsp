@@ -1,4 +1,5 @@
 <%@page import="fr.eni.EnCher.bo.Article"%>
+<%@page import="fr.eni.EnCher.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -103,15 +104,17 @@
                         <div class="col-md-2 col-12"><h5>Vendeur :</h5></div>
                         <div class="col-md-10 col-12"><a href="#">${ article.proprietaire.pseudo }</a></div>
                     </div>
-
-                    <form class="proposition row p-1" method="post" action="${pageContext.request.contextPath}/article/encherir" enctype="multipart/form-data">
-                        <div class="col-lg-2 col-md-4 col-12"><h5>Faire une proposition :</h5></div>
-                        <div class="col-md-5 col-6">
-                        <input type="number" id="proposition" name="proposition" class="form-control" min="${enchere.montant}" value="${enchere.montant}">
-                        <input type="hidden" id="idArticle" name="idArticle" value="${ article.idArticle }" /></div>
-                        <div class="col-lg-5 col-md-3 col-6"><button type="submit" class="btn btn-primary">Enchérir</button></div>
-                    </form>
-
+					
+					<c:if test="${user != null && user.idUtilisateur != article.proprietaire.idUtilisateur}">
+	                    <form class="proposition row p-1" method="post" action="${pageContext.request.contextPath}/article/encherir" enctype="multipart/form-data">
+	                        <div class="col-lg-2 col-md-4 col-12"><h5>Faire une proposition :</h5></div>
+	                        <div class="col-md-5 col-6">
+	                        <input type="number" id="proposition" name="proposition" class="form-control" min="${enchere.montant}" value="${enchere.montant}">
+	                        <input type="hidden" id="idArticle" name="idArticle" value="${ article.idArticle }" /></div>
+	                        <div class="col-lg-5 col-md-3 col-6"><button type="submit" class="btn btn-primary">Enchérir</button></div>
+	                    </form>
+                    </c:if>
+                    
                 </div>
             </div>
         </section>

@@ -18,7 +18,7 @@
 <% request.getSession().removeAttribute("listeCodesErreurs"); %>
 
 <c:if test="${successMessage != messageSucces}">
-	<div class="encher-alert alert alert-success alert-dismissible text-start fade show my-3 w-50 mx-auto position-absolute top-0" role="alert">
+	<div class="encher-alert alert alert-success alert-dismissible text-start fade show my-3 w-50 mx-auto position-absolute start-50 translate-middle" role="alert">
 		${messageSucces}
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
