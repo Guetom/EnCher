@@ -98,11 +98,13 @@ public class ServletUtilisateur extends HttpServlet {
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}
-			}else {
-				response.sendRedirect(request.getContextPath() + "/connexion");
 			}
 			request.setAttribute("user", user);
-			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
+			if (session.getAttribute("user") == null){
+				response.sendRedirect(request.getContextPath() + "/");
+			}else {
+				request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
+			}
 		} else if (request.getServletPath().equals("/profil/modifier")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/formProfil.jsp").forward(request, response);
 		}
@@ -302,7 +304,8 @@ public class ServletUtilisateur extends HttpServlet {
 			if(session != null){
 	            session.invalidate();
 	        }
-			
+			response.sendRedirect(request.getContextPath() + "/");
+		}else {
 			response.sendRedirect(request.getContextPath() + "/");
 		}
 	}

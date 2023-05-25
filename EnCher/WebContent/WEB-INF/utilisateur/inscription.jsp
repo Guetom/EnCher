@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
 <title>Inscription</title>
 <!-- Bootstrap and CSS CUSTOM -->
 <link
