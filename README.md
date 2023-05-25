@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/Guetom/EnCher/logo.png)
+![Logo](/logo.png)
 
 
 # EnCher
