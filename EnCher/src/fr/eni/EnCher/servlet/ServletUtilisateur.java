@@ -77,20 +77,22 @@ public class ServletUtilisateur extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			String pseudo = "";
 			pseudo = request.getParameter("pseudo");
-			if (!pseudo.isEmpty()) {
+			if (pseudo != null && !pseudo.isEmpty()) {
 				//Afficher le profil en parametre
 				try {
 					user = utilisateurManager.selection(pseudo);
+					session.setAttribute("utilisateur", user);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 					e.printStackTrace();
 				}				
-			}else if (session.getAttribute("user") != null && pseudo.isEmpty()) {
+			}else if (session.getAttribute("user") != null) {
 				//Afficher le profil de l'utilisateur connecté
 				Utilisateur userConnect = (Utilisateur) session.getAttribute("user");
 				try {
 					user = utilisateurManager.selection(userConnect.getPseudo());
+					session.setAttribute("utilisateur", user);
 				} catch (EncherException e) {
 					// TODO Auto-generated catch block
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());

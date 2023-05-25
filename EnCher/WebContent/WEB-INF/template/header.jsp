@@ -16,6 +16,7 @@
 	crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/enchere.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/profil.css" rel="stylesheet">
 
 </head>
 

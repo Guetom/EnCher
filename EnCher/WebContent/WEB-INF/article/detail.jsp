@@ -82,7 +82,7 @@
 					    <c:when test="${ enchere != null }">
 						    <div class="meilleure-offre row p-1">
 		                        <div class="col-lg-2 col-12"><h5>Meilleure offre :</h5></div>
-		                        <div class="col-lg-10 col-12"><p><span class="prix">${ enchere.montant }</span> crédits par <a href="#">${ enchere.encherisseur.pseudo }</a></p></div>
+		                        <div class="col-lg-10 col-12"><p><span class="prix">${ enchere.montant }</span> crédits par <a href="${pageContext.request.contextPath}/profil?pseudo=${enchere.encherisseur.pseudo}">${ enchere.encherisseur.pseudo }</a></p></div>
 		                    </div>
 					    </c:when>
 					    <c:otherwise>
@@ -101,7 +101,7 @@
 
                     <div class="vendeur row p-1">
                         <div class="col-md-2 col-12"><h5>Vendeur :</h5></div>
-                        <div class="col-md-10 col-12"><a href="#">${ article.proprietaire.pseudo }</a></div>
+                        <div class="col-md-10 col-12"><a href="${pageContext.request.contextPath}/profil?pseudo=${article.proprietaire.pseudo}">${ article.proprietaire.pseudo }</a></div>
                     </div>
 
                     <form class="proposition row p-1" method="post" action="${pageContext.request.contextPath}/article/encherir" enctype="multipart/form-data">
