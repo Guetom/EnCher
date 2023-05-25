@@ -20,6 +20,24 @@ if(user != null){
 <jsp:include page="/WEB-INF/template/header.jsp"></jsp:include>
 
 <main> <section class="profil">
+<div class="modal fade" id="modalSupprimer" tabindex="-1" aria-labelledby="modalSupprimerLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalSupprimerLabel">Voulez-vous vraiment supprimer votre compte ?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <form  method="post" action="${pageContext.request.contextPath}/profil/supprimer"
+	enctype="multipart/form-data">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non je reste</button>
+            <button type="submit" class="btn btn-danger">Oui je le veux</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 <h2 class="my-4">Modifier profil</h2>
 <form class="container mb-4 p-3 pt-0" method="post"
 	action="${pageContext.request.contextPath}/profil/modifier"
@@ -97,7 +115,7 @@ if(user != null){
 			<div class="col-lg-12 mx-auto d-flex justify-content-center">
 				<button class="btn btn-lg btn-primary mb-1 mx-2" type="submit">Valider</button>
 				<a class="btn btn-lg btn-secondary mb-1 mx-2" href="${pageContext.request.contextPath}/profil">Annuler</a>
-				<a class="btn btn-lg btn-danger mb-1 mx-2" href="#">Supprimer
+				<a class="btn btn-lg btn-danger mb-1 mx-2" data-bs-toggle="modal" data-bs-target="#modalSupprimer">Supprimer
 					mon compte</a>
 			</div>
 		</div>

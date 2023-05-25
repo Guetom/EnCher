@@ -127,15 +127,21 @@ public class ArticleDAOSqlServer implements DAO<Article>{
 					
 					Retrait retrait = new Retrait();
 					
-					String imageArticle = rs.getString("A_P_url");
-					String[] image = imageArticle.split(";");
+					Photo photo = null;
 					
-					String idImageArticle = rs.getString("A_P_idPhoto");
-					String[] idImage = idImageArticle.split(";");
-					
-					Photo photo = new Photo(
-							Integer.parseInt(idImage[0]),
-							image[0]);
+					if (rs.getString("A_P_url") != null) {
+						String imageArticle = rs.getString("A_P_url");
+						String[] image = imageArticle.split(";");
+						
+						String idImageArticle = rs.getString("A_P_idPhoto");
+						String[] idImage = idImageArticle.split(";");
+						
+						photo = new Photo(
+								Integer.parseInt(idImage[0]),
+								image[0]);
+					}else {
+						photo = new Photo("profil.jpg");
+					}
 					
 					article = new Article(
 							rs.getInt("A_idArticle"),
