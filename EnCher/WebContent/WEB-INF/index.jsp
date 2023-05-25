@@ -170,8 +170,7 @@
 						<a class="card-text" href="${pageContext.request.contextPath}/article?id=${c.idArticle}">En savoir plus</a>
 					</div>
 					<div class="card-footer">
-						<small class="text-body-secondary">Mis en ligne il y a 2
-							heures par </small> <a href="#">${c.proprietaire.pseudo}</a>
+						<small class="text-body-secondary">Mis en ligne par </small> <a href="${pageContext.request.contextPath}/profil?pseudo=${c.proprietaire.pseudo}">${c.proprietaire.pseudo}</a>
 					</div>
 				</div>
 			</c:forEach>
