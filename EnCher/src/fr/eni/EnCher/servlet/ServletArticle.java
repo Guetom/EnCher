@@ -65,6 +65,8 @@ public class ServletArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Récupérer l'objet de session
+	    HttpSession session = request.getSession();
 		ArticleManager articleManager = new ArticleManager();
 		CategorieManager categorieManager = new CategorieManager();
 		PhotoManager photoManager = new PhotoManager();
@@ -86,6 +88,7 @@ public class ServletArticle extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 			rd.forward(request, response);
+			session.removeAttribute("listeCodesErreurs");
 //			doPost(request, response);			
 			
 		}
@@ -111,6 +114,7 @@ public class ServletArticle extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/detail.jsp");
 			rd.forward(request, response);
+			session.removeAttribute("listeCodesErreurs");
 			
 			
 		}
@@ -120,6 +124,8 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("categories", CategorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
 				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
+				rd.forward(request, response);
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
@@ -169,7 +175,7 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("listeArticles", listeArticle);
 				request.setAttribute("categories", listeCategorie);
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
@@ -205,7 +211,7 @@ public class ServletArticle extends HttpServlet {
 				File uploadDir = new File(UPLOAD_DIRECTORY);
 		        if (!uploadDir.exists()) {
 		            uploadDir.mkdirs();
-		        }
+		        } 
 
 		        for (Part part : request.getParts()) {
 		            String fileName = getFileName(part);
@@ -240,6 +246,8 @@ public class ServletArticle extends HttpServlet {
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				} catch (EncherException e) {
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
+					rd.forward(request, response);
 					e.printStackTrace();
 				}
 			}

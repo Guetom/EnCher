@@ -131,7 +131,40 @@
 					<div class="card-body">
 						<div class="d-flex flex-row">
 							<h5 class="card-title w-100">${c.nom}</h5>
-							<span class="badge text-bg-primary align-self-start">${c.prix} crédits</span>
+							<div class="d-flex flex-column">
+								<span class="badge text-bg-primary align-self-start w-100">${c.prix} crédits</span>
+								
+								<c:set var="etatTexte">
+								  <c:choose>
+								    <c:when test="${c.etat eq 'CR'}">Créé</c:when>
+								    <c:when test="${c.etat eq 'VD'}">Vendu</c:when>
+								    <c:when test="${c.etat eq 'EC'}">En cours</c:when>
+								    <c:when test="${c.etat eq 'RT'}">Retiré</c:when>
+								    <c:when test="${c.etat eq 'AN'}">Annulé</c:when>
+								    <c:otherwise>État inconnu</c:otherwise>
+								  </c:choose>
+								</c:set>
+
+							    <c:choose>
+							        <c:when test="${c.etat == 'CR'}">
+							            <c:set var="bgColorEtat" value="text-bg-info" />
+							        </c:when>
+							        <c:when test="${c.etat == 'EC'}">
+							            <c:set var="bgColorEtat" value="text-bg-success" />
+							        </c:when>
+							        <c:when test="${c.etat == 'AN'}">
+							            <c:set var="bgColorEtat" value="text-bg-danger" />
+							        </c:when>
+							        <c:when test="${c.etat == 'VD' || c.etat == 'RT'}">
+							            <c:set var="bgColorEtat" value="text-bg-danger" />
+							        </c:when>
+							        <c:otherwise>
+							            <c:set var="bgColorEtat" value="text-bg-primary" />
+							        </c:otherwise>
+							    </c:choose>
+
+								<span class="badge align-self-start mt-1 w-100 ${bgColorEtat}"><c:out value="${etatTexte}" /></span></div>
+								
 						</div>
 						<p class="card-text text-truncate">${c.description}</p>
 						<a class="card-text" href="${pageContext.request.contextPath}/article?id=${c.idArticle}">En savoir plus</a>
