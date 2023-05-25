@@ -105,8 +105,6 @@ public class ServletUtilisateur extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp").forward(request, response);
 		} else if (request.getServletPath().equals("/profil/modifier")) {
 			request.getRequestDispatcher("/WEB-INF/utilisateur/formProfil.jsp").forward(request, response);
-		} else if (request.getServletPath().equals("/profil/supprimer")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/supprimer.jsp").forward(request, response);
 		}
 	}
 
@@ -292,7 +290,20 @@ public class ServletUtilisateur extends HttpServlet {
 			}
 			response.sendRedirect(request.getContextPath() + "/profil");
 		} else if (request.getServletPath().equals("/profil/supprimer")) {
-			request.getRequestDispatcher("/WEB-INF/utilisateur/supprimer.jsp").forward(request, response);
+			HttpSession session = request.getSession();
+			Utilisateur userConnect = (Utilisateur) session.getAttribute("user");
+			
+			try {
+				utilisateurManager.supprimer(userConnect);
+			} catch (EncherException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(session != null){
+	            session.invalidate();
+	        }
+			
+			response.sendRedirect(request.getContextPath() + "/");
 		}
 	}
 
