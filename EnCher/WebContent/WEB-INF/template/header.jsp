@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -16,6 +17,7 @@
 	crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/enchere.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/profil.css" rel="stylesheet">
 
 </head>
 
@@ -53,10 +55,16 @@
 							src="${pageContext.request.contextPath}/assets/profil.jpg"
 							alt="Avatar Logo" height="60" class="rounded-pill">
 						</a>
-						<ul class="dropdown-menu dropdown-menu-end">
+						<div class="dropdown-menu dropdown-menu-end">
+						
+						</div>
+						<ul >
+							<li><h5 class="dropdown-header">${user.pseudo}</h5></li>
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
 									déconnecter</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><h5 class="dropdown-header">Crédit : <span class="prix">${user.credit}</span></h5></li>
 						</ul>
 					</div>
 					<%
@@ -69,9 +77,12 @@
 							height="50" class="rounded-pill">
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
+							<li><h4 class="dropdown-header">${user.pseudo}</h5></li>
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
 							<li><a class="dropdown-item disconnect" href="${pageContext.request.contextPath}/deconnection">Se
 									déconnecter</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><h5 class="dropdown-header">Crédit : <span class="text-success">${user.credit}</span></h5></li>
 						</ul>
 					</div>
 					<%

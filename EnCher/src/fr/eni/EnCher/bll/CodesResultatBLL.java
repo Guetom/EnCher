@@ -160,7 +160,27 @@ public abstract class CodesResultatBLL {
 	 * L'article est indisponible.
 	 */
 	public static final int REGLE_ENCHERE_ARTICLE_INDISPONIBLE = 20304;
-
+	
+	/**
+	 * Impossible d'enchérir à un prix inférieur ou égal à la plus grosse proposition actuelle.
+	 */
+	public static final int REGLE_ENCHERE_PLUS_BASSE = 20305; 
+	
+	/**
+	 * Impossible d'enchérir à un prix inférieur ou égal au prix initial.
+	 */
+	public static final int REGLE_ENCHERE_PLUS_BASSE_INITIAL = 20306; 
+	
+	/**
+	 * Impossible d'enchérir sur sa propre offre.
+	 */
+	public static final int REGLE_ENCHERE_MEME_ENCHERISSEUR_PROPRIO = 20307; 
+	
+	/**
+	 * Vous n'avez pas assez de crédit pour enchérir sur cette offre.
+	 */
+	public static final int REGLE_ENCHERE_PAS_ASSEZ_CREDIT = 20308;
+	
 	/* Retrait */
 
 	/**

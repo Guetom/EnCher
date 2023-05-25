@@ -64,6 +64,9 @@ public class ServletArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// Récupérer l'objet de session
+	    HttpSession session = request.getSession();
 		ArticleManager articleManager = new ArticleManager();
 		CategorieManager categorieManager = new CategorieManager();
 		PhotoManager photoManager = new PhotoManager();
@@ -75,7 +78,7 @@ public class ServletArticle extends HttpServlet {
 		if(request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			//Tout
 			try {
-				listeArticle = ArticleManager.getManager().selectionner(Lister.TOUT);
+				listeArticle = ArticleManager.getManager().selectionner(new boolean[]{true,true,false,false}, 0, 0, "");
 				listeCategorie = CategorieManager.getManager().selectionner(Lister.TOUT);
 				request.setAttribute("listeArticles", listeArticle);
 				request.setAttribute("categories", listeCategorie);
@@ -85,6 +88,7 @@ public class ServletArticle extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 			rd.forward(request, response);
+			session.removeAttribute("listeCodesErreurs");
 //			doPost(request, response);			
 			
 		}
@@ -110,6 +114,7 @@ public class ServletArticle extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/detail.jsp");
 			rd.forward(request, response);
+			session.removeAttribute("listeCodesErreurs");
 			
 			
 		}
@@ -119,6 +124,8 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("categories", CategorieManager.getManager().selectionner(Lister.TOUT));
 			} catch (EncherException e) {
 				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
+				rd.forward(request, response);
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
@@ -137,6 +144,7 @@ public class ServletArticle extends HttpServlet {
 		PhotoManager photoManager = new PhotoManager();
 		EnchereManager enchereManager = new EnchereManager();
 		RetraitManager retraitManager = new RetraitManager();
+		request.getSession().removeAttribute("listeArticles");
 		if (request.getServletPath() == null || request.getServletPath().equals("") || request.getServletPath().equals("/")) {
 			Utilisateur user = (Utilisateur) session.getAttribute("user");
 			int idUtilisateur = (user == null)? 0 : user.getIdUtilisateur();
@@ -167,7 +175,7 @@ public class ServletArticle extends HttpServlet {
 				request.setAttribute("listeArticles", listeArticle);
 				request.setAttribute("categories", listeCategorie);
 			} catch (EncherException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
@@ -203,7 +211,7 @@ public class ServletArticle extends HttpServlet {
 				File uploadDir = new File(UPLOAD_DIRECTORY);
 		        if (!uploadDir.exists()) {
 		            uploadDir.mkdirs();
-		        }
+		        } 
 
 		        for (Part part : request.getParts()) {
 		            String fileName = getFileName(part);
@@ -234,9 +242,12 @@ public class ServletArticle extends HttpServlet {
 					retraitManager.ajouter(retrait);
 					article.setListeImage(listePhoto);
 					articleManager.ajouter(article);
+					request.getSession().setAttribute("messageSucces", "L'article a bien été créé.");
 					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				} catch (EncherException e) {
 					request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/formArticle.jsp");
+					rd.forward(request, response);
 					e.printStackTrace();
 				}
 			}
@@ -247,14 +258,23 @@ public class ServletArticle extends HttpServlet {
 				int proposition = Integer.parseInt(request.getParameter("proposition"));
 				int idArticle = Integer.parseInt(request.getParameter("idArticle"));
 				Utilisateur user = (Utilisateur) session.getAttribute("user");
-				Article artTemp = new Article(idArticle);
-				Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, artTemp);
+				
+				// Côté BLL, on aura besoins de certaines infos en lien avec l'article, on est obligé de venir le sélectionner
+				Article article = new Article(idArticle);
 				try {
-					enchereManager.ajouter(enchere);
-					response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
-				} catch (EncherException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					article = articleManager.selectionner(idArticle);
+					Enchere enchere = new Enchere(LocalDateTime.now(), proposition, user, article);
+					try {
+						enchereManager.ajouter(enchere);
+						response.sendRedirect(request.getContextPath() + "/article?id=" + idArticle);
+					} catch (EncherException e) {
+						session.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+						response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
+						e.printStackTrace();
+					}
+				} catch (EncherException e1) {
+					session.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
+					response.sendRedirect(request.getContextPath() + "/article?id=" + article.getIdArticle());
 				}
 			}
 		}

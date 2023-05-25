@@ -129,10 +129,6 @@ public class Utilisateur {
 		return photoProfil;
 	}
 	
-	/*public Photo setPhotoProfil() {
-		this.photoProfil = "https://maisondesante-saintcere.fr/images/assets/pp-default.png";
-	}*/
-
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -140,5 +136,66 @@ public class Utilisateur {
 	public List<Article> getListeArticle() {
 		return listeArticle;
 	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setNumeroTel(long numeroTel) {
+		this.numeroTel = numeroTel;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setDateNaissance(LocalDate dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+
+	public void setDateCreation(LocalDateTime dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public void setPhotoProfil(Photo photoProfil) {
+		this.photoProfil = photoProfil;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	public void setListeArticle(List<Article> listeArticle) {
+		this.listeArticle = listeArticle;
+	}
+	
 	
 }

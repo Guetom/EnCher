@@ -21,8 +21,8 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 	private final String UTILISATEUR_PSEUDO = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE pseudo=?";
 	private final String UTILISATEUR_LOGIN = "SELECT * FROM UTILISATEURS INNER JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE (email=? AND mot_de_passe=?) OR (pseudo=? AND mot_de_passe=?)";
 	private final String AJOUTER = "INSERT INTO UTILISATEURS(pseudo, prenom, nom, idPhoto, tel, email, rue, code_postal, ville, mot_de_passe, credit, dateNaissance, isAdmin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private final String MODIFIER = "UPDATE UTILISATEURS SET idArticle=?, rue=?, code_postal=?, ville=? WHERE idRetrait=?";
-	private final String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE idRetrait=?";
+	private final String MODIFIER = "UPDATE UTILISATEURS SET pseudo=?, prenom=?, nom=?, idPhoto=?, tel=?, email=?, rue=?, code_postal=?, ville=?, credit=?, isAdmin=?, dateNaissance=? WHERE idUtilisateur=?";
+	private final String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE idUtilisateur=?";
 	
 	public Utilisateur selectionner(int idUtilisateur) throws EncherException {
 		Utilisateur utilisateur = null;
@@ -215,10 +215,10 @@ public class UtilisateurDAODqlServer implements DAO<Utilisateur>{
 			pStmt.setString(7, t.getRue());
 			pStmt.setString(8, t.getCodePostal());
 			pStmt.setString(9, t.getVille());
-			pStmt.setString(10, t.getMotDePasse());
-			pStmt.setInt(11, t.getCredit());
-			pStmt.setBoolean(12, t.isAdmin());
-			pStmt.setDate(13, java.sql.Date.valueOf(t.getDateNaissance()));	
+			pStmt.setInt(10, t.getCredit());
+			pStmt.setBoolean(11, t.isAdmin());
+			pStmt.setDate(12, java.sql.Date.valueOf(t.getDateNaissance()));	
+			pStmt.setInt(13, t.getIdUtilisateur());	
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

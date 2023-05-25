@@ -18,7 +18,7 @@ import fr.eni.EnCher.exception.EncherException;
 
 public class EnchereDAOSqlServer implements DAO<Enchere>{
 	private final String LISTER = "SELECT * FROM ENCHERES JOIN UTILISATEURS ON ENCHERES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN ARTICLES ON ENCHERES.idArticle = ARTICLES.idArticle JOIN CATEGORIES ON ARTICLES.idCategorie = CATEGORIES.idCategorie";
-	private final String LISTER_ID_ARTICLE = "SELECT TOP(1) * FROM ENCHERES JOIN UTILISATEURS ON ENCHERES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE ENCHERES.idArticle=? ORDER BY montant ASC";
+	private final String LISTER_ID_ARTICLE = "SELECT * FROM ENCHERES JOIN UTILISATEURS ON ENCHERES.idUtilisateur = UTILISATEURS.idUtilisateur JOIN PHOTOS ON UTILISATEURS.idPhoto = PHOTOS.idPhoto WHERE ENCHERES.idArticle = ? AND montant = ( SELECT MAX(montant) FROM ENCHERES WHERE ENCHERES.idArticle = ?)";
 	private final String AJOUTER = "INSERT INTO ENCHERES(dateheure, montant, idUtilisateur, idArticle) VALUES (?,?,?,?)";
 	private final String MODIFIER = "UPDATE ENCHERES SET dateheure=?, montant=?, idUtilisateur=?, idArticle=? WHERE idEnchere=?";
 	private final String SUPPRIMER = "DELETE FROM ENCHERES WHERE idEnchere=?";
@@ -35,6 +35,7 @@ public class EnchereDAOSqlServer implements DAO<Enchere>{
 		try(Connection con = JdbcTools.getConnection(); 
 				PreparedStatement pStmt = con.prepareStatement(LISTER_ID_ARTICLE)){
 			pStmt.setInt(1, idArticle);
+			pStmt.setInt(2, idArticle);
 			ResultSet rs = pStmt.executeQuery();
 			
 			if (rs.next()) {
@@ -58,13 +59,15 @@ public class EnchereDAOSqlServer implements DAO<Enchere>{
 						photoProfil,
 						rs.getBoolean("isAdmin"));
 				
+				//Obligé de faire ça -> créer un article ça mettrait trois plombes (faudrait faire une requête du futur pour rien) + on a déjà une requête toute belle toute faite pour ça
+				ArticleDAOSqlServer articleDAO = new ArticleDAOSqlServer();
+				
 				enchere = new Enchere(
 						rs.getInt("idEnchere"),
 						rs.getTimestamp("dateheure").toLocalDateTime(),
 						rs.getInt("montant"),
 						utilisateur,
-						null);
-				
+						articleDAO.selectionner(idArticle));
 			}
 			
 		} catch (SQLException e) {
